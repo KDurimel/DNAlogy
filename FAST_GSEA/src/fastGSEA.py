@@ -15,6 +15,10 @@ FastGSEA workfow. Performs GO-terms enrichment analysis between two gene sets.
 import map # custom libs: id mapping functions 
 
 map.any_ids_to_go(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4])
+# map.ids_to_go(sys.argv[1],sys.argv[2],sys.argv[3])
+# map.mk_susbet(sys.argv[1])
+# map.ids_to_go_online(sys.argv[1],sys.argv[2],sys.argv[3])
+# map.any_ids_to_go_online(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4])
 
 
 
