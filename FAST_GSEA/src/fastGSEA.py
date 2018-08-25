@@ -28,6 +28,7 @@ import sys, subprocess # too many uses --> import all.
 
 ######## IMPORT HOMEMADE MODULES ########
 import map # homemade id mapping module : import all
+from enrich import launchGSEA # homemade go-enrichment module
 
 
 def get_parser():
@@ -79,6 +80,10 @@ def get_parser():
 						'Faster but less reliable. Use this option in case of low internet bandwith, but '+\
 						'dont forget that the GO enrichment step (following the mapping step) will still '+\
 						'requires a reliable internet connection.', default=False)
+
+	parser.add_argument('--keepTmp', dest='keepTmp', action='store_true', 
+						help='Generate graphical representation of the enrichment results (experimental feature)',
+						default=False)
 
 	parser.add_argument('--view', dest='view', action='store_true', 
 						help='Generate graphical representation of the enrichment results (experimental feature)',
@@ -134,46 +139,47 @@ def main():
 	# 	************************ 
 	subprocess.check_call('mkdir -p ' + Arguments.output + '/tmp', shell=True)
 	TMP_DIR = Arguments.output + '/tmp'
-	if not exists(Arguments.mappingFile + '_subset.gz'):
-		# Create idmapping subset file if it dont already exists
-		map.mk_susbet(Arguments.mappingFile) 
+	# if not exists(Arguments.mappingFile + '_subset.gz'):
+	# 	# Create idmapping subset file if it dont already exists
+	# 	map.mk_susbet(Arguments.mappingFile) 
 
-	if Arguments.mapOffline:
-		# Map ids files OFFLINE enabling only Refseq and GO ids support. Reliable solution
-		if Arguments.fromOtherDB:
-			if Arguments.fromOtherDB not in SUPPORTED_IDS:
-				print 'fromOtherDB - bad argument: ' + Arguments.fromOtherDB + \
-				'\nPlease use only supported ids. Program will stop now.'
-				sys.exit(1)
-			# Map ids files OFFLINE enabling all ids support. Results may be uncomplete
-			else:
-				map.any_ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', Arguments.fromOtherDB) # Map sample ids
-				map.any_ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', Arguments.fromOtherDB) # Map universe ids
-		# Map ids files OFFLINE enabling only Refseq and GO ids support. Reliable solution
-		else:
-			map.ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
-			map.ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
-	else:
-		# Map ids files ONLINE enabling only Refseq and GO ids support. BEST solution for strong results
-		if Arguments.fromOtherDB:
-			if Arguments.fromOtherDB not in SUPPORTED_IDS:
-				print 'fromOtherDB - bad argument: ' + str(Arguments.fromOtherDB) + \
-				'\nPlease use only supported ids. Program will stop now.'
-				sys.exit(1)
-			else:
-				map.any_ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', Arguments.fromOtherDB) # Map sample ids
-				map.any_ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', Arguments.fromOtherDB) # Map universe ids
-		# Map ids files ONLINE enabling all ids support. Results may be uncomplete
-		else:
-			map.ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
-			map.ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
+	# if Arguments.mapOffline:
+	# 	# Map ids files OFFLINE enabling only Refseq and GO ids support. Reliable solution
+	# 	if Arguments.fromOtherDB:
+	# 		if Arguments.fromOtherDB not in SUPPORTED_IDS:
+	# 			print 'fromOtherDB - bad argument: ' + Arguments.fromOtherDB + \
+	# 			'\nPlease use only supported ids. Program will stop now.'
+	# 			sys.exit(1)
+	# 		# Map ids files OFFLINE enabling all ids support. Results may be uncomplete
+	# 		else:
+	# 			map.any_ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', Arguments.fromOtherDB) # Map sample ids
+	# 			map.any_ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', Arguments.fromOtherDB) # Map universe ids
+	# 	# Map ids files OFFLINE enabling only Refseq and GO ids support. Reliable solution
+	# 	else:
+	# 		map.ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
+	# 		map.ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
+	# else:
+	# 	# Map ids files ONLINE enabling only Refseq and GO ids support. BEST solution for strong results
+	# 	if Arguments.fromOtherDB:
+	# 		if Arguments.fromOtherDB not in SUPPORTED_IDS:
+	# 			print 'fromOtherDB - bad argument: ' + str(Arguments.fromOtherDB) + \
+	# 			'\nPlease use only supported ids. Program will stop now.'
+	# 			sys.exit(1)
+	# 		else:
+	# 			map.any_ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', Arguments.fromOtherDB) # Map sample ids
+	# 			map.any_ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', Arguments.fromOtherDB) # Map universe ids
+	# 	# Map ids files ONLINE enabling all ids support. Results may be uncomplete
+	# 	else:
+	# 		map.ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
+	# 		map.ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
 
 	# 	************************ 
 	# 	**** GO ENRICHMENT ***** 
 	# 	************************ 
-
+	launchGSEA(TMP_DIR)
 	
-
+	if not Arguments.keepTmp:
+		subprocess.check_call('rm -r ' + TMP_DIR, shell = True)
 
 	# remove tmp files
 	# subprocess.check_call('rm -r ' + Arguments.output + '/tmp', shell=True)
