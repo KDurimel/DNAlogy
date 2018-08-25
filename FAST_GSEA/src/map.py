@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os, sys, time, subprocess
-import signal # Async alerts module used to handle gzip broken pipe when zgrep, more info : https://blog.nelhage.com/2010/02/a-very-subtle-bug/
-import urllib,urllib2,requests	# HTML requests
-import re #regex
 
 __doc__="""
 Id mapping script for a gene set. Takes as input a file (gene set) constitued by Refseq,Uniprot, or other supported ids.
@@ -25,18 +21,32 @@ Supported ids are (by decreasing quantity of available information):
 20. Ensembl_TRS (20)
 21. Ensembl_PRO (21)
 
-
-Suppported i
-
 @requires: U{python 2.7<https://www.python.org/downloads/>} or greater
-@requires: U{Conda 4.4.10<https://conda.io/>} or greater with FastGSEA  conda environment (fastgsea.yml)
+@requires: U{Conda 4.4.10<https://conda.io/>} or greater with FastGSEA conda environment (fastgsea.yml)
 @requires: manageFiles.sh
 """
+
+__author__ = 'Kevin Durimel'
+__credits__ = ['Kevin La', 'Arnaud Felten', 'Meryl Vila-Nova', 'Nicolas Radomski']
+__license__ = 'GPL'
+__version__ = '3.0'
+__maintainer__ = 'Kevin Durimel'
+__email__ = 'k@durimel@gmail.com'
+__status__ = 'Alpha'
+
+######## IMPORT BUILT IN MODULES ########
+import os, sys, time, subprocess
+import signal # Async alerts module used to handle gzip broken pipe when zgrep, more info : https://blog.nelhage.com/2010/02/a-very-subtle-bug/
+
+######## IMPORT THIRPDARTY MODULES ########
+import urllib,urllib2,requests	# HTML requests
+import re #regex
+
 
 EXEC_PATH = sys.path[0] # Current running script path
 
 def show_progression(counter, total, precision):
-	sys.stdout.write("\r{0}% processed".format(round(float(counter)/int(total)*100, precision))) # % progressing display
+	sys.stdout.write('\r{0}% processed'.format(round(float(counter)/int(total)*100, precision))) # % progressing display
 
 def mk_susbet(idMappingFile):
 	print 'Generating a subset from ids mapping file:'
@@ -143,7 +153,7 @@ def ids_to_go_online(idMappingFile, idsFile, outputPrefix):
 						time.sleep(5)
 						pass	
 
-				dicogo[goterm]= [] # cleared for next loop
+				dicogo = {} # cleared for next loop
 	# write all goterms in a file
 	with open (outputPrefix, 'w') as gofile:
 		gofile.write('\n'.join(all_goterms))
@@ -250,7 +260,7 @@ def any_ids_to_go_online(idMappingFile, idsFile, outputPrefix, whichDb):
 						time.sleep(5)
 						pass	
 
-				dicogo[goterm]= [] # cleared for next loop
+				dicogo = {} # cleared for next loop
 	# write all goterms in a file
 	with open (outputPrefix, 'w') as gofile:
 		gofile.write('\n'.join(all_goterms))
