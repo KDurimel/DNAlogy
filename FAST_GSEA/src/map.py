@@ -28,7 +28,8 @@ Supported ids are (by decreasing quantity of available information):
 
 Suppported i
 
-@requires: U{python 2.7<https://www.python.org/downloads/>} (tested with 2.7.6)
+@requires: U{python 2.7<https://www.python.org/downloads/>} or greater
+@requires: U{Conda 4.4.10<https://conda.io/>} or greater with FastGSEA  conda environment (fastgsea.yml)
 @requires: manageFiles.sh
 """
 
@@ -38,10 +39,10 @@ def show_progression(counter, total, precision):
 	sys.stdout.write("\r{0}% processed".format(round(float(counter)/int(total)*100, precision))) # % progressing display
 
 def mk_susbet(idMappingFile):
-	print 'Map module: generating a subset from ids mapping file...',
+	print 'Generating a subset from ids mapping file:'
 	cmd = 'zcat ' + idMappingFile + ' | cut -f 1,4,7 | gzip --stdout > ' + idMappingFile + '_subset.gz'
 	subprocess.check_call(cmd, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
-	print 'ok '
+	print '...ok'
 
 
 def ids_to_go(idMappingFile, idsFile, outputPrefix):
