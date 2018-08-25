@@ -127,6 +127,10 @@ def main():
 	Arguments=parser.parse_args()
 
 	################ Workflow starts here ##########################
+
+	# 	************************ 
+	# 	****** ID MAPPING ****** 
+	# 	************************ 
 	subprocess.check_call('mkdir -p ' + Arguments.output + '/tmp', shell=True)
 	TMP_DIR = Arguments.output + '/tmp'
 	if not exists(Arguments.mappingFile + '_subset.gz'):
@@ -162,6 +166,13 @@ def main():
 		else:
 			map.ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
 			map.ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
+
+	# 	************************ 
+	# 	**** GO ENRICHMENT ***** 
+	# 	************************ 
+
+	
+
 
 	# remove tmp files
 	# subprocess.check_call('rm -r ' + Arguments.output + '/tmp', shell=True)
