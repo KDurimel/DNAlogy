@@ -9,17 +9,19 @@
 #Load GOdb silently
 suppressMessages(library(GO.db))
 
-#Raise number of printable strings in order to be able to capture large outputs
+# Raise number of printable strings in order to be able to capture large outputs
 options(max.print=99999999)
 
-#parse arguments from EveryGO.py
+# parse arguments from master script
 args <- commandArgs(TRUE)
 
 #Load VCFtoGO.py and EveryGO.py output 
-go_file=readLines("univers.txt")                                #VCFtoGO output (non-enriched list of GO-terms for universe)
-compvalue=args[1]                                               #Folder name will be the same thant "value" of <COMPARISON>
-compvalue=gsub(" ", "",compvalue, fixed = TRUE)                 #Fix 10.08.16
-go_ech_file=readLines(paste(compvalue,"/","go_ech.txt",sep="")) #EveryGO output (non-enriched list of GO-terms for sample)
+outputPrefix=args[1]    
+outputPrefix=gsub(" ", "",outputPrefix, fixed = TRUE)  
+go_univ_file=readLines(paste(outputPrefix,"/","go_univ_raw.txt",sep="")) 
+go_ech_file=readLines(paste(outputPrefix,"/","go_ech_raw.txt",sep="")) 
+
+
 
 #####################################################################
 #GO-TERMS WALKING
@@ -31,21 +33,21 @@ go_ech_file=readLines(paste(compvalue,"/","go_ech.txt",sep="")) #EveryGO output 
 
 ###RETRIEVE UNIVERSE GO-TERMS ANCESTORS###
 
-capture.output(for(i in 1:length(go_file))
+capture.output(for(i in 1:length(go_univ_file))
 {
   aspect=1
   #Try, in order to avoid errors if GO-term is not a CC or dont have any ancestors
-  try(print(aspect<-get(go_file[i],GOCCANCESTOR)),TRUE)
+  try(print(aspect<-get(go_univ_file[i],GOCCANCESTOR)),TRUE)
   options(warn=-1) #This test is valid but generate msgerr, so, turn-off msgerr
   if(aspect!=1) #if aspect!=1 aspect is an GOCC
   {
-    print(go_file[i]) #print first GO-term if is its a CC
+    print(go_univ_file[i]) #print first GO-term if is its a CC
   }
   options(warn=0) # test ok, turn-on msgerr
-},file=(paste(compvalue,"/gocc_univ.txt",sep="")))
+},file=(paste(outputPrefix,"/gocc_univ.txt",sep="")))
 
 #Open file and keep GO terms only (update file and erase old version)
-data=scan(paste(compvalue,"/","gocc_univ.txt",sep=""),what="character"())#opened with fonction scan (+as character) in order to grep efficiently with go_only
+data=scan(paste(outputPrefix,"/","gocc_univ.txt",sep=""),what="character"())#opened with fonction scan (+as character) in order to grep efficiently with go_only
 
 #Special function in order to dont show columns and row names during the writing of the output file
 print.go_only <- function(m)
@@ -56,7 +58,7 @@ print.go_only <- function(m)
 
 
 #Save results which only contains GO Id's
-capture.output(print.go_only(grep(pattern ="GO:" , data, value = TRUE, fixed = TRUE)),file=paste(compvalue,"/gocc_univ.txt",sep=""))
+capture.output(print.go_only(grep(pattern ="GO:" , data, value = TRUE, fixed = TRUE)),file=paste(outputPrefix,"/gocc_univ.txt",sep=""))
 
 
 ###RETRIEVE SAMPLE GO-TERMS ANCESTORS###
@@ -73,34 +75,34 @@ capture.output(for(i in 1:length(go_ech_file))
     print(go_ech_file[i]) #print first GO-term if is its a CC
   }
   options(warn=0)
-},file=(paste(compvalue,"/gocc_ech.txt",sep="")))
+},file=(paste(outputPrefix,"/gocc_ech.txt",sep="")))
 
 #Open file and keep GO terms only (update file and erase old version)
-data=scan(paste(compvalue,"/gocc_ech.txt",sep=""),what="character"())#opened with fonction scan (+as character) in order to grep efficiently with go_only
+data=scan(paste(outputPrefix,"/gocc_ech.txt",sep=""),what="character"())#opened with fonction scan (+as character) in order to grep efficiently with go_only
 
 #Save results which only contains GO Id's
-capture.output(print.go_only(grep(pattern ="GO:" , data, value = TRUE, fixed = TRUE)),file=(paste(compvalue,"/gocc_ech.txt",sep="")))
+capture.output(print.go_only(grep(pattern ="GO:" , data, value = TRUE, fixed = TRUE)),file=(paste(outputPrefix,"/gocc_ech.txt",sep="")))
 
 ################### ASPECT 2: BP ################################
 
 ###RETRIEVE UNIVERSE GO-TERMS ANCESTORS###
 
-capture.output(for(i in 1:length(go_file))
+capture.output(for(i in 1:length(go_univ_file))
 {
   aspect=1
   #Try, in order to avoid errors if GO-term is not a CC or dont have any ancestors
-  try(print(aspect<-get(go_file[i],GOBPANCESTOR)),TRUE)
+  try(print(aspect<-get(go_univ_file[i],GOBPANCESTOR)),TRUE)
   options(warn=-1)
   if(aspect!=1) #if aspect!=1 aspect is an GOCC
   {
-    print(go_file[i]) #print first GO-term if is its a CC
+    print(go_univ_file[i]) #print first GO-term if is its a CC
   }
   options(warn=0)
-},file=(paste(compvalue,"/gobp_univ.txt",sep="")))
+},file=(paste(outputPrefix,"/gobp_univ.txt",sep="")))
 
 #Open file and keep GO terms only (update file and erase old version)
-data=scan(paste(compvalue,"/gobp_univ.txt",sep=""),what="character"()) 
-capture.output(print.go_only(grep(pattern = "GO:" , data, value = TRUE, fixed = TRUE)),file=(paste(compvalue,"/gobp_univ.txt",sep="")))
+data=scan(paste(outputPrefix,"/gobp_univ.txt",sep=""),what="character"()) 
+capture.output(print.go_only(grep(pattern = "GO:" , data, value = TRUE, fixed = TRUE)),file=(paste(outputPrefix,"/gobp_univ.txt",sep="")))
 
 ###RETRIEVE SAMPLE GO-TERMS ANCESTORS###
 
@@ -116,35 +118,35 @@ capture.output(for(i in 1:length(go_ech_file))
     print(go_ech_file[i]) #print first GO-term if is its a CC
   }
   options(warn=0)
-},file=(paste(compvalue,"/gobp_ech.txt",sep="")))
+},file=(paste(outputPrefix,"/gobp_ech.txt",sep="")))
 
 #Open file and keep GO terms only (update file and erase old version)
-data=scan(paste(compvalue,"/gobp_ech.txt",sep=""),what="character"())#opened with fonction scan (+as character) in order to grep efficiently with go_only
+data=scan(paste(outputPrefix,"/gobp_ech.txt",sep=""),what="character"())#opened with fonction scan (+as character) in order to grep efficiently with go_only
 #Save results which only contains GO Id's
-capture.output(print.go_only(grep(pattern ="GO:" , data, value = TRUE, fixed = TRUE)),file=(paste(compvalue,"/gobp_ech.txt",sep="")))
+capture.output(print.go_only(grep(pattern ="GO:" , data, value = TRUE, fixed = TRUE)),file=(paste(outputPrefix,"/gobp_ech.txt",sep="")))
 
 
 ################### ASPECT 3: MF ################################
 
 ###RETRIEVE UNIVERSE GO-TERMS ANCESTORS###
 
-capture.output(for(i in 1:length(go_file))
+capture.output(for(i in 1:length(go_univ_file))
 {
   #Try, in order to avoid errors if GOterm is not a MF or dont have any ancestors
   aspect=1
   #Try, in order to avoid errors if GO-term is not a CC or dont have any ancestors
-  try(print(aspect<-get(go_file[i],GOMFANCESTOR)),TRUE)
+  try(print(aspect<-get(go_univ_file[i],GOMFANCESTOR)),TRUE)
   options(warn=-1)
   if(aspect!=1) #if aspect!=1 aspect is an GOCC
   {
-    print(go_file[i]) #print first GO-term if is its a CC
+    print(go_univ_file[i]) #print first GO-term if is its a CC
   }
   options(warn=0)
-},file=(paste(compvalue,"/gomf_univ.txt",sep="")))
+},file=(paste(outputPrefix,"/gomf_univ.txt",sep="")))
 
 #Open file and keep GO terms only (update file and erase old version)
-data=scan(paste(compvalue,"/gomf_univ.txt",sep=""),what="character"())
-capture.output(print.go_only(grep(pattern = "GO:" , data, value = TRUE, fixed = TRUE)),file=(paste(compvalue,"/gomf_univ.txt",sep="")))
+data=scan(paste(outputPrefix,"/gomf_univ.txt",sep=""),what="character"())
+capture.output(print.go_only(grep(pattern = "GO:" , data, value = TRUE, fixed = TRUE)),file=(paste(outputPrefix,"/gomf_univ.txt",sep="")))
 
 ###RETRIEVE SAMPLE GO-TERMS ANCESTORS###
 
@@ -160,12 +162,12 @@ capture.output(for(i in 1:length(go_ech_file))
     print(go_ech_file[i]) #print first GO-term if is its a CC
   }
   options(warn=0)
-},file=(paste(compvalue,"/gomf_ech.txt",sep="")))
+},file=(paste(outputPrefix,"/gomf_ech.txt",sep="")))
 
 #Open file and keep GO terms only (update file and erase old version)
-data=scan(paste(compvalue,"/gomf_ech.txt",sep=""),what="character"())#opened with fonction scan (+as character) in order to grep efficiently with go_only
+data=scan(paste(outputPrefix,"/gomf_ech.txt",sep=""),what="character"())#opened with fonction scan (+as character) in order to grep efficiently with go_only
 #Save results which only contains GO Id's
-capture.output(print.go_only(grep(pattern ="GO:" , data, value = TRUE, fixed = TRUE)),file=(paste(compvalue,"/gomf_ech.txt",sep="")))
+capture.output(print.go_only(grep(pattern ="GO:" , data, value = TRUE, fixed = TRUE)),file=(paste(outputPrefix,"/gomf_ech.txt",sep="")))
 
 
 ######################################################################################################################
@@ -188,14 +190,14 @@ capture.output(print.go_only(grep(pattern ="GO:" , data, value = TRUE, fixed = T
 #########################################################
 #INITIALIZE VALUES FOR UNIVERSE AND DATASETS 
 #########################################################
-univers_mf=read.table(paste(compvalue,"/gomf_univ.txt",sep=""))
-echantillon_mf=read.table(paste(compvalue,"/gomf_ech.txt",sep=""))
+univers_mf=read.table(paste(outputPrefix,"/gomf_univ.txt",sep=""))
+echantillon_mf=read.table(paste(outputPrefix,"/gomf_ech.txt",sep=""))
 
-univers_cc=read.table(paste(compvalue,"/gocc_univ.txt",sep=""))
-echantillon_cc=read.table(paste(compvalue,"/gocc_ech.txt",sep=""))
+univers_cc=read.table(paste(outputPrefix,"/gocc_univ.txt",sep=""))
+echantillon_cc=read.table(paste(outputPrefix,"/gocc_ech.txt",sep=""))
 
-univers_bp=read.table(paste(compvalue,"/gobp_univ.txt",sep=""))
-echantillon_bp=read.table(paste(compvalue,"/gobp_ech.txt",sep=""))
+univers_bp=read.table(paste(outputPrefix,"/gobp_univ.txt",sep=""))
+echantillon_bp=read.table(paste(outputPrefix,"/gobp_ech.txt",sep=""))
 #######################################################
 
 #Special function in order to do not keep undesired characters
@@ -228,7 +230,6 @@ pvals=""
 for(i in 1:length(Go_uniq))
 {
   targeted_goterm=toString(Go_uniq[i]) #tostring in order to request value
-  #Bro-tip= lower.tail=TRUE because (lower.tail=TRUE)=FALSE in next loop, for obscure reasons
   pvals[i]<-phyper(length(which(Go_ech==targeted_goterm)),length(which(Go_univ==targeted_goterm)),length(Go_univ[,1])-length(which(Go_univ==targeted_goterm)),length(Go_ech[,1]),lower.tail = FALSE) 
 }
 pvals2<-as.vector(pvals)
@@ -283,7 +284,7 @@ capture.output(
     rm(targeted_goterm)
     a=a+1
   }
-  ,file=paste(compvalue,"/hyperesults_mf.txt",sep=""))
+  ,file=paste(outputPrefix,"/hyperesults_mf.txt",sep=""))
 
 #################### CELLULAR COMPOPENT #################
 
@@ -350,7 +351,7 @@ capture.output(
     rm(targeted_goterm)
     a=a+1
   }
-  ,file=paste(compvalue,"/hyperesults_cc.txt",sep=""))
+  ,file=paste(outputPrefix,"/hyperesults_cc.txt",sep=""))
 
 #################### BIOLOGICAL PROCESS #################
 
@@ -363,7 +364,6 @@ pvals=""
 for(i in 1:length(Go_uniq))
 {
   targeted_goterm=toString(Go_uniq[i]) #tostring in order to request value
-  #Bro-tip= lower.tail=TRUE because (lower.tail=TRUE)=FALSE in next loop, for obscure reasons
   pvals[i]<-phyper(length(which(Go_ech==targeted_goterm)),length(which(Go_univ==targeted_goterm)),length(Go_univ[,1])-length(which(Go_univ==targeted_goterm)),length(Go_ech[,1]),lower.tail = FALSE) 
 }
 pvals2<-as.vector(pvals)
@@ -418,4 +418,4 @@ capture.output(
     rm(targeted_goterm)
     a=a+1
   }
-  ,file=paste(compvalue,"/hyperesults_bp.txt",sep=""))
+  ,file=paste(outputPrefix,"/hyperesults_bp.txt",sep=""))

@@ -6,6 +6,7 @@ FastGSEA workfow. Performs GO-terms enrichment analysis between two gene sets. T
 must be provided as files containing one international databank (ncbi, refseq, etc...) gene or
 protein identifier per line.
 @requires: U{python 2.7<https://www.python.org/downloads/>} or greater
+@requires: U{R 3.3.3 RC <https://www.r-project.org/>}
 @requires: U{Conda 4.4.10<https://conda.io/>} or greater with FastGSEA  conda environment (fastgsea.yml)
 @requires: map.py
 @requires: managefiles.sh
@@ -127,6 +128,10 @@ def main():
 	Arguments=parser.parse_args()
 
 	################ Workflow starts here ##########################
+
+	# 	************************ 
+	# 	****** ID MAPPING ****** 
+	# 	************************ 
 	subprocess.check_call('mkdir -p ' + Arguments.output + '/tmp', shell=True)
 	TMP_DIR = Arguments.output + '/tmp'
 	if not exists(Arguments.mappingFile + '_subset.gz'):
@@ -162,6 +167,13 @@ def main():
 		else:
 			map.ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
 			map.ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
+
+	# 	************************ 
+	# 	**** GO ENRICHMENT ***** 
+	# 	************************ 
+
+	
+
 
 	# remove tmp files
 	# subprocess.check_call('rm -r ' + Arguments.output + '/tmp', shell=True)
