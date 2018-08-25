@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import print_function # python 3 like print
 import os, sys, time, subprocess
 import signal # Async alerts module used to handle gzip broken pipe when zgrep, more info : https://blog.nelhage.com/2010/02/a-very-subtle-bug/
 import urllib,urllib2,requests	# HTML requests
@@ -8,29 +7,26 @@ import re #regex
 
 __doc__="""
 Id mapping script for a gene set. Takes as input a file (gene set) constitued by Refseq,Uniprot, or other supported ids.
-Supported ids are:
-1. UniProtKB-AC
-2. UniProtKB-ID
-3. GeneID (EntrezGene)
-4. RefSeq
-5. GI
-6. PDB
-7. GO
-8. UniRef100
-9. UniRef90
-10. UniRef50
-11. UniParc
-12. PIR
-13. NCBI-taxon
-14. MIM
-15. UniGene
-16. PubMed
-17. EMBL
-18. EMBL-CDS
-19. Ensembl
-20. Ensembl_TRS
-21. Ensembl_PRO
-22. Additional PubMed
+Supported ids are (by decreasing quantity of available information):
+1. UniProtKB-AC (1st col in gz file)
+2. UniProtKB-ID (2)
+3. GeneID (EntrezGene) (3)
+4. RefSeq (4)
+5. GI (5)
+6. GO (as output only) (7)
+8. UniRef100 (8)
+9. UniRef90 (9)
+10. UniRef50 (10)
+11. UniParc (11)
+15. UniGene (15)
+17. EMBL (17)
+18. EMBL-CDS (18)
+19. Ensembl (19)
+20. Ensembl_TRS (20)
+21. Ensembl_PRO (21)
+
+
+Suppported i
 
 @requires: U{python 2.7<https://www.python.org/downloads/>} (tested with 2.7.6)
 @requires: manageFiles.sh
@@ -38,11 +34,14 @@ Supported ids are:
 
 EXEC_PATH = sys.path[0] # Current running script path
 
+def show_progression(counter, total, precision):
+	sys.stdout.write("\r{0}% processed".format(round(float(counter)/int(total)*100, precision))) # % progressing display
+
 def mk_susbet(idMappingFile):
-	print('Map module: generating a subset from ids mapping file...', end = '')
+	print 'Map module: generating a subset from ids mapping file...',
 	cmd = 'zcat ' + idMappingFile + ' | cut -f 1,4,7 | gzip --stdout > ' + idMappingFile + '_subset.gz'
 	subprocess.check_call(cmd, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
-	print('ok')
+	print 'ok '
 
 
 def ids_to_go(idMappingFile, idsFile, outputPrefix):
@@ -58,11 +57,17 @@ def ids_to_go(idMappingFile, idsFile, outputPrefix):
 	@param outputPrefix: file path output prefix
 	@type outputPrefix: string
 	"""
-	print('Process: offline GO mapping from RefSeq or Uniprot IDs...', end = '')
+	print 'Offline GO mapping from RefSeq or Uniprot IDs:'
+
 	all_goterms = [] # This will contains all the go-terms retrieved
+
+	# Compute file lenght (for % progressing display)
+	with open(idsFile,'r ') as ids:
+		input_lines_count = len([f for f in ids.readlines()])
+
 	with open(idsFile,'r') as ids:
-		for id_ in ids:
-			
+		for counter,id_ in enumerate(ids):
+			show_progression(counter,input_lines_count,2)
 			cmd = 'bash ' + EXEC_PATH + '/manageFiles.sh '+ ' --subsetToGo ' + idMappingFile + ' ' + id_.strip()
 			goterms = str(subprocess.check_output(cmd, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))).split(';')
 			for goterm in goterms:
@@ -76,7 +81,7 @@ def ids_to_go(idMappingFile, idsFile, outputPrefix):
 	with open (outputPrefix, 'w') as gofile:
 		gofile.write('\n'.join(all_goterms))
 
-	print('ok')
+	print '...ok'
 
 def ids_to_go_online(idMappingFile, idsFile, outputPrefix):
 	"""
@@ -92,19 +97,23 @@ def ids_to_go_online(idMappingFile, idsFile, outputPrefix):
 	@param outputPrefix: file path output prefix
 	@type outputPrefix: string
 	"""
-	print('Process: Online GO mapping from RefSeq or Uniprot IDs...', end = '')
+	print 'Online GO mapping from RefSeq or Uniprot IDs   '
 	all_goterms = [] # This will contains all the go-terms retrieved
 
-	with open(idsFile,'r') as ids:
-		for id_ in ids:
-			
+	# Compute file lenght (for % progressing display)
+	with open(idsFile,'r ') as ids:
+		input_lines_count = len([f for f in ids.readlines()])
+
+	with open(idsFile,'r ') as ids:
+		# enumerate used in order to increment a seamless counter (counter) while looping on ids (ids) 
+		for counter,id_ in enumerate(ids):
+			show_progression(counter,input_lines_count,2)
 			#if this line contains a Refseq id (NP_xxx, Wp_xxx...) performs offline id mapping
 			if 'P_' in id_.strip():
-				print(id_)
 				cmd = 'bash ' + EXEC_PATH + '/manageFiles.sh ' + ' --anythingToGo ' + idMappingFile + ' ' + id_.strip()
 				goterms = str(subprocess.check_output(cmd,shell=True,preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))).split(';')
 				for goterm in goterms:
-					
+
 					goterm_clean = goterm.strip()
 					# if goterm exist (not nonetype or something else bcs was processed by strip())
 					if goterm_clean:
@@ -127,10 +136,9 @@ def ids_to_go_online(idMappingFile, idsFile, outputPrefix):
 							if goterm not in dicogo.keys() and goterm!='GO':
 								all_goterms.append(goterm)
 								dicogo[goterm]=id_
-								print(goterm)
 
 					except urllib2.URLError:
-						print('Timeout, we\'ll wait 5 seconds before re-trying the request...')
+						print 'Timeout, we\'ll wait 5 seconds before re-trying the request... '
 						time.sleep(5)
 						pass	
 
@@ -138,7 +146,7 @@ def ids_to_go_online(idMappingFile, idsFile, outputPrefix):
 	# write all goterms in a file
 	with open (outputPrefix, 'w') as gofile:
 		gofile.write('\n'.join(all_goterms))
-	print('ok')
+	print '...ok'
 
 
 
@@ -156,12 +164,16 @@ def any_ids_to_go(idMappingFile, idsFile, outputPrefix, whichDb):
 	@param outputPrefix: file path output prefix
 	@type outputPrefix: string
 	"""
-	print('Process: Offline GO mapping from any IDs...', end = "")
+	print 'Offline GO mapping from any IDs:'
 	all_goterms = [] # This will contains all the go-terms retrieved
 
-	with open(idsFile,'r') as ids:
-		for id_ in ids:
+	# Compute file lenght (for % progressing display)
+	with open(idsFile,'r ') as ids:
+		input_lines_count = len([f for f in ids.readlines()])
 
+	with open(idsFile,'r') as ids:
+		for counter,id_ in enumerate(ids):
+			show_progression(counter,input_lines_count,2)
 			cmd = 'bash ' + EXEC_PATH + '/manageFiles.sh '+ ' --anythingToAnything '+ idMappingFile + ' ' + id_.strip() + ' ' + whichDb
 			goterms = str(subprocess.check_output(cmd, shell = True, preexec_fn = lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))).split(';')
 			for goterm in goterms:
@@ -174,7 +186,7 @@ def any_ids_to_go(idMappingFile, idsFile, outputPrefix, whichDb):
 	# write all goterms in a file
 	with open (outputPrefix, 'w') as gofile:
 		gofile.write('\n'.join(all_goterms))
-	print('ok')
+	print '...ok'
 
 def any_ids_to_go_online(idMappingFile, idsFile, outputPrefix, whichDb):
 	"""
@@ -193,15 +205,18 @@ def any_ids_to_go_online(idMappingFile, idsFile, outputPrefix, whichDb):
 	@param outputPrefix: file path output prefix
 	@type outputPrefix: string
 	"""
-	print('Process: Online GO mapping from any IDs (experimental feature, use at your own risks!) ...', end = "")
+	print 'Online GO mapping from any IDs (experimental feature, use at your own risks!):'
 	all_goterms = [] # This will contains all the go-terms retrieved
 
+	# Compute file lenght (for % progressing display)
+	with open(idsFile,'r ') as ids:
+		input_lines_count = len([f for f in ids.readlines()])
+
 	with open(idsFile,'r') as ids:
-		for id_ in ids:
-			
+		for counter,id_ in enumerate(ids):
+			show_progression(counter,input_lines_count,2)
 			#if this line contains a Refseq id (NP_xxx, Wp_xxx...) performs offline id mapping
 			if 'P_' in id_.strip():
-				print(id_)
 				cmd = 'bash ' + EXEC_PATH + '/manageFiles.sh ' + ' --anythingToAnything ' + idMappingFile + ' ' + id_.strip() + ' ' + whichDb
 				goterms = str(subprocess.check_output(cmd,shell=True,preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))).split(';')
 				for goterm in goterms:
@@ -228,10 +243,9 @@ def any_ids_to_go_online(idMappingFile, idsFile, outputPrefix, whichDb):
 							if goterm not in dicogo.keys() and goterm!='GO':
 								all_goterms.append(goterm)
 								dicogo[goterm]=id_
-								print(goterm)
 
 					except urllib2.URLError:
-						print('Timeout, we\'ll wait 5 seconds before re-trying the request...')
+						print 'Timeout, we\'ll wait 5 seconds before re-trying the request... '
 						time.sleep(5)
 						pass	
 
@@ -239,4 +253,4 @@ def any_ids_to_go_online(idMappingFile, idsFile, outputPrefix, whichDb):
 	# write all goterms in a file
 	with open (outputPrefix, 'w') as gofile:
 		gofile.write('\n'.join(all_goterms))
-	print('ok')
+	print '...ok'
