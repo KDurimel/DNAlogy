@@ -6,6 +6,7 @@ FastGSEA workfow. Performs GO-terms enrichment analysis between two gene sets. T
 must be provided as files containing one international databank (ncbi, refseq, etc...) gene or
 protein identifier per line.
 @requires: U{python 2.7<https://www.python.org/downloads/>} or greater
+@requires: U{R 3.3.3 RC <https://www.r-project.org/>}
 @requires: U{Conda 4.4.10<https://conda.io/>} or greater with FastGSEA  conda environment (fastgsea.yml)
 @requires: map.py
 @requires: managefiles.sh
