@@ -148,63 +148,69 @@ def main():
 	# 	************************ 
 	subprocess.check_call('mkdir -p ' + Arguments.output + '/tmp', shell=True)
 	TMP_DIR = Arguments.output + '/tmp'
-	if not exists(Arguments.mappingFile + '_subset.gz'):
-		# Create idmapping subset file if it dont already exists
-		map.mk_susbet(Arguments.mappingFile) 
+	# if not exists(Arguments.mappingFile + '_subset.gz'):
+	# 	# Create idmapping subset file if it dont already exists
+	# 	map.mk_susbet(Arguments.mappingFile) 
 
-	if Arguments.mapOffline:
-		# Map ids files OFFLINE enabling only Refseq and GO ids support. Reliable solution
-		if Arguments.fromOtherDB:
-			if Arguments.fromOtherDB not in SUPPORTED_IDS:
-				print 'fromOtherDB - bad argument: ' + Arguments.fromOtherDB + \
-				'\nPlease use only supported ids. Program will stop now.'
-				parser.print_help()
-				sys.exit(1)
-			# Map ids files OFFLINE enabling all ids support. Results may be uncomplete
-			else:
-				map.any_ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', Arguments.fromOtherDB) # Map sample ids
-				map.any_ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', Arguments.fromOtherDB) # Map universe ids
-		# Map ids files OFFLINE enabling only Refseq and GO ids support. Reliable solution
-		else:
-			map.ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
-			map.ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
-	else:
-		# Map ids files ONLINE enabling only Refseq and GO ids support. BEST solution for strong results
-		if Arguments.fromOtherDB:
-			if Arguments.fromOtherDB not in SUPPORTED_IDS:
-				print 'fromOtherDB - bad argument: ' + str(Arguments.fromOtherDB) + \
-				'\nPlease use only supported ids. Program will stop now.'
-				parser.print_help()
-				sys.exit(1)
-			else:
-				map.any_ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', Arguments.fromOtherDB) # Map sample ids
-				map.any_ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', Arguments.fromOtherDB) # Map universe ids
-		# Map ids files ONLINE enabling all ids support. Results may be uncomplete
-		else:
-			map.ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
-			map.ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
+	# if Arguments.mapOffline:
+	# 	# Map ids files OFFLINE enabling only Refseq and GO ids support. Reliable solution
+	# 	if Arguments.fromOtherDB:
+	# 		if Arguments.fromOtherDB not in SUPPORTED_IDS:
+	# 			print 'fromOtherDB - bad argument: ' + Arguments.fromOtherDB + \
+	# 			'\nPlease use only supported ids. Program will stop now.'
+	# 			parser.print_help()
+	# 			sys.exit(1)
+	# 		# Map ids files OFFLINE enabling all ids support. Results may be uncomplete
+	# 		else:
+	# 			map.any_ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', Arguments.fromOtherDB) # Map sample ids
+	# 			map.any_ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', Arguments.fromOtherDB) # Map universe ids
+	# 	# Map ids files OFFLINE enabling only Refseq and GO ids support. Reliable solution
+	# 	else:
+	# 		map.ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
+	# 		map.ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
+	# else:
+	# 	# Map ids files ONLINE enabling only Refseq and GO ids support. BEST solution for strong results
+	# 	if Arguments.fromOtherDB:
+	# 		if Arguments.fromOtherDB not in SUPPORTED_IDS:
+	# 			print 'fromOtherDB - bad argument: ' + str(Arguments.fromOtherDB) + \
+	# 			'\nPlease use only supported ids. Program will stop now.'
+	# 			parser.print_help()
+	# 			sys.exit(1)
+	# 		else:
+	# 			map.any_ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', Arguments.fromOtherDB) # Map sample ids
+	# 			map.any_ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', Arguments.fromOtherDB) # Map universe ids
+	# 	# Map ids files ONLINE enabling all ids support. Results may be uncomplete
+	# 	else:
+	# 		map.ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
+	# 		map.ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
 
-	# 	************************ 
-	# 	**** GO ENRICHMENT ***** 
-	# 	************************ 
-
-	# Gene set enrichment and hypergeometric tests using R scripts called by python map module
-	launchGSEA(TMP_DIR)
-	Trim prokarytic GO-terms if asked by user
+	# # 	************************ 
+	# # 	**** GO ENRICHMENT ***** 
+	# # 	************************ 
+	# # Gene set enrichment and hypergeometric tests using R scripts called by python map module
+	# launchGSEA(TMP_DIR)
+	# Trim prokarytic GO-terms if asked by user
 	if Arguments.trim:
 		if Arguments.obo:
 			# Automatically watch if a subset file exists, and generates it if its not the case
 			trim.mk_subset(Arguments.obo, TMP_DIR + '/gosubset.txt') 
 			# Trim non prokaryote and non obsolete terms from enrichment results
 			trim.trim(TMP_DIR + '/gosubset.txt', TMP_DIR + '/../hyperesults.csv')
+			# Generates GO distribution plot
+			if Arguments.view:
+				subprocess.check_call('R --vanilla --slave --args ' + TMP_DIR + '/../hyperesults.csv_cleaned.csv < ' +\
+					EXEC_DIR + '/goView.R', shell = True)
 		else:
 			print "Please provide a obo file!"
 			parser.print_help()
 			exit(1)
-	# remove tmp files
+	# Generates GO distribution plot
+	if Arguments.view:
+		subprocess.check_call('R --vanilla --slave --args ' + TMP_DIR + '/../hyperesults.csv < ' + EXEC_DIR + '/goView.R', shell = True)
+	# Remove tmp files
 	if not Arguments.keepTmp:
 		subprocess.check_call('rm -r ' + TMP_DIR, shell = True)
-		
+
 	################## Show time elapsed  ##########################
 	TIMER.lifetime = "Workflow finished in"
 	print TIMER.lifetime

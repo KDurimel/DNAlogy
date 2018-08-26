@@ -23,15 +23,12 @@ go_ech_file=readLines(paste(outputPrefix,"/go_ech_raw.txt",sep=""))
 
 
 #####################################################################
-# WALK INSIDE THE GO-TERMS TREE
+# BROWSE THE GO-TEMRS ONTOLOGY TREE
 #####################################################################
-# For each GO-terms, retrieve its ancestors and categorize them by aspect(CC,BP,MF)
-
 
 ################### ASPECT 1: CC ################################
 
 ###RETRIEVE UNIVERSE GO-TERMS ANCESTORS###
-
 
 print('Browsing sample ontology tree for cellular components...')
 
@@ -58,10 +55,8 @@ print.go_only <- function(m)
               row.names=F, col.names=F, quote=F)
 }
 
-
 #Save results which only contains GO Id's
 capture.output(print.go_only(grep(pattern ="GO:" , data, value = TRUE, fixed = TRUE)),file=paste(outputPrefix,"/gocc_univ.txt",sep=""))
-
 
 ###RETRIEVE SAMPLE GO-TERMS ANCESTORS###
 print('Browsing universe ontology tree for cellular components...')
@@ -185,6 +180,7 @@ print('Performing hypergeometric tests...')
 ############################################
 #HYPERGEOMETRIC TEST
 ############################################
+
 #phyper(a,b,c,d,lower.tail = TRUE)
 #
 #a : GO-term hits in sample
@@ -194,6 +190,7 @@ print('Performing hypergeometric tests...')
 #H0: overrepresented GO-term
 #H1: not overrepresented GO-term
 #Lower.tail = TRUE : invert HO and H1 hypothesis.
+
 #########################################################
 #INITIALIZE VALUES FOR UNIVERSE AND DATASETS 
 #########################################################

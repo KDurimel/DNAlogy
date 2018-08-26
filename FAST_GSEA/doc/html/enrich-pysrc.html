@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>enrich</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Module&nbsp;enrich
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="enrich-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="enrich-module.html">Module enrich</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment">#!/usr/bin/env python</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># -*- coding: utf-8 -*-</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt id="link-0" class="py-name" targets="Variable enrich.__doc__=enrich-module.html#__doc__,Variable fastGSEA.__doc__=fastGSEA-module.html#__doc__,Variable map.__doc__=map-module.html#__doc__,Variable trim.__doc__=trim-module.html#__doc__"><a title="enrich.__doc__
+fastGSEA.__doc__
+map.__doc__
+trim.__doc__" class="py-name" href="#" onclick="return doclink('link-0', '__doc__', 'link-0');">__doc__</a></tt><tt class="py-op">=</tt><tt class="py-docstring">"""</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring">GSEA script. Launches Enrich.R script and manage its results.</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring">@requires: U{python 2.7&lt;https://www.python.org/downloads/&gt;} or greater</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-docstring">@requires: U{R 3.3.3 RC &lt;https://www.r-project.org/&gt;}</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-docstring">@requires: U{Conda 4.4.10&lt;https://conda.io/&gt;} or greater with FastGSEA  conda environment (fastgsea.yml)</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-name">__author__</tt> <tt class="py-op">=</tt> <tt class="py-string">'Kevin Durimel'</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt id="link-1" class="py-name" targets="Variable enrich.__credits__=enrich-module.html#__credits__,Variable fastGSEA.__credits__=fastGSEA-module.html#__credits__,Variable map.__credits__=map-module.html#__credits__,Variable trim.__credits__=trim-module.html#__credits__"><a title="enrich.__credits__
+fastGSEA.__credits__
+map.__credits__
+trim.__credits__" class="py-name" href="#" onclick="return doclink('link-1', '__credits__', 'link-1');">__credits__</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'Kevin La'</tt><tt class="py-op">,</tt> <tt class="py-string">'Arnaud Felten'</tt><tt class="py-op">,</tt> <tt class="py-string">'Meryl Vila-Nova'</tt><tt class="py-op">,</tt> <tt class="py-string">'Nicolas Radomski'</tt><tt class="py-op">]</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-name">__license__</tt> <tt class="py-op">=</tt> <tt class="py-string">'GPL'</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">'3.0'</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt id="link-2" class="py-name" targets="Variable enrich.__maintainer__=enrich-module.html#__maintainer__,Variable fastGSEA.__maintainer__=fastGSEA-module.html#__maintainer__,Variable map.__maintainer__=map-module.html#__maintainer__,Variable trim.__maintainer__=trim-module.html#__maintainer__"><a title="enrich.__maintainer__
+fastGSEA.__maintainer__
+map.__maintainer__
+trim.__maintainer__" class="py-name" href="#" onclick="return doclink('link-2', '__maintainer__', 'link-2');">__maintainer__</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'Kevin Durimel'</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt id="link-3" class="py-name" targets="Variable enrich.__email__=enrich-module.html#__email__,Variable fastGSEA.__email__=fastGSEA-module.html#__email__,Variable map.__email__=map-module.html#__email__,Variable trim.__email__=trim-module.html#__email__"><a title="enrich.__email__
+fastGSEA.__email__
+map.__email__
+trim.__email__" class="py-name" href="#" onclick="return doclink('link-3', '__email__', 'link-3');">__email__</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'k@durimel@gmail.com'</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt id="link-4" class="py-name" targets="Variable enrich.__status__=enrich-module.html#__status__,Variable fastGSEA.__status__=fastGSEA-module.html#__status__,Variable map.__status__=map-module.html#__status__,Variable trim.__status__=trim-module.html#__status__"><a title="enrich.__status__
+fastGSEA.__status__
+map.__status__
+trim.__status__" class="py-name" href="#" onclick="return doclink('link-4', '__status__', 'link-4');">__status__</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'Alpha'</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">sys</tt><tt class="py-op">,</tt> <tt class="py-name">subprocess</tt> <tt class="py-comment"># too many uses --&gt; import all.</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt id="link-5" class="py-name" targets="Variable enrich.EXEC_DIR=enrich-module.html#EXEC_DIR"><a title="enrich.EXEC_DIR" class="py-name" href="#" onclick="return doclink('link-5', 'EXEC_DIR', 'link-5');">EXEC_DIR</a></tt> <tt class="py-op">=</tt> <tt class="py-name">sys</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> <tt class="py-comment"># Current running script path</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"> </tt>
+<a name="launchGSEA"></a><div id="launchGSEA-def"><a name="L23"></a><tt class="py-lineno">23</tt> <a class="py-toggle" href="#" id="launchGSEA-toggle" onclick="return toggle('launchGSEA');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="enrich-module.html#launchGSEA">launchGSEA</a><tt class="py-op">(</tt><tt class="py-param">outputDir</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="launchGSEA-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="launchGSEA-expanded"><a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">        <tt class="py-keyword">print</tt> <tt class="py-string">'Online GO enrichment and hypergeometric tests:'</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">        <tt class="py-name">subprocess</tt><tt class="py-op">.</tt><tt class="py-name">check_call</tt><tt class="py-op">(</tt><tt class="py-string">'R --vanilla --slave --args '</tt> <tt class="py-op">+</tt> <tt class="py-name">outputDir</tt> <tt class="py-op">+</tt> <tt class="py-string">' &lt; '</tt> <tt class="py-op">+</tt> <tt id="link-6" class="py-name"><a title="enrich.EXEC_DIR" class="py-name" href="#" onclick="return doclink('link-6', 'EXEC_DIR', 'link-5');">EXEC_DIR</a></tt> <tt class="py-op">+</tt> <tt class="py-string">"/enrich.R"</tt><tt class="py-op">,</tt> <tt class="py-name">shell</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">        <tt class="py-comment"># Add header</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">        <tt class="py-name">subprocess</tt><tt class="py-op">.</tt><tt class="py-name">check_call</tt><tt class="py-op">(</tt><tt class="py-string">' echo "GO:ID;Go term;Number of hits;Expected number of hits;Go level;P-value;Corrected p-value;Aspect" &gt; '</tt> <tt class="py-op">+</tt> \ </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">                <tt class="py-name">outputDir</tt> <tt class="py-op">+</tt> <tt class="py-string">'/../hyperesults.csv'</tt><tt class="py-op">,</tt> <tt class="py-name">shell</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">        <tt class="py-comment"># Merge all files in one final file</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">        <tt class="py-name">subprocess</tt><tt class="py-op">.</tt><tt class="py-name">check_call</tt><tt class="py-op">(</tt><tt class="py-string">'cat '</tt> <tt class="py-op">+</tt> <tt class="py-name">outputDir</tt> <tt class="py-op">+</tt> <tt class="py-string">'/hyperesults_* &gt;&gt; '</tt> <tt class="py-op">+</tt>  <tt class="py-name">outputDir</tt> <tt class="py-op">+</tt> <tt class="py-string">'/../hyperesults.csv'</tt><tt class="py-op">,</tt> <tt class="py-name">shell</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt><tt class="py-op">)</tt>  </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">        <tt class="py-keyword">print</tt> <tt class="py-string">'...ok'</tt> </tt>
+</div><a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Aug 26 06:18:49 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
