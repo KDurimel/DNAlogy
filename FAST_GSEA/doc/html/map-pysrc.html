@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>map</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Module&nbsp;map
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="map-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="map-module.html">Module map</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment">#!/usr/bin/env python</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-comment"># -*- coding: utf-8 -*-</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt id="link-0" class="py-name" targets="Variable enrich.__doc__=enrich-module.html#__doc__,Variable fastGSEA.__doc__=fastGSEA-module.html#__doc__,Variable map.__doc__=map-module.html#__doc__,Variable trim.__doc__=trim-module.html#__doc__"><a title="enrich.__doc__
+fastGSEA.__doc__
+map.__doc__
+trim.__doc__" class="py-name" href="#" onclick="return doclink('link-0', '__doc__', 'link-0');">__doc__</a></tt><tt class="py-op">=</tt><tt class="py-docstring">"""</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-docstring">Id mapping script for a gene set. Takes as input a file (gene set) constitued by Refseq,Uniprot, or other supported ids.</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-docstring">Supported ids are (by decreasing quantity of available information):</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-docstring">1. UniProtKB-AC (1st col in gz file)</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-docstring">2. UniProtKB-ID (2)</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-docstring">3. GeneID (EntrezGene) (3)</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-docstring">4. RefSeq (4)</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-docstring">5. GI (5)</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-docstring">6. GO (as output only) (7)</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-docstring">8. UniRef100 (8)</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-docstring">9. UniRef90 (9)</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-docstring">10. UniRef50 (10)</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-docstring">11. UniParc (11)</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-docstring">15. UniGene (15)</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-docstring">17. EMBL (17)</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-docstring">18. EMBL-CDS (18)</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-docstring">19. Ensembl (19)</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-docstring">20. Ensembl_TRS (20)</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-docstring">21. Ensembl_PRO (21)</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-docstring">@requires: U{python 2.7&lt;https://www.python.org/downloads/&gt;} or greater</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-docstring">@requires: U{Conda 4.4.10&lt;https://conda.io/&gt;} or greater with FastGSEA conda environment (fastgsea.yml)</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-docstring">@requires: manageFiles.sh</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-name">__author__</tt> <tt class="py-op">=</tt> <tt class="py-string">'Kevin Durimel'</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt id="link-1" class="py-name" targets="Variable enrich.__credits__=enrich-module.html#__credits__,Variable fastGSEA.__credits__=fastGSEA-module.html#__credits__,Variable map.__credits__=map-module.html#__credits__,Variable trim.__credits__=trim-module.html#__credits__"><a title="enrich.__credits__
+fastGSEA.__credits__
+map.__credits__
+trim.__credits__" class="py-name" href="#" onclick="return doclink('link-1', '__credits__', 'link-1');">__credits__</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'Kevin La'</tt><tt class="py-op">,</tt> <tt class="py-string">'Arnaud Felten'</tt><tt class="py-op">,</tt> <tt class="py-string">'Meryl Vila-Nova'</tt><tt class="py-op">,</tt> <tt class="py-string">'Nicolas Radomski'</tt><tt class="py-op">]</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-name">__license__</tt> <tt class="py-op">=</tt> <tt class="py-string">'GPL'</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">'3.0'</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt id="link-2" class="py-name" targets="Variable enrich.__maintainer__=enrich-module.html#__maintainer__,Variable fastGSEA.__maintainer__=fastGSEA-module.html#__maintainer__,Variable map.__maintainer__=map-module.html#__maintainer__,Variable trim.__maintainer__=trim-module.html#__maintainer__"><a title="enrich.__maintainer__
+fastGSEA.__maintainer__
+map.__maintainer__
+trim.__maintainer__" class="py-name" href="#" onclick="return doclink('link-2', '__maintainer__', 'link-2');">__maintainer__</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'Kevin Durimel'</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt id="link-3" class="py-name" targets="Variable enrich.__email__=enrich-module.html#__email__,Variable fastGSEA.__email__=fastGSEA-module.html#__email__,Variable map.__email__=map-module.html#__email__,Variable trim.__email__=trim-module.html#__email__"><a title="enrich.__email__
+fastGSEA.__email__
+map.__email__
+trim.__email__" class="py-name" href="#" onclick="return doclink('link-3', '__email__', 'link-3');">__email__</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'k@durimel@gmail.com'</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt id="link-4" class="py-name" targets="Variable enrich.__status__=enrich-module.html#__status__,Variable fastGSEA.__status__=fastGSEA-module.html#__status__,Variable map.__status__=map-module.html#__status__,Variable trim.__status__=trim-module.html#__status__"><a title="enrich.__status__
+fastGSEA.__status__
+map.__status__
+trim.__status__" class="py-name" href="#" onclick="return doclink('link-4', '__status__', 'link-4');">__status__</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'Alpha'</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-comment">######## IMPORT BUILT IN MODULES ########</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">os</tt><tt class="py-op">,</tt> <tt class="py-name">sys</tt><tt class="py-op">,</tt> <tt class="py-name">time</tt><tt class="py-op">,</tt> <tt class="py-name">subprocess</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">signal</tt> <tt class="py-comment"># Async alerts module used to handle gzip broken pipe when zgrep, more info : https://blog.nelhage.com/2010/02/a-very-subtle-bug/</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-comment">######## IMPORT THIRPDARTY MODULES ########</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">urllib</tt><tt class="py-op">,</tt><tt class="py-name">urllib2</tt><tt class="py-op">,</tt><tt class="py-name">requests</tt>  <tt class="py-comment"># HTML requests</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">re</tt> <tt class="py-comment">#regex</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"><tt id="link-5" class="py-name" targets="Variable map.EXEC_PATH=map-module.html#EXEC_PATH"><a title="map.EXEC_PATH" class="py-name" href="#" onclick="return doclink('link-5', 'EXEC_PATH', 'link-5');">EXEC_PATH</a></tt> <tt class="py-op">=</tt> <tt class="py-name">sys</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> <tt class="py-comment"># Current running script path</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"> </tt>
+<a name="show_progression"></a><div id="show_progression-def"><a name="L48"></a><tt class="py-lineno"> 48</tt> <a class="py-toggle" href="#" id="show_progression-toggle" onclick="return toggle('show_progression');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="map-module.html#show_progression">show_progression</a><tt class="py-op">(</tt><tt class="py-param">counter</tt><tt class="py-op">,</tt> <tt class="py-param">total</tt><tt class="py-op">,</tt> <tt class="py-param">precision</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="show_progression-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="show_progression-expanded"><a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line">        <tt class="py-name">sys</tt><tt class="py-op">.</tt><tt class="py-name">stdout</tt><tt class="py-op">.</tt><tt class="py-name">write</tt><tt class="py-op">(</tt><tt class="py-string">'\r{0}% processed'</tt><tt class="py-op">.</tt><tt class="py-name">format</tt><tt class="py-op">(</tt><tt class="py-name">round</tt><tt class="py-op">(</tt><tt class="py-name">float</tt><tt class="py-op">(</tt><tt class="py-name">counter</tt><tt class="py-op">)</tt><tt class="py-op">/</tt><tt class="py-name">int</tt><tt class="py-op">(</tt><tt class="py-name">total</tt><tt class="py-op">)</tt><tt class="py-op">*</tt><tt class="py-number">100</tt><tt class="py-op">,</tt> <tt class="py-name">precision</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-comment"># % progressing display</tt> </tt>
+</div><a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"> </tt>
+<a name="mk_susbet"></a><div id="mk_susbet-def"><a name="L51"></a><tt class="py-lineno"> 51</tt> <a class="py-toggle" href="#" id="mk_susbet-toggle" onclick="return toggle('mk_susbet');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="map-module.html#mk_susbet">mk_susbet</a><tt class="py-op">(</tt><tt class="py-param">idMappingFile</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="mk_susbet-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="mk_susbet-expanded"><a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line">        <tt class="py-keyword">print</tt> <tt class="py-string">'Generating a subset from ids mapping file:'</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line">        <tt class="py-name">cmd</tt> <tt class="py-op">=</tt> <tt class="py-string">'zcat '</tt> <tt class="py-op">+</tt> <tt class="py-name">idMappingFile</tt> <tt class="py-op">+</tt> <tt class="py-string">' | cut -f 1,4,7 | gzip --stdout &gt; '</tt> <tt class="py-op">+</tt> <tt class="py-name">idMappingFile</tt> <tt class="py-op">+</tt> <tt class="py-string">'_subset.gz'</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">        <tt class="py-name">subprocess</tt><tt class="py-op">.</tt><tt class="py-name">check_call</tt><tt class="py-op">(</tt><tt class="py-name">cmd</tt><tt class="py-op">,</tt> <tt class="py-name">shell</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">,</tt> <tt class="py-name">preexec_fn</tt><tt class="py-op">=</tt><tt class="py-keyword">lambda</tt><tt class="py-op">:</tt><tt class="py-name">signal</tt><tt class="py-op">.</tt><tt class="py-name">signal</tt><tt class="py-op">(</tt><tt class="py-name">signal</tt><tt class="py-op">.</tt><tt class="py-name">SIGPIPE</tt><tt class="py-op">,</tt> <tt class="py-name">signal</tt><tt class="py-op">.</tt><tt class="py-name">SIG_DFL</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line">        <tt class="py-keyword">print</tt> <tt class="py-string">'...ok'</tt> </tt>
+</div><a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"> </tt>
+<a name="ids_to_go"></a><div id="ids_to_go-def"><a name="L57"></a><tt class="py-lineno"> 57</tt> <a class="py-toggle" href="#" id="ids_to_go-toggle" onclick="return toggle('ids_to_go');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="map-module.html#ids_to_go">ids_to_go</a><tt class="py-op">(</tt><tt class="py-param">idMappingFile</tt><tt class="py-op">,</tt> <tt class="py-param">idsFile</tt><tt class="py-op">,</tt> <tt class="py-param">outputPrefix</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ids_to_go-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="ids_to_go-expanded"><a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt class="py-docstring">        Takes as input Uniprot or Refseq ids and returns its corresponding GO-terms. Please use this </tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"><tt class="py-docstring">        function if you want to retrieve GO-terms using a input file containing Refseq or Uniprot ids.</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line"><tt class="py-docstring">        The id mapping file subset is automatically generated if it was not already the case (e.g First</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line"><tt class="py-docstring">        script launch , or file deleted.) </tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"><tt class="py-docstring">        @param idMappingFile: path to the .gz file used for id mapping </tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"><tt class="py-docstring">        @type idMappingFile: string</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"><tt class="py-docstring">        @param idsFile: path to the input file containing all the ids we have to map </tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line"><tt class="py-docstring">        @type view: string</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"><tt class="py-docstring">        @param outputPrefix: file path output prefix</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"><tt class="py-docstring">        @type outputPrefix: string</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line">        <tt class="py-keyword">print</tt> <tt class="py-string">'Offline GO mapping from RefSeq or Uniprot IDs:'</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">        <tt class="py-name">all_goterms</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> <tt class="py-comment"># This will contains all the go-terms retrieved</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line"> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">        <tt class="py-comment"># Compute file lenght (for % progressing display)</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">        <tt class="py-keyword">with</tt> <tt class="py-name">open</tt><tt class="py-op">(</tt><tt class="py-name">idsFile</tt><tt class="py-op">,</tt><tt class="py-string">'r '</tt><tt class="py-op">)</tt> <tt class="py-keyword">as</tt> <tt class="py-name">ids</tt><tt class="py-op">:</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">                <tt class="py-name">input_lines_count</tt> <tt class="py-op">=</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-name">f</tt> <tt class="py-keyword">for</tt> <tt class="py-name">f</tt> <tt class="py-keyword">in</tt> <tt class="py-name">ids</tt><tt class="py-op">.</tt><tt class="py-name">readlines</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">        <tt class="py-keyword">with</tt> <tt class="py-name">open</tt><tt class="py-op">(</tt><tt class="py-name">idsFile</tt><tt class="py-op">,</tt><tt class="py-string">'r'</tt><tt class="py-op">)</tt> <tt class="py-keyword">as</tt> <tt class="py-name">ids</tt><tt class="py-op">:</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">                <tt class="py-keyword">for</tt> <tt class="py-name">counter</tt><tt class="py-op">,</tt><tt class="py-name">id_</tt> <tt class="py-keyword">in</tt> <tt class="py-name">enumerate</tt><tt class="py-op">(</tt><tt class="py-name">ids</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">                        <tt id="link-6" class="py-name" targets="Function map.show_progression()=map-module.html#show_progression"><a title="map.show_progression" class="py-name" href="#" onclick="return doclink('link-6', 'show_progression', 'link-6');">show_progression</a></tt><tt class="py-op">(</tt><tt class="py-name">counter</tt><tt class="py-op">,</tt><tt class="py-name">input_lines_count</tt><tt class="py-op">,</tt><tt class="py-number">2</tt><tt class="py-op">)</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">                        <tt class="py-name">cmd</tt> <tt class="py-op">=</tt> <tt class="py-string">'bash '</tt> <tt class="py-op">+</tt> <tt id="link-7" class="py-name"><a title="map.EXEC_PATH" class="py-name" href="#" onclick="return doclink('link-7', 'EXEC_PATH', 'link-5');">EXEC_PATH</a></tt> <tt class="py-op">+</tt> <tt class="py-string">'/manageFiles.sh '</tt><tt class="py-op">+</tt> <tt class="py-string">' --subsetToGo '</tt> <tt class="py-op">+</tt> <tt class="py-name">idMappingFile</tt> <tt class="py-op">+</tt> <tt class="py-string">' '</tt> <tt class="py-op">+</tt> <tt class="py-name">id_</tt><tt class="py-op">.</tt><tt class="py-name">strip</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">                        <tt class="py-name">goterms</tt> <tt class="py-op">=</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">subprocess</tt><tt class="py-op">.</tt><tt class="py-name">check_output</tt><tt class="py-op">(</tt><tt class="py-name">cmd</tt><tt class="py-op">,</tt> <tt class="py-name">shell</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">,</tt> <tt class="py-name">preexec_fn</tt><tt class="py-op">=</tt><tt class="py-keyword">lambda</tt><tt class="py-op">:</tt><tt class="py-name">signal</tt><tt class="py-op">.</tt><tt class="py-name">signal</tt><tt class="py-op">(</tt><tt class="py-name">signal</tt><tt class="py-op">.</tt><tt class="py-name">SIGPIPE</tt><tt class="py-op">,</tt> <tt class="py-name">signal</tt><tt class="py-op">.</tt><tt class="py-name">SIG_DFL</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">split</tt><tt class="py-op">(</tt><tt class="py-string">';'</tt><tt class="py-op">)</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">                        <tt class="py-keyword">for</tt> <tt class="py-name">goterm</tt> <tt class="py-keyword">in</tt> <tt class="py-name">goterms</tt><tt class="py-op">:</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">                                 </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">                                <tt class="py-name">goterm_clean</tt> <tt class="py-op">=</tt> <tt class="py-name">goterm</tt><tt class="py-op">.</tt><tt class="py-name">strip</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">                                <tt class="py-comment"># if goterm exist (not nonetype or something else bcs was processed by strip())</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">                                <tt class="py-keyword">if</tt> <tt class="py-name">goterm_clean</tt><tt class="py-op">:</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">                                        <tt class="py-name">all_goterms</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt class="py-name">goterm_clean</tt><tt class="py-op">)</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line"> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">        <tt class="py-comment"># write all goterms in a file</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line">        <tt class="py-keyword">with</tt> <tt class="py-name">open</tt> <tt class="py-op">(</tt><tt class="py-name">outputPrefix</tt><tt class="py-op">,</tt> <tt class="py-string">'w'</tt><tt class="py-op">)</tt> <tt class="py-keyword">as</tt> <tt class="py-name">gofile</tt><tt class="py-op">:</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">                <tt class="py-name">gofile</tt><tt class="py-op">.</tt><tt class="py-name">write</tt><tt class="py-op">(</tt><tt class="py-string">'\n'</tt><tt class="py-op">.</tt><tt class="py-name">join</tt><tt class="py-op">(</tt><tt class="py-name">all_goterms</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">'\n'</tt><tt class="py-op">)</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">        <tt class="py-keyword">print</tt> <tt class="py-string">'...ok'</tt> </tt>
+</div><a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"> </tt>
+<a name="ids_to_go_online"></a><div id="ids_to_go_online-def"><a name="L95"></a><tt class="py-lineno"> 95</tt> <a class="py-toggle" href="#" id="ids_to_go_online-toggle" onclick="return toggle('ids_to_go_online');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="map-module.html#ids_to_go_online">ids_to_go_online</a><tt class="py-op">(</tt><tt class="py-param">idMappingFile</tt><tt class="py-op">,</tt> <tt class="py-param">idsFile</tt><tt class="py-op">,</tt> <tt class="py-param">outputPrefix</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ids_to_go_online-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="ids_to_go_online-expanded"><a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line"><tt class="py-docstring">        This function follows same principles as ids_to_go() but performs id mapping online. It the best</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line"><tt class="py-docstring">        choice for reliability and up-to-date GO-terms. Ids_to_to_online() always requires idMappingFile</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line"><tt class="py-docstring">        parameter to retrieve refseq ids offline. </tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line"><tt class="py-docstring">        Takes as input Uniprot or Refseq ids and returns its corresponding GO-terms. Please use this </tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"><tt class="py-docstring">        function if you want to retrieve GO-terms using a input file containing Refseq or Uniprot ids.</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"><tt class="py-docstring">        @param idMappingFile: path to the .gz file used for id mapping </tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"><tt class="py-docstring">        @type idMappingFile: string</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"><tt class="py-docstring">        @param idsFile: path to the input file containing all the ids we have to map </tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line"><tt class="py-docstring">        @type view: string</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line"><tt class="py-docstring">        @param outputPrefix: file path output prefix</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line"><tt class="py-docstring">        @type outputPrefix: string</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">        <tt class="py-keyword">print</tt> <tt class="py-string">'Online GO mapping from RefSeq or Uniprot IDs   '</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">        <tt class="py-name">all_goterms</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> <tt class="py-comment"># This will contains all the go-terms retrieved</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line">        <tt class="py-comment"># Compute file lenght (for % progressing display)</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">        <tt class="py-keyword">with</tt> <tt class="py-name">open</tt><tt class="py-op">(</tt><tt class="py-name">idsFile</tt><tt class="py-op">,</tt><tt class="py-string">'r '</tt><tt class="py-op">)</tt> <tt class="py-keyword">as</tt> <tt class="py-name">ids</tt><tt class="py-op">:</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">                <tt class="py-name">input_lines_count</tt> <tt class="py-op">=</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-name">f</tt> <tt class="py-keyword">for</tt> <tt class="py-name">f</tt> <tt class="py-keyword">in</tt> <tt class="py-name">ids</tt><tt class="py-op">.</tt><tt class="py-name">readlines</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line">        <tt class="py-keyword">with</tt> <tt class="py-name">open</tt><tt class="py-op">(</tt><tt class="py-name">idsFile</tt><tt class="py-op">,</tt><tt class="py-string">'r '</tt><tt class="py-op">)</tt> <tt class="py-keyword">as</tt> <tt class="py-name">ids</tt><tt class="py-op">:</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">                <tt class="py-comment"># enumerate used in order to increment a seamless counter (counter) while looping on ids (ids) </tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line">                <tt class="py-keyword">for</tt> <tt class="py-name">counter</tt><tt class="py-op">,</tt><tt class="py-name">id_</tt> <tt class="py-keyword">in</tt> <tt class="py-name">enumerate</tt><tt class="py-op">(</tt><tt class="py-name">ids</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">                        <tt id="link-8" class="py-name"><a title="map.show_progression" class="py-name" href="#" onclick="return doclink('link-8', 'show_progression', 'link-6');">show_progression</a></tt><tt class="py-op">(</tt><tt class="py-name">counter</tt><tt class="py-op">,</tt><tt class="py-name">input_lines_count</tt><tt class="py-op">,</tt><tt class="py-number">2</tt><tt class="py-op">)</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line">                        <tt class="py-comment">#if this line contains a Refseq id (NP_xxx, Wp_xxx...) performs offline id mapping</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line">                        <tt class="py-keyword">if</tt> <tt class="py-string">'P_'</tt> <tt class="py-keyword">in</tt> <tt class="py-name">id_</tt><tt class="py-op">.</tt><tt class="py-name">strip</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line">                                <tt class="py-name">cmd</tt> <tt class="py-op">=</tt> <tt class="py-string">'bash '</tt> <tt class="py-op">+</tt> <tt id="link-9" class="py-name"><a title="map.EXEC_PATH" class="py-name" href="#" onclick="return doclink('link-9', 'EXEC_PATH', 'link-5');">EXEC_PATH</a></tt> <tt class="py-op">+</tt> <tt class="py-string">'/manageFiles.sh '</tt> <tt class="py-op">+</tt> <tt class="py-string">' --anythingToGo '</tt> <tt class="py-op">+</tt> <tt class="py-name">idMappingFile</tt> <tt class="py-op">+</tt> <tt class="py-string">' '</tt> <tt class="py-op">+</tt> <tt class="py-name">id_</tt><tt class="py-op">.</tt><tt class="py-name">strip</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line">                                <tt class="py-name">goterms</tt> <tt class="py-op">=</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">subprocess</tt><tt class="py-op">.</tt><tt class="py-name">check_output</tt><tt class="py-op">(</tt><tt class="py-name">cmd</tt><tt class="py-op">,</tt><tt class="py-name">shell</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">,</tt><tt class="py-name">preexec_fn</tt><tt class="py-op">=</tt><tt class="py-keyword">lambda</tt><tt class="py-op">:</tt><tt class="py-name">signal</tt><tt class="py-op">.</tt><tt class="py-name">signal</tt><tt class="py-op">(</tt><tt class="py-name">signal</tt><tt class="py-op">.</tt><tt class="py-name">SIGPIPE</tt><tt class="py-op">,</tt> <tt class="py-name">signal</tt><tt class="py-op">.</tt><tt class="py-name">SIG_DFL</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">split</tt><tt class="py-op">(</tt><tt class="py-string">';'</tt><tt class="py-op">)</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line">                                <tt class="py-keyword">for</tt> <tt class="py-name">goterm</tt> <tt class="py-keyword">in</tt> <tt class="py-name">goterms</tt><tt class="py-op">:</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line"> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">                                        <tt class="py-name">goterm_clean</tt> <tt class="py-op">=</tt> <tt class="py-name">goterm</tt><tt class="py-op">.</tt><tt class="py-name">strip</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line">                                        <tt class="py-comment"># if goterm exist (not nonetype or something else bcs was processed by strip())</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line">                                        <tt class="py-keyword">if</tt> <tt class="py-name">goterm_clean</tt><tt class="py-op">:</tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">                                                <tt class="py-name">all_goterms</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt class="py-name">goterm_clean</tt><tt class="py-op">)</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line"> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">                        <tt class="py-comment"># If this line contains a Uniprot ID, perform online id mapping</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">                        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">                                <tt class="py-name">dicogo</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-op">}</tt> <tt class="py-comment"># used to avoid GO-terms duplicates for a same Uniprot id (it really happens sometimes)</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">                                <tt class="py-name">res_text</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> <tt class="py-comment"># True if GET request received a response</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line">                                <tt class="py-keyword">while</tt> <tt class="py-name">res_text</tt> <tt class="py-op">==</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line"> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line">                                        <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line">                                                <tt class="py-name">url</tt><tt class="py-op">=</tt><tt class="py-string">'https://www.ebi.ac.uk/QuickGO/services/annotation/downloadSearch?geneProductId='</tt> <tt class="py-op">+</tt> <tt class="py-name">id_</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line">                                                <tt class="py-name">res</tt> <tt class="py-op">=</tt> <tt class="py-name">requests</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-name">url</tt><tt class="py-op">,</tt> <tt class="py-name">headers</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt> <tt class="py-string">"Accept"</tt> <tt class="py-op">:</tt> <tt class="py-string">"text/tsv"</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> <tt class="py-name">verify</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line">                                                <tt class="py-name">res_text</tt> <tt class="py-op">=</tt> <tt class="py-name">res</tt><tt class="py-op">.</tt><tt class="py-name">text</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line">                                                <tt class="py-name">goterms</tt> <tt class="py-op">=</tt> <tt class="py-name">re</tt><tt class="py-op">.</tt><tt class="py-name">findall</tt><tt class="py-op">(</tt><tt class="py-string">r'\bGO:\d+'</tt><tt class="py-op">,</tt><tt class="py-name">res_text</tt><tt class="py-op">)</tt> <tt class="py-comment"># re.findall returns a list of GO ids strings</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line">                                                 </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line">                                                <tt class="py-keyword">for</tt> <tt class="py-name">goterm</tt> <tt class="py-keyword">in</tt> <tt class="py-name">goterms</tt><tt class="py-op">:</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line"> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line">                                                        <tt class="py-keyword">if</tt> <tt class="py-name">goterm</tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt class="py-name">dicogo</tt><tt class="py-op">.</tt><tt class="py-name">keys</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-keyword">and</tt> <tt class="py-name">goterm</tt><tt class="py-op">!=</tt><tt class="py-string">'GO'</tt><tt class="py-op">:</tt> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line">                                                                <tt class="py-name">all_goterms</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt class="py-name">goterm</tt><tt class="py-op">)</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line">                                                                <tt class="py-name">dicogo</tt><tt class="py-op">[</tt><tt class="py-name">goterm</tt><tt class="py-op">]</tt><tt class="py-op">=</tt><tt class="py-name">id_</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line"> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line">                                        <tt class="py-keyword">except</tt> <tt class="py-name">urllib2</tt><tt class="py-op">.</tt><tt class="py-name">URLError</tt><tt class="py-op">:</tt> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line">                                                <tt class="py-keyword">print</tt> <tt class="py-string">'Timeout, we\'ll wait 5 seconds before re-trying the request... '</tt> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line">                                                <tt class="py-name">time</tt><tt class="py-op">.</tt><tt class="py-name">sleep</tt><tt class="py-op">(</tt><tt class="py-number">5</tt><tt class="py-op">)</tt> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line">                                                <tt class="py-keyword">pass</tt>     </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line">                                <tt class="py-name">dicogo</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-op">}</tt> <tt class="py-comment"># cleared for next loop</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line"> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line">        <tt class="py-comment"># write all goterms in a file</tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line">        <tt class="py-keyword">with</tt> <tt class="py-name">open</tt> <tt class="py-op">(</tt><tt class="py-name">outputPrefix</tt><tt class="py-op">,</tt> <tt class="py-string">'w'</tt><tt class="py-op">)</tt> <tt class="py-keyword">as</tt> <tt class="py-name">gofile</tt><tt class="py-op">:</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line">                <tt class="py-name">gofile</tt><tt class="py-op">.</tt><tt class="py-name">write</tt><tt class="py-op">(</tt><tt class="py-string">'\n'</tt><tt class="py-op">.</tt><tt class="py-name">join</tt><tt class="py-op">(</tt><tt class="py-name">all_goterms</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">'\n'</tt><tt class="py-op">)</tt> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line">        <tt class="py-keyword">print</tt> <tt class="py-string">'...ok'</tt> </tt>
+</div><a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line"> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line"> </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line"> </tt>
+<a name="any_ids_to_go"></a><div id="any_ids_to_go-def"><a name="L161"></a><tt class="py-lineno">161</tt> <a class="py-toggle" href="#" id="any_ids_to_go-toggle" onclick="return toggle('any_ids_to_go');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="map-module.html#any_ids_to_go">any_ids_to_go</a><tt class="py-op">(</tt><tt class="py-param">idMappingFile</tt><tt class="py-op">,</tt> <tt class="py-param">idsFile</tt><tt class="py-op">,</tt> <tt class="py-param">outputPrefix</tt><tt class="py-op">,</tt> <tt class="py-param">whichDb</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="any_ids_to_go-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="any_ids_to_go-expanded"><a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line"><tt class="py-docstring">        Takes as input any suppported ids and returns its corresponding GO-terms. Slower</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line"><tt class="py-docstring">        than ids_go_to beacause it do not use the idMappingFile subset and requests id per id.</tt> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line"><tt class="py-docstring">        @param idMappingFile: path to the .gz file used for id mapping </tt> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line"><tt class="py-docstring">        @type idMappingFile: string</tt> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line"><tt class="py-docstring">        @param idsFile: path to the input file containing all the ids we have to map </tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line"><tt class="py-docstring">        @type view: string</tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line"><tt class="py-docstring">        @param whichDb: the ids database prefix that we want in output (for example, if we </tt> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line"><tt class="py-docstring">        want go ids, whichDB = GO. Please refer to "supported ids" at the top section)</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line"><tt class="py-docstring">        @type whichDb: string</tt> </tt>
+<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line"><tt class="py-docstring">        @param outputPrefix: file path output prefix</tt> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line"><tt class="py-docstring">        @type outputPrefix: string</tt> </tt>
+<a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line">        <tt class="py-keyword">print</tt> <tt class="py-string">'Offline GO mapping from any IDs:'</tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line">        <tt class="py-name">all_goterms</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> <tt class="py-comment"># This will contains all the go-terms retrieved</tt> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line">        <tt class="py-comment"># Compute file lenght (for % progressing display)</tt> </tt>
+<a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line">        <tt class="py-keyword">with</tt> <tt class="py-name">open</tt><tt class="py-op">(</tt><tt class="py-name">idsFile</tt><tt class="py-op">,</tt><tt class="py-string">'r '</tt><tt class="py-op">)</tt> <tt class="py-keyword">as</tt> <tt class="py-name">ids</tt><tt class="py-op">:</tt> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line">                <tt class="py-name">input_lines_count</tt> <tt class="py-op">=</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-name">f</tt> <tt class="py-keyword">for</tt> <tt class="py-name">f</tt> <tt class="py-keyword">in</tt> <tt class="py-name">ids</tt><tt class="py-op">.</tt><tt class="py-name">readlines</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line"> </tt>
+<a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line">        <tt class="py-keyword">with</tt> <tt class="py-name">open</tt><tt class="py-op">(</tt><tt class="py-name">idsFile</tt><tt class="py-op">,</tt><tt class="py-string">'r'</tt><tt class="py-op">)</tt> <tt class="py-keyword">as</tt> <tt class="py-name">ids</tt><tt class="py-op">:</tt> </tt>
+<a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line">                <tt class="py-keyword">for</tt> <tt class="py-name">counter</tt><tt class="py-op">,</tt><tt class="py-name">id_</tt> <tt class="py-keyword">in</tt> <tt class="py-name">enumerate</tt><tt class="py-op">(</tt><tt class="py-name">ids</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line">                        <tt id="link-10" class="py-name"><a title="map.show_progression" class="py-name" href="#" onclick="return doclink('link-10', 'show_progression', 'link-6');">show_progression</a></tt><tt class="py-op">(</tt><tt class="py-name">counter</tt><tt class="py-op">,</tt><tt class="py-name">input_lines_count</tt><tt class="py-op">,</tt><tt class="py-number">2</tt><tt class="py-op">)</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line">                        <tt class="py-name">cmd</tt> <tt class="py-op">=</tt> <tt class="py-string">'bash '</tt> <tt class="py-op">+</tt> <tt id="link-11" class="py-name"><a title="map.EXEC_PATH" class="py-name" href="#" onclick="return doclink('link-11', 'EXEC_PATH', 'link-5');">EXEC_PATH</a></tt> <tt class="py-op">+</tt> <tt class="py-string">'/manageFiles.sh '</tt><tt class="py-op">+</tt> <tt class="py-string">' --anythingToAnything '</tt><tt class="py-op">+</tt> <tt class="py-name">idMappingFile</tt> <tt class="py-op">+</tt> <tt class="py-string">' '</tt> <tt class="py-op">+</tt> <tt class="py-name">id_</tt><tt class="py-op">.</tt><tt class="py-name">strip</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">' '</tt> <tt class="py-op">+</tt> <tt class="py-name">whichDb</tt> </tt>
+<a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line">                        <tt class="py-name">goterms</tt> <tt class="py-op">=</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">subprocess</tt><tt class="py-op">.</tt><tt class="py-name">check_output</tt><tt class="py-op">(</tt><tt class="py-name">cmd</tt><tt class="py-op">,</tt> <tt class="py-name">shell</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt><tt class="py-op">,</tt> <tt class="py-name">preexec_fn</tt> <tt class="py-op">=</tt> <tt class="py-keyword">lambda</tt><tt class="py-op">:</tt><tt class="py-name">signal</tt><tt class="py-op">.</tt><tt class="py-name">signal</tt><tt class="py-op">(</tt><tt class="py-name">signal</tt><tt class="py-op">.</tt><tt class="py-name">SIGPIPE</tt><tt class="py-op">,</tt> <tt class="py-name">signal</tt><tt class="py-op">.</tt><tt class="py-name">SIG_DFL</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">split</tt><tt class="py-op">(</tt><tt class="py-string">';'</tt><tt class="py-op">)</tt> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line">                        <tt class="py-keyword">for</tt> <tt class="py-name">goterm</tt> <tt class="py-keyword">in</tt> <tt class="py-name">goterms</tt><tt class="py-op">:</tt> </tt>
+<a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line"> </tt>
+<a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line">                                <tt class="py-name">goterm_clean</tt> <tt class="py-op">=</tt> <tt class="py-name">goterm</tt><tt class="py-op">.</tt><tt class="py-name">strip</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line">                                <tt class="py-comment"># if goterms exist (not nonetype or something else bcs was processed by strip())</tt> </tt>
+<a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line">                                <tt class="py-keyword">if</tt> <tt class="py-name">goterm_clean</tt><tt class="py-op">:</tt> </tt>
+<a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line">                                        <tt class="py-name">all_goterms</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt class="py-name">goterm_clean</tt><tt class="py-op">)</tt> </tt>
+<a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line"> </tt>
+<a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line">        <tt class="py-comment"># write all goterms in a file</tt> </tt>
+<a name="L194"></a><tt class="py-lineno">194</tt>  <tt class="py-line">        <tt class="py-keyword">with</tt> <tt class="py-name">open</tt> <tt class="py-op">(</tt><tt class="py-name">outputPrefix</tt><tt class="py-op">,</tt> <tt class="py-string">'w'</tt><tt class="py-op">)</tt> <tt class="py-keyword">as</tt> <tt class="py-name">gofile</tt><tt class="py-op">:</tt> </tt>
+<a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line">                <tt class="py-name">gofile</tt><tt class="py-op">.</tt><tt class="py-name">write</tt><tt class="py-op">(</tt><tt class="py-string">'\n'</tt><tt class="py-op">.</tt><tt class="py-name">join</tt><tt class="py-op">(</tt><tt class="py-name">all_goterms</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">'\n'</tt><tt class="py-op">)</tt> </tt>
+<a name="L196"></a><tt class="py-lineno">196</tt>  <tt class="py-line">        <tt class="py-keyword">print</tt> <tt class="py-string">'...ok'</tt> </tt>
+</div><a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line"> </tt>
+<a name="any_ids_to_go_online"></a><div id="any_ids_to_go_online-def"><a name="L198"></a><tt class="py-lineno">198</tt> <a class="py-toggle" href="#" id="any_ids_to_go_online-toggle" onclick="return toggle('any_ids_to_go_online');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="map-module.html#any_ids_to_go_online">any_ids_to_go_online</a><tt class="py-op">(</tt><tt class="py-param">idMappingFile</tt><tt class="py-op">,</tt> <tt class="py-param">idsFile</tt><tt class="py-op">,</tt> <tt class="py-param">outputPrefix</tt><tt class="py-op">,</tt> <tt class="py-param">whichDb</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="any_ids_to_go_online-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="any_ids_to_go_online-expanded"><a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line"><tt class="py-docstring">        This function follows same principles as any_ids_to_go() but performs id mapping online.</tt> </tt>
+<a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line"><tt class="py-docstring">        This function is an experimental feature and support only the ids supported by the </tt> </tt>
+<a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line"><tt class="py-docstring">        U{ Uniprot API &lt;https://www.ebi.ac.uk/QuickGO/api/index.html&gt;} </tt> </tt>
+<a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line"><tt class="py-docstring">        Takes as input any suppported ids and returns its corresponding GO-terms. Slower</tt> </tt>
+<a name="L204"></a><tt class="py-lineno">204</tt>  <tt class="py-line"><tt class="py-docstring">        than any_ids_go_to() beacause it do not use the idMappingFile subset and requests id per id.</tt> </tt>
+<a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line"><tt class="py-docstring">        @param idMappingFile: path to the .gz file used for id mapping </tt> </tt>
+<a name="L206"></a><tt class="py-lineno">206</tt>  <tt class="py-line"><tt class="py-docstring">        @type idMappingFile: string</tt> </tt>
+<a name="L207"></a><tt class="py-lineno">207</tt>  <tt class="py-line"><tt class="py-docstring">        @param idsFile: path to the input file containing all the ids we have to map </tt> </tt>
+<a name="L208"></a><tt class="py-lineno">208</tt>  <tt class="py-line"><tt class="py-docstring">        @type view: string</tt> </tt>
+<a name="L209"></a><tt class="py-lineno">209</tt>  <tt class="py-line"><tt class="py-docstring">        @param whichDb: the ids database prefix that we want in output (for example, if we </tt> </tt>
+<a name="L210"></a><tt class="py-lineno">210</tt>  <tt class="py-line"><tt class="py-docstring">        want go ids, whichDB = GO. Please refer to "supported ids" at the top section)</tt> </tt>
+<a name="L211"></a><tt class="py-lineno">211</tt>  <tt class="py-line"><tt class="py-docstring">        @type whichDb: string</tt> </tt>
+<a name="L212"></a><tt class="py-lineno">212</tt>  <tt class="py-line"><tt class="py-docstring">        @param outputPrefix: file path output prefix</tt> </tt>
+<a name="L213"></a><tt class="py-lineno">213</tt>  <tt class="py-line"><tt class="py-docstring">        @type outputPrefix: string</tt> </tt>
+<a name="L214"></a><tt class="py-lineno">214</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L215"></a><tt class="py-lineno">215</tt>  <tt class="py-line">        <tt class="py-keyword">print</tt> <tt class="py-string">'Online GO mapping from any IDs (experimental feature, use at your own risks!):'</tt> </tt>
+<a name="L216"></a><tt class="py-lineno">216</tt>  <tt class="py-line">        <tt class="py-name">all_goterms</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> <tt class="py-comment"># This will contains all the go-terms retrieved</tt> </tt>
+<a name="L217"></a><tt class="py-lineno">217</tt>  <tt class="py-line">        <tt class="py-comment"># Compute file lenght (for % progressing display)</tt> </tt>
+<a name="L218"></a><tt class="py-lineno">218</tt>  <tt class="py-line">        <tt class="py-keyword">with</tt> <tt class="py-name">open</tt><tt class="py-op">(</tt><tt class="py-name">idsFile</tt><tt class="py-op">,</tt><tt class="py-string">'r '</tt><tt class="py-op">)</tt> <tt class="py-keyword">as</tt> <tt class="py-name">ids</tt><tt class="py-op">:</tt> </tt>
+<a name="L219"></a><tt class="py-lineno">219</tt>  <tt class="py-line">                <tt class="py-name">input_lines_count</tt> <tt class="py-op">=</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-name">f</tt> <tt class="py-keyword">for</tt> <tt class="py-name">f</tt> <tt class="py-keyword">in</tt> <tt class="py-name">ids</tt><tt class="py-op">.</tt><tt class="py-name">readlines</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L220"></a><tt class="py-lineno">220</tt>  <tt class="py-line"> </tt>
+<a name="L221"></a><tt class="py-lineno">221</tt>  <tt class="py-line">        <tt class="py-keyword">with</tt> <tt class="py-name">open</tt><tt class="py-op">(</tt><tt class="py-name">idsFile</tt><tt class="py-op">,</tt><tt class="py-string">'r'</tt><tt class="py-op">)</tt> <tt class="py-keyword">as</tt> <tt class="py-name">ids</tt><tt class="py-op">:</tt> </tt>
+<a name="L222"></a><tt class="py-lineno">222</tt>  <tt class="py-line">                <tt class="py-keyword">for</tt> <tt class="py-name">counter</tt><tt class="py-op">,</tt><tt class="py-name">id_</tt> <tt class="py-keyword">in</tt> <tt class="py-name">enumerate</tt><tt class="py-op">(</tt><tt class="py-name">ids</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L223"></a><tt class="py-lineno">223</tt>  <tt class="py-line">                        <tt id="link-12" class="py-name"><a title="map.show_progression" class="py-name" href="#" onclick="return doclink('link-12', 'show_progression', 'link-6');">show_progression</a></tt><tt class="py-op">(</tt><tt class="py-name">counter</tt><tt class="py-op">,</tt><tt class="py-name">input_lines_count</tt><tt class="py-op">,</tt><tt class="py-number">2</tt><tt class="py-op">)</tt> </tt>
+<a name="L224"></a><tt class="py-lineno">224</tt>  <tt class="py-line">                        <tt class="py-comment">#if this line contains a Refseq id (NP_xxx, Wp_xxx...) performs offline id mapping</tt> </tt>
+<a name="L225"></a><tt class="py-lineno">225</tt>  <tt class="py-line">                        <tt class="py-keyword">if</tt> <tt class="py-string">'P_'</tt> <tt class="py-keyword">in</tt> <tt class="py-name">id_</tt><tt class="py-op">.</tt><tt class="py-name">strip</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L226"></a><tt class="py-lineno">226</tt>  <tt class="py-line">                                <tt class="py-name">cmd</tt> <tt class="py-op">=</tt> <tt class="py-string">'bash '</tt> <tt class="py-op">+</tt> <tt id="link-13" class="py-name"><a title="map.EXEC_PATH" class="py-name" href="#" onclick="return doclink('link-13', 'EXEC_PATH', 'link-5');">EXEC_PATH</a></tt> <tt class="py-op">+</tt> <tt class="py-string">'/manageFiles.sh '</tt> <tt class="py-op">+</tt> <tt class="py-string">' --anythingToAnything '</tt> <tt class="py-op">+</tt> <tt class="py-name">idMappingFile</tt> <tt class="py-op">+</tt> <tt class="py-string">' '</tt> <tt class="py-op">+</tt> <tt class="py-name">id_</tt><tt class="py-op">.</tt><tt class="py-name">strip</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">' '</tt> <tt class="py-op">+</tt> <tt class="py-name">whichDb</tt> </tt>
+<a name="L227"></a><tt class="py-lineno">227</tt>  <tt class="py-line">                                <tt class="py-name">goterms</tt> <tt class="py-op">=</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">subprocess</tt><tt class="py-op">.</tt><tt class="py-name">check_output</tt><tt class="py-op">(</tt><tt class="py-name">cmd</tt><tt class="py-op">,</tt><tt class="py-name">shell</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">,</tt><tt class="py-name">preexec_fn</tt><tt class="py-op">=</tt><tt class="py-keyword">lambda</tt><tt class="py-op">:</tt><tt class="py-name">signal</tt><tt class="py-op">.</tt><tt class="py-name">signal</tt><tt class="py-op">(</tt><tt class="py-name">signal</tt><tt class="py-op">.</tt><tt class="py-name">SIGPIPE</tt><tt class="py-op">,</tt> <tt class="py-name">signal</tt><tt class="py-op">.</tt><tt class="py-name">SIG_DFL</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">split</tt><tt class="py-op">(</tt><tt class="py-string">';'</tt><tt class="py-op">)</tt> </tt>
+<a name="L228"></a><tt class="py-lineno">228</tt>  <tt class="py-line">                                <tt class="py-keyword">for</tt> <tt class="py-name">goterm</tt> <tt class="py-keyword">in</tt> <tt class="py-name">goterms</tt><tt class="py-op">:</tt> </tt>
+<a name="L229"></a><tt class="py-lineno">229</tt>  <tt class="py-line"> </tt>
+<a name="L230"></a><tt class="py-lineno">230</tt>  <tt class="py-line">                                        <tt class="py-name">goterm_clean</tt> <tt class="py-op">=</tt> <tt class="py-name">goterm</tt><tt class="py-op">.</tt><tt class="py-name">strip</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L231"></a><tt class="py-lineno">231</tt>  <tt class="py-line">                                        <tt class="py-comment"># if goterm exist (not nonetype or something else bcs was processed by strip())</tt> </tt>
+<a name="L232"></a><tt class="py-lineno">232</tt>  <tt class="py-line">                                        <tt class="py-keyword">if</tt> <tt class="py-name">goterm_clean</tt><tt class="py-op">:</tt> </tt>
+<a name="L233"></a><tt class="py-lineno">233</tt>  <tt class="py-line">                                                <tt class="py-name">all_goterms</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt class="py-name">goterm_clean</tt><tt class="py-op">)</tt> </tt>
+<a name="L234"></a><tt class="py-lineno">234</tt>  <tt class="py-line"> </tt>
+<a name="L235"></a><tt class="py-lineno">235</tt>  <tt class="py-line">                        <tt class="py-comment"># If this line contains a Uniprot ID, perform online id mapping</tt> </tt>
+<a name="L236"></a><tt class="py-lineno">236</tt>  <tt class="py-line">                        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L237"></a><tt class="py-lineno">237</tt>  <tt class="py-line">                                <tt class="py-name">dicogo</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-op">}</tt> <tt class="py-comment"># used to avoid GO-terms duplicates for a same Uniprot id (it really happens sometimes)</tt> </tt>
+<a name="L238"></a><tt class="py-lineno">238</tt>  <tt class="py-line">                                <tt class="py-name">res_text</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> <tt class="py-comment"># True if GET request received a response</tt> </tt>
+<a name="L239"></a><tt class="py-lineno">239</tt>  <tt class="py-line">                                <tt class="py-keyword">while</tt> <tt class="py-name">res_text</tt> <tt class="py-op">==</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L240"></a><tt class="py-lineno">240</tt>  <tt class="py-line"> </tt>
+<a name="L241"></a><tt class="py-lineno">241</tt>  <tt class="py-line">                                        <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L242"></a><tt class="py-lineno">242</tt>  <tt class="py-line">                                                <tt class="py-name">url</tt><tt class="py-op">=</tt><tt class="py-string">'https://www.ebi.ac.uk/QuickGO/services/annotation/downloadSearch?geneProductId='</tt> <tt class="py-op">+</tt> <tt class="py-name">id_</tt> </tt>
+<a name="L243"></a><tt class="py-lineno">243</tt>  <tt class="py-line">                                                <tt class="py-name">res</tt> <tt class="py-op">=</tt> <tt class="py-name">requests</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-name">url</tt><tt class="py-op">,</tt> <tt class="py-name">headers</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt> <tt class="py-string">"Accept"</tt> <tt class="py-op">:</tt> <tt class="py-string">"text/tsv"</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> <tt class="py-name">verify</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L244"></a><tt class="py-lineno">244</tt>  <tt class="py-line">                                                <tt class="py-name">res_text</tt> <tt class="py-op">=</tt> <tt class="py-name">res</tt><tt class="py-op">.</tt><tt class="py-name">text</tt> </tt>
+<a name="L245"></a><tt class="py-lineno">245</tt>  <tt class="py-line">                                                <tt class="py-name">goterms</tt> <tt class="py-op">=</tt> <tt class="py-name">re</tt><tt class="py-op">.</tt><tt class="py-name">findall</tt><tt class="py-op">(</tt><tt class="py-string">r'\bGO:\d+'</tt><tt class="py-op">,</tt><tt class="py-name">res_text</tt><tt class="py-op">)</tt> <tt class="py-comment"># re.findall returns a list of GO ids strings</tt> </tt>
+<a name="L246"></a><tt class="py-lineno">246</tt>  <tt class="py-line">                                                 </tt>
+<a name="L247"></a><tt class="py-lineno">247</tt>  <tt class="py-line">                                                <tt class="py-keyword">for</tt> <tt class="py-name">goterm</tt> <tt class="py-keyword">in</tt> <tt class="py-name">goterms</tt><tt class="py-op">:</tt> </tt>
+<a name="L248"></a><tt class="py-lineno">248</tt>  <tt class="py-line"> </tt>
+<a name="L249"></a><tt class="py-lineno">249</tt>  <tt class="py-line">                                                        <tt class="py-keyword">if</tt> <tt class="py-name">goterm</tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt class="py-name">dicogo</tt><tt class="py-op">.</tt><tt class="py-name">keys</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-keyword">and</tt> <tt class="py-name">goterm</tt><tt class="py-op">!=</tt><tt class="py-string">'GO'</tt><tt class="py-op">:</tt> </tt>
+<a name="L250"></a><tt class="py-lineno">250</tt>  <tt class="py-line">                                                                <tt class="py-name">all_goterms</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt class="py-name">goterm</tt><tt class="py-op">)</tt> </tt>
+<a name="L251"></a><tt class="py-lineno">251</tt>  <tt class="py-line">                                                                <tt class="py-name">dicogo</tt><tt class="py-op">[</tt><tt class="py-name">goterm</tt><tt class="py-op">]</tt><tt class="py-op">=</tt><tt class="py-name">id_</tt> </tt>
+<a name="L252"></a><tt class="py-lineno">252</tt>  <tt class="py-line"> </tt>
+<a name="L253"></a><tt class="py-lineno">253</tt>  <tt class="py-line">                                        <tt class="py-keyword">except</tt> <tt class="py-name">urllib2</tt><tt class="py-op">.</tt><tt class="py-name">URLError</tt><tt class="py-op">:</tt> </tt>
+<a name="L254"></a><tt class="py-lineno">254</tt>  <tt class="py-line">                                                <tt class="py-keyword">print</tt> <tt class="py-string">'Timeout, we\'ll wait 5 seconds before re-trying the request... '</tt> </tt>
+<a name="L255"></a><tt class="py-lineno">255</tt>  <tt class="py-line">                                                <tt class="py-name">time</tt><tt class="py-op">.</tt><tt class="py-name">sleep</tt><tt class="py-op">(</tt><tt class="py-number">5</tt><tt class="py-op">)</tt> </tt>
+<a name="L256"></a><tt class="py-lineno">256</tt>  <tt class="py-line">                                                <tt class="py-keyword">pass</tt>     </tt>
+<a name="L257"></a><tt class="py-lineno">257</tt>  <tt class="py-line">                                <tt class="py-name">dicogo</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-op">}</tt> <tt class="py-comment"># cleared for next loop</tt> </tt>
+<a name="L258"></a><tt class="py-lineno">258</tt>  <tt class="py-line">        <tt class="py-comment"># write all goterms in a file</tt> </tt>
+<a name="L259"></a><tt class="py-lineno">259</tt>  <tt class="py-line">        <tt class="py-keyword">with</tt> <tt class="py-name">open</tt> <tt class="py-op">(</tt><tt class="py-name">outputPrefix</tt><tt class="py-op">,</tt> <tt class="py-string">'w'</tt><tt class="py-op">)</tt> <tt class="py-keyword">as</tt> <tt class="py-name">gofile</tt><tt class="py-op">:</tt> </tt>
+<a name="L260"></a><tt class="py-lineno">260</tt>  <tt class="py-line">                <tt class="py-name">gofile</tt><tt class="py-op">.</tt><tt class="py-name">write</tt><tt class="py-op">(</tt><tt class="py-string">'\n'</tt><tt class="py-op">.</tt><tt class="py-name">join</tt><tt class="py-op">(</tt><tt class="py-name">all_goterms</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">'\n'</tt><tt class="py-op">)</tt> </tt>
+<a name="L261"></a><tt class="py-lineno">261</tt>  <tt class="py-line">        <tt class="py-keyword">print</tt> <tt class="py-string">'...ok'</tt> </tt>
+</div><a name="L262"></a><tt class="py-lineno">262</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Aug 26 06:18:49 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

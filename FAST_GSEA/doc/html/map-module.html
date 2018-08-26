@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>map</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Module&nbsp;map
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="map-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module map</h1><p class="nomargin-top"><span class="codelink"><a href="map-pysrc.html">source&nbsp;code</a></span></p>
+<pre class="literalblock">
+
+Id mapping script for a gene set. Takes as input a file (gene set) constitued by Refseq,Uniprot, or other supported ids.
+Supported ids are (by decreasing quantity of available information):
+1. UniProtKB-AC (1st col in gz file)
+2. UniProtKB-ID (2)
+3. GeneID (EntrezGene) (3)
+4. RefSeq (4)
+5. GI (5)
+6. GO (as output only) (7)
+8. UniRef100 (8)
+9. UniRef90 (9)
+10. UniRef50 (10)
+11. UniParc (11)
+15. UniGene (15)
+17. EMBL (17)
+18. EMBL-CDS (18)
+19. Ensembl (19)
+20. Ensembl_TRS (20)
+21. Ensembl_PRO (21)
+
+@requires: U{python 2.7&lt;https://www.python.org/downloads/&gt;} or greater
+@requires: U{Conda 4.4.10&lt;https://conda.io/&gt;} or greater with FastGSEA conda environment (fastgsea.yml)
+@requires: manageFiles.sh
+
+</pre>
+
+<hr />
+<div class="fields">      <p><strong>Version:</strong>
+        3.0
+      </p>
+      <p><strong>Author:</strong>
+        Kevin Durimel
+      </p>
+      <p><strong>License:</strong>
+        GPL
+      </p>
+</div><!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="show_progression"></a><span class="summary-sig-name">show_progression</span>(<span class="summary-sig-arg">counter</span>,
+        <span class="summary-sig-arg">total</span>,
+        <span class="summary-sig-arg">precision</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="map-pysrc.html#show_progression">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="mk_susbet"></a><span class="summary-sig-name">mk_susbet</span>(<span class="summary-sig-arg">idMappingFile</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="map-pysrc.html#mk_susbet">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="map-module.html#ids_to_go" class="summary-sig-name">ids_to_go</a>(<span class="summary-sig-arg">idMappingFile</span>,
+        <span class="summary-sig-arg">idsFile</span>,
+        <span class="summary-sig-arg">outputPrefix</span>)</span><br />
+      Takes as input Uniprot or Refseq ids and returns its corresponding 
+      GO-terms.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="map-pysrc.html#ids_to_go">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="map-module.html#ids_to_go_online" class="summary-sig-name">ids_to_go_online</a>(<span class="summary-sig-arg">idMappingFile</span>,
+        <span class="summary-sig-arg">idsFile</span>,
+        <span class="summary-sig-arg">outputPrefix</span>)</span><br />
+      This function follows same principles as ids_to_go() but performs id 
+      mapping online.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="map-pysrc.html#ids_to_go_online">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="map-module.html#any_ids_to_go" class="summary-sig-name">any_ids_to_go</a>(<span class="summary-sig-arg">idMappingFile</span>,
+        <span class="summary-sig-arg">idsFile</span>,
+        <span class="summary-sig-arg">outputPrefix</span>,
+        <span class="summary-sig-arg">whichDb</span>)</span><br />
+      Takes as input any suppported ids and returns its corresponding 
+      GO-terms.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="map-pysrc.html#any_ids_to_go">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="map-module.html#any_ids_to_go_online" class="summary-sig-name">any_ids_to_go_online</a>(<span class="summary-sig-arg">idMappingFile</span>,
+        <span class="summary-sig-arg">idsFile</span>,
+        <span class="summary-sig-arg">outputPrefix</span>,
+        <span class="summary-sig-arg">whichDb</span>)</span><br />
+      This function follows same principles as any_ids_to_go() but performs
+      id mapping online.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="map-pysrc.html#any_ids_to_go_online">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="map-module.html#__doc__" class="summary-name">__doc__</a> = <code title="&quot;&quot;&quot;
+Id mapping script for a gene set. Takes as input a file (gene set) con\
+stitued by Refseq,Uniprot, or other supported ids.
+Supported ids are (by decreasing quantity of available information):
+1. UniProtKB-AC (1st col in gz file)
+2. UniProtKB-ID (2)
+3. GeneID (EntrezGene) (3)
+4. RefSeq (4)
+..."><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="map-module.html#__credits__" class="summary-name">__credits__</a> = <code title="['Kevin La', 'Arnaud Felten', 'Meryl Vila-Nova', 'Nicolas Radomski']"><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">Kevin La</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Arnaud Felten</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Meryl Vila-Nova</code><code class="variable-quote">'</code><code class="variable-op">,</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__maintainer__"></a><span class="summary-name">__maintainer__</span> = <code title="'Kevin Durimel'"><code class="variable-quote">'</code><code class="variable-string">Kevin Durimel</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__email__"></a><span class="summary-name">__email__</span> = <code title="'k@durimel@gmail.com'"><code class="variable-quote">'</code><code class="variable-string">k@durimel@gmail.com</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__status__"></a><span class="summary-name">__status__</span> = <code title="'Alpha'"><code class="variable-quote">'</code><code class="variable-string">Alpha</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="map-module.html#EXEC_PATH" class="summary-name">EXEC_PATH</a> = <code title="'/home/wrecker/EspaceDeTravailLinux/DNAlogy/aug18/DNAlogy/FAST_GSEA/sr\
+c'"><code class="variable-quote">'</code><code class="variable-string">/home/wrecker/EspaceDeTravailLinux/DNAlogy/aug18/</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="None">None</code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="ids_to_go"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ids_to_go</span>(<span class="sig-arg">idMappingFile</span>,
+        <span class="sig-arg">idsFile</span>,
+        <span class="sig-arg">outputPrefix</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="map-pysrc.html#ids_to_go">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Takes as input Uniprot or Refseq ids and returns its corresponding 
+  GO-terms. Please use this function if you want to retrieve GO-terms using
+  a input file containing Refseq or Uniprot ids. The id mapping file subset
+  is automatically generated if it was not already the case (e.g First 
+  script launch , or file deleted.)</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>idMappingFile</code></strong> (string) - path to the .gz file used for id mapping</li>
+        <li><strong class="pname"><code>idsFile</code></strong> - path to the input file containing all the ids we have to map</li>
+        <li><strong class="pname"><code>outputPrefix</code></strong> (string) - file path output prefix</li>
+        <li><strong class="pname"><code>view</code></strong> (string)</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ids_to_go_online"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ids_to_go_online</span>(<span class="sig-arg">idMappingFile</span>,
+        <span class="sig-arg">idsFile</span>,
+        <span class="sig-arg">outputPrefix</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="map-pysrc.html#ids_to_go_online">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This function follows same principles as ids_to_go() but performs id 
+  mapping online. It the best choice for reliability and up-to-date 
+  GO-terms. Ids_to_to_online() always requires idMappingFile parameter to 
+  retrieve refseq ids offline. Takes as input Uniprot or Refseq ids and 
+  returns its corresponding GO-terms. Please use this function if you want 
+  to retrieve GO-terms using a input file containing Refseq or Uniprot 
+  ids.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>idMappingFile</code></strong> (string) - path to the .gz file used for id mapping</li>
+        <li><strong class="pname"><code>idsFile</code></strong> - path to the input file containing all the ids we have to map</li>
+        <li><strong class="pname"><code>outputPrefix</code></strong> (string) - file path output prefix</li>
+        <li><strong class="pname"><code>view</code></strong> (string)</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="any_ids_to_go"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">any_ids_to_go</span>(<span class="sig-arg">idMappingFile</span>,
+        <span class="sig-arg">idsFile</span>,
+        <span class="sig-arg">outputPrefix</span>,
+        <span class="sig-arg">whichDb</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="map-pysrc.html#any_ids_to_go">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Takes as input any suppported ids and returns its corresponding 
+  GO-terms. Slower than ids_go_to beacause it do not use the idMappingFile 
+  subset and requests id per id.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>idMappingFile</code></strong> (string) - path to the .gz file used for id mapping</li>
+        <li><strong class="pname"><code>idsFile</code></strong> - path to the input file containing all the ids we have to map</li>
+        <li><strong class="pname"><code>whichDb</code></strong> (string) - the ids database prefix that we want in output (for example, if 
+          we want go ids, whichDB = GO. Please refer to &quot;supported 
+          ids&quot; at the top section)</li>
+        <li><strong class="pname"><code>outputPrefix</code></strong> (string) - file path output prefix</li>
+        <li><strong class="pname"><code>view</code></strong> (string)</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="any_ids_to_go_online"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">any_ids_to_go_online</span>(<span class="sig-arg">idMappingFile</span>,
+        <span class="sig-arg">idsFile</span>,
+        <span class="sig-arg">outputPrefix</span>,
+        <span class="sig-arg">whichDb</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="map-pysrc.html#any_ids_to_go_online">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This function follows same principles as any_ids_to_go() but performs 
+  id mapping online. This function is an experimental feature and support 
+  only the ids supported by the <a 
+  href="https://www.ebi.ac.uk/QuickGO/api/index.html" target="_top"> 
+  Uniprot API</a> Takes as input any suppported ids and returns its 
+  corresponding GO-terms. Slower than any_ids_go_to() beacause it do not 
+  use the idMappingFile subset and requests id per id.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>idMappingFile</code></strong> (string) - path to the .gz file used for id mapping</li>
+        <li><strong class="pname"><code>idsFile</code></strong> - path to the input file containing all the ids we have to map</li>
+        <li><strong class="pname"><code>whichDb</code></strong> (string) - the ids database prefix that we want in output (for example, if 
+          we want go ids, whichDB = GO. Please refer to &quot;supported 
+          ids&quot; at the top section)</li>
+        <li><strong class="pname"><code>outputPrefix</code></strong> (string) - file path output prefix</li>
+        <li><strong class="pname"><code>view</code></strong> (string)</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__doc__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">__doc__</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&quot;&quot;&quot;
+Id mapping script for a gene set. Takes as input a file (gene set) con<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+stitued by Refseq,Uniprot, or other supported ids.
+Supported ids are (by decreasing quantity of available information):
+1. UniProtKB-AC (1st col in gz file)
+2. UniProtKB-ID (2)
+3. GeneID (EntrezGene) (3)
+4. RefSeq (4)
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__credits__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">__credits__</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">Kevin La</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Arnaud Felten</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Meryl Vila-Nova</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Nicolas Radomski</code><code class="variable-quote">'</code><code class="variable-group">]</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="EXEC_PATH"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">EXEC_PATH</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-quote">'</code><code class="variable-string">/home/wrecker/EspaceDeTravailLinux/DNAlogy/aug18/DNAlogy/FAST_GSEA/sr</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">c</code><code class="variable-quote">'</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Aug 26 06:18:49 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
