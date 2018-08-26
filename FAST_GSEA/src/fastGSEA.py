@@ -9,6 +9,8 @@ protein identifier per line.
 @requires: U{R 3.3.3 RC <https://www.r-project.org/>}
 @requires: U{Conda 4.4.10<https://conda.io/>} or greater with FastGSEA  conda environment (fastgsea.yml)
 @requires: map.py
+@requires: enrich.py
+@requires: trim.py
 @requires: managefiles.sh
 """
 
@@ -72,12 +74,13 @@ def get_parser():
 	parser.add_argument('-output', dest='output', action="store",
 						type=str, required=True, help='output results prefix: recquired')
 
-	parser.add_argument('-fromOtherDB', dest='fromOtherDB', action="store",
-						type=str, required=False, help='Ids supported by default are UniProtKB-AC and RefSeq ids. Use this '+\
-						'option if you want to use all the supported ids. Caution: results may be less reliable!')
+	parser.add_argument('--fromOtherDB', dest='fromOtherDB', action='store_true', 
+						help='Ids supported by default are UniProtKB-AC and RefSeq ids. Use this '+\
+						'option if you want to use all the supported ids. Caution: results may be less reliable!',
+						default=False)
 
 	parser.add_argument('-obo', dest='obo', action="store",
-						type=str, required=False, help='gene ontology file (old go-basic.obo or latest gosubset_prok.obo)')
+						type=str, required=False, help='Gene ontology file (old go-basic.obo or latest gosubset_prok.obo)')
 
 	parser.add_argument('--mapOffline', dest='mapOffline', action='store_true', 
 						help='Retrieve GO-terms without requesting Uniprot API\'s. '+\
@@ -97,6 +100,15 @@ def get_parser():
 	parser.add_argument('--view', dest='view', action='store_true', 
 						help='Generate graphical representation of the enrichment results (experimental feature)',
 						default=False)
+
+	parser.add_argument('--mapOnly', dest='mapOnly', action='store_true', 
+						help='Only mapping ids from your input (arg: -from) ids to other (arg: -to) ids and save the results in'+\
+						'a text file',
+						default=False)
+
+	parser.add_argument('-toDB', dest='toDB', action="store",
+						type=str, required=False, help='database identifier wanted for the output ids (GO, UniRef100, etc...')
+
 
 	return parser
 
@@ -152,34 +164,42 @@ def main():
 		# Create idmapping subset file if it dont already exists
 		map.mk_susbet(Arguments.mappingFile) 
 
-	if Arguments.mapOffline:
-		# Map ids files OFFLINE enabling only Refseq and GO ids support. Reliable solution
-		if Arguments.fromOtherDB:
-			if Arguments.fromOtherDB not in SUPPORTED_IDS:
-				print 'fromOtherDB - bad argument: ' + Arguments.fromOtherDB + \
+	# Only mapping ids if asked
+	if Arguments.mapOnly:
+		if Arguments.toDB:
+			if Arguments.toDB in SUPPORTED_IDS:
+				map.any_ids_to_any_ids(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/../ech_mapped_ids.txt', Arguments.toDB) # Map sample ids
+				map.any_ids_to_any_ids(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/../univ_mapped_ids.txt', Arguments.toDB) # Map universe ids
+				# Remove tmp files
+				if not Arguments.keepTmp:
+					subprocess.check_call('rm -r ' + TMP_DIR, shell = True)
+				sys.exit(0)
+			else:
+				print 'toDB - bad argument: ' + Arguments.toDB + \
 				'\nPlease use only supported ids. Program will stop now.'
 				parser.print_help()
 				sys.exit(1)
-			# Map ids files OFFLINE enabling all ids support. Results may be uncomplete
-			else:
-				map.any_ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', Arguments.fromOtherDB) # Map sample ids
-				map.any_ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', Arguments.fromOtherDB) # Map universe ids
-		# Map ids files OFFLINE enabling only Refseq and GO ids support. Reliable solution
+		else:
+			parser.print_help()
+			sys.exit(1)
+
+
+
+	if Arguments.mapOffline:
+		# Map ids files OFFLINE enabling only all ids support.
+		if Arguments.fromOtherDB:
+			map.any_ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', 'GO') # Map sample ids
+			map.any_ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', 'GO') # Map universe ids
+		# Map ids files OFFLINE enabling only Refseq and GO ids support. Faster and most reliable solution
 		else:
 			map.ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
 			map.ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
 	else:
-		# Map ids files ONLINE enabling only Refseq and GO ids support. BEST solution for strong results
-		if Arguments.fromOtherDB:
-			if Arguments.fromOtherDB not in SUPPORTED_IDS:
-				print 'fromOtherDB - bad argument: ' + str(Arguments.fromOtherDB) + \
-				'\nPlease use only supported ids. Program will stop now.'
-				parser.print_help()
-				sys.exit(1)
-			else:
-				map.any_ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', Arguments.fromOtherDB) # Map sample ids
-				map.any_ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', Arguments.fromOtherDB) # Map universe ids
 		# Map ids files ONLINE enabling all ids support. Results may be uncomplete
+		if Arguments.fromOtherDB:
+			map.any_ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', 'GO') # Map sample ids
+			map.any_ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', 'GO') # Map universe ids
+		# Map ids files ONLINE enabling only Refset and Uniprot ids support. BEST solution for strong results
 		else:
 			map.ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
 			map.ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids

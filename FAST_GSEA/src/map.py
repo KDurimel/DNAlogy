@@ -260,3 +260,38 @@ def any_ids_to_go_online(idMappingFile, idsFile, outputPrefix, whichDb):
 		gofile.write('\n'.join(all_goterms) + '\n')
 	print '...ok'
 	
+def any_ids_to_any_ids(idMappingFile, idsFile, outputPrefix, whichDb):
+	"""
+	Takes as input any suppported ids and returns its corresponding GO-terms. Slower
+	than ids_go_to beacause it do not use the idMappingFile subset and requests id per id.
+	@param idMappingFile: path to the .gz file used for id mapping 
+	@type idMappingFile: string
+	@param idsFile: path to the input file containing all the ids we have to map 
+	@type view: string
+	@param whichDb: the ids database prefix that we want in output (for example, if we 
+	want go ids, whichDB = GO. Please refer to "supported ids" at the top section)
+	@type whichDb: string
+	@param outputPrefix: file path output prefix
+	@type outputPrefix: string
+	"""
+	print 'Offline ids mapping from any IDs:'
+	all_ids = [] # This will contains all the go-terms retrieved
+	# Compute file lenght (for % progressing display)
+	with open(idsFile,'r ') as ids:
+		input_lines_count = len([f for f in ids.readlines()])
+
+	with open(idsFile,'r') as ids:
+		for counter,id_ in enumerate(ids):
+			show_progression(counter,input_lines_count,2)
+			cmd = 'bash ' + EXEC_PATH + '/manageFiles.sh '+ ' --anythingToAnything '+ idMappingFile + ' ' + id_.strip() + ' ' + whichDb
+			ids = str(subprocess.check_output(cmd, shell = True, preexec_fn = lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))).split(';')
+			for id_ in ids:
+				ids_clean = id_.strip()
+				# if ids exist (not nonetype or something else bcs was processed by strip())
+				if ids_clean:
+					all_ids.append(ids_clean)
+
+	# write all ids in a file
+	with open (outputPrefix, 'w') as idsOut:
+		idsOut.write('\n'.join(all_ids) + '\n')
+	print '...ok'
