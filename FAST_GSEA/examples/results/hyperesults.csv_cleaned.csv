@@ -1,0 +1,101 @@
+GO:ID;Go term;Number of hits;Expected number of hits;Go level;P-value;Corrected p-value;Aspect
+GO:0008152;metabolic process;2;1.329281;2;0.148569385734993;1;BP
+GO:0006139;nucleobase-containing compound metabolic process;2;0.2658561;5;0.00241919929424088;1;BP
+GO:0006351;transcription, DNA-templated;2;0.1375118;7;0.000349549112383601;0.6358298;BP
+GO:0006725;cellular aromatic compound metabolic process;2;0.2750236;4;0.00266512508329008;1;BP
+GO:0006807;nitrogen compound metabolic process;2;0.5408797;3;0.0171561347195367;1;BP
+GO:0008150;biological_process;8;7.856507;1;0.386745009844001;1;BP
+GO:0009058;biosynthetic process;2;0.3529469;3;0.00538392840178453;1;BP
+GO:0009059;macromolecule biosynthetic process;2;0.183349;5;0.000822609880817503;1;BP
+GO:0009987;cellular process;8;4.024512;2;0.0201116177212208;1;BP
+GO:0010467;gene expression;2;0.2750236;5;0.00266512508329008;1;BP
+GO:0016070;RNA metabolic process;2;0.2429375;6;0.00186754730970782;1;BP
+GO:0018130;heterocycle biosynthetic process;2;0.1558467;5;0.00050833740543895;0.9246657;BP
+GO:0019438;aromatic compound biosynthetic process;2;0.1558467;5;0.00050833740543895;0.9246657;BP
+GO:0034641;cellular nitrogen compound metabolic process;2;0.3071097;4;0.00364500102660841;1;BP
+GO:0034654;nucleobase-containing compound biosynthetic process;2;0.1466792;6;0.000424182163633266;0.7715874;BP
+GO:0043170;macromolecule metabolic process;2;0.770066;4;0.0423655509929639;1;BP
+GO:0044237;cellular metabolic process;2;0.9396639;3;0.0685098591705979;1;BP
+GO:0044238;primary metabolic process;2;0.870908;3;0.0571837690945502;1;BP
+GO:0044249;cellular biosynthetic process;2;0.3025259;4;0.00349339523709072;1;BP
+GO:0044260;cellular macromolecule metabolic process;2;0.7425636;5;0.03870949572768;1;BP
+GO:0044271;cellular nitrogen compound biosynthetic process;2;0.183349;5;0.000822609880817503;1;BP
+GO:0046483;heterocycle metabolic process;2;0.2750236;4;0.00266512508329008;1;BP
+GO:0050789;regulation of biological process;2;2.864829;3;0.548390666886537;1;BP
+GO:0050794;regulation of cellular process;2;2.168102;4;0.369162640699249;1;BP
+GO:0065007;biological regulation;2;3.006924;2;0.581298408076566;1;BP
+GO:0044403;symbiosis, encompassing mutualism through parasitism;1;0.3804493;4;0.0557975839109295;1;BP
+GO:0044419;interspecies interaction between organisms;1;0.3804493;3;0.0557975839109295;1;BP
+GO:0051704;multi-organism process;1;0.5546309;2;0.106589520106289;1;BP
+GO:0007049;cell cycle;1;0.4492052;4;0.0745929625926795;1;BP
+GO:0051301;cell division;1;0.1100094;4;0.00538950894084093;1;BP
+GO:0009653;anatomical structure morphogenesis;1;0.06875589;3;0.0021064505041345;1;BP
+GO:0030154;cell differentiation;1;0.2566887;5;0.0273397133766173;1;BP
+GO:0032502;developmental process;1;0.7471474;2;0.171897940202315;1;BP
+GO:0048869;cellular developmental process;1;0.2750236;4;0.0310534691657144;1;BP
+GO:0030435;sporulation resulting in formation of a cellular spore;1;0.01375118;6;6.2398085109501e-05;0.1135021;BP
+GO:0008219;cell death;2;0.1787653;4;0.000763464447495772;1;BP
+GO:0044003;modification by symbiont of host morphology or physiology;1;0.01375118;5;6.2398085109501e-05;0.1135021;BP
+GO:0044068;modulation by symbiont of host cellular process;1;0.01375118;6;6.2398085109501e-05;0.1135021;BP
+GO:0051701;interaction with host;1;0.02750236;4;0.000309181122877641;0.5624005;BP
+GO:0051817;modification of morphology or physiology of other organism involved in symbiotic interaction;1;0.01375118;4;6.2398085109501e-05;0.1135021;BP
+GO:0052040;modulation by symbiont of host programmed cell death;1;0.004583726;7;0;0;BP
+GO:0052150;modulation by symbiont of host apoptotic process;1;0.004583726;8;0;0;BP
+GO:0052248;modulation of programmed cell death in other organism involved in symbiotic interaction;1;0.004583726;5;0;0;BP
+GO:0052433;modulation by organism of apoptotic process in other organism involved in symbiotic interaction;1;0.004583726;9;0;0;BP
+GO:0065008;regulation of biological quality;1;0.284191;3;0.0329809451734963;1;BP
+GO:0022607;cellular component assembly;1;0.183349;4;0.0145207907765277;1;BP
+GO:0016043;cellular component organization;1;0.5408797;3;0.102229706943078;1;BP
+GO:0043933;macromolecular complex subunit organization;1;0.1145932;4;0.00584065149450681;1;BP
+GO:0044085;cellular component biogenesis;1;0.183349;3;0.0145207907765277;1;BP
+GO:0065003;macromolecular complex assembly;1;0.1100094;5;0.00538950894084093;1;BP
+GO:0051259;protein oligomerization;1;0.05500471;7;0.0013360466217826;1;BP
+GO:0005575;cellular_component;51;24.84522;1;3.46345478910582e-07;9.489866e-05;CC
+GO:0018995;host;19;0.9841024;3;5.18002988422697e-21;1.419328e-18;CC
+GO:0033643;host cell part;19;0.930179;3;1.46334434714575e-21;4.009564e-19;CC
+GO:0043657;host cell;19;0.930179;4;1.46334434714575e-21;4.009564e-19;CC
+GO:0044279;other organism membrane;18;0.7684087;3;7.21707096070447e-22;1.977477e-19;CC
+GO:0033644;host cell membrane;18;0.7549279;4;4.87048864825583e-22;1.334514e-19;CC
+GO:0016020;membrane;29;13.25168;2;3.05160663084188e-05;0.008361402;CC
+GO:0031224;intrinsic component of membrane;25;2.83098;3;1.18455441230607e-17;3.245679e-15;CC
+GO:0044425;membrane part;25;4.489125;2;7.8540753942438e-13;2.152017e-10;CC
+GO:0016021;integral component of membrane;23;2.777056;4;8.84965652641274e-16;2.424806e-13;CC
+GO:0005623;cell;6;20.78748;2;0.99990374074545;1;CC
+GO:0044464;cell part;6;20.774;2;0.99990272483771;1;CC
+GO:0030428;cell septum;1;0.02696171;3;0.00018123123566463;0.04965736;CC
+GO:0005886;plasma membrane;4;3.531984;3;0.279540584104501;1;CC
+GO:0005622;intracellular;1;15.59735;3;0.999998138922043;1;CC
+GO:0044424;intracellular part;1;15.59735;3;0.999998138922043;1;CC
+GO:0005737;cytoplasm;1;12.84725;4;0.999972444825054;1;CC
+GO:0005576;extracellular region;1;0.6201193;2;0.12758446646801;1;CC
+GO:0033646;host intracellular part;1;0.4044256;4;0.061546717766687;1;CC
+GO:0043656;intracellular region of host;1;0.4044256;4;0.061546717766687;1;CC
+GO:0030430;host cell cytoplasm;1;0.3235405;5;0.0411501674201295;1;CC
+GO:0043231;intracellular membrane-bounded organelle;1;11.29696;4;0.999877436762301;1;CC
+GO:0043226;organelle;1;12.29454;2;0.999952973367428;1;CC
+GO:0043227;membrane-bounded organelle;1;11.60702;3;0.999908907156883;1;CC
+GO:0043229;intracellular organelle;1;11.971;3;0.999935775768225;1;CC
+GO:0044444;cytoplasmic part;1;11.44525;4;0.999893641229162;1;CC
+GO:0003674;molecular_function;12;11.52056;1;0.362978006575565;1;MF
+GO:0003676;nucleic acid binding;2;0.4531196;4;0.0101698199006674;1;MF
+GO:0005488;binding;5;7.465145;2;0.772828784778415;1;MF
+GO:0003677;DNA binding;2;0.1246079;5;0.000214594512723556;0.05557998;MF
+GO:0003824;catalytic activity;4;2.390206;2;0.0897055434106401;1;MF
+GO:0016740;transferase activity;2;0.3511677;3;0.00497359782028975;1;MF
+GO:0016772;transferase activity, transferring phosphorus-containing groups;2;0.07929592;4;4.70233333446567e-05;0.01217904;MF
+GO:0016779;nucleotidyltransferase activity;2;0.04531196;5;5.50685542907356e-06;0.001426276;MF
+GO:0034062;RNA polymerase activity;2;0.04531196;6;5.50685542907356e-06;0.001426276;MF
+GO:0003899;DNA-directed RNA polymerase activity;2;0.03398397;7;1.38796764901718e-06;0.0003594836;MF
+GO:0016787;hydrolase activity;2;1.257407;3;0.130564823171023;1;MF
+GO:0016788;hydrolase activity, acting on ester bonds;2;0.2039038;4;0.00100273927591617;0.2597095;MF
+GO:0016791;phosphatase activity;2;0.1812478;6;0.000699386937393913;0.1811412;MF
+GO:0042578;phosphoric ester hydrolase activity;2;0.1812478;5;0.000699386937393913;0.1811412;MF
+GO:0046872;metal ion binding;3;0.3058557;5;0.00021644446036753;0.05605912;MF
+GO:0043167;ion binding;3;1.348031;3;0.0452142424912679;1;MF
+GO:0043169;cation binding;3;0.3058557;4;0.00021644446036753;0.05605912;MF
+GO:0046914;transition metal ion binding;1;0.09062391;6;0.00338605535456251;0.8769883;MF
+GO:0008270;zinc ion binding;1;0.06796793;7;0.00184071994519136;0.4767465;MF
+GO:0045735;nutrient reservoir activity;3;0.4191356;2;0.000748204210845644;0.1937849;MF
+GO:0004721;phosphoprotein phosphatase activity;2;0.1472639;7;0.000365977322599956;0.09478813;MF
+GO:0004725;protein tyrosine phosphatase activity;1;0.01132799;8;0;0;MF
+GO:0008138;protein tyrosine/serine/threonine phosphatase activity;1;0.01132799;8;0;0;MF
