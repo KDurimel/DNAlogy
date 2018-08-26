@@ -92,6 +92,8 @@ def trim(goprok_txt,enrichmentResultsFile):
     CAUTION - Using this functionality may make you lose relevant prokaryotic GO-terms::\n\
     https://github.com/geneontology/go-ontology/issues/16077 \n\
     Please inspect your results carefully."
-    subprocess.check_call('grep -F -f ' + goprok_txt + ' ' + enrichmentResultsFile + ' > ' +\
+    subprocess.check_call('echo "GO:ID;Go term;Number of hits;Expected number of hits;Go level;P-value;Corrected p-value;Aspect" > '+\
+        enrichmentResultsFile + '_cleaned.csv', shell = True)
+    subprocess.check_call('grep -F -f ' + goprok_txt + ' ' + enrichmentResultsFile + ' >> ' +\
         enrichmentResultsFile + '_cleaned.csv', shell = True)
     print "...ok"
