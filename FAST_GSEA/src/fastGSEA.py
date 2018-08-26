@@ -139,39 +139,39 @@ def main():
 	# 	************************ 
 	subprocess.check_call('mkdir -p ' + Arguments.output + '/tmp', shell=True)
 	TMP_DIR = Arguments.output + '/tmp'
-	# if not exists(Arguments.mappingFile + '_subset.gz'):
-	# 	# Create idmapping subset file if it dont already exists
-	# 	map.mk_susbet(Arguments.mappingFile) 
+	if not exists(Arguments.mappingFile + '_subset.gz'):
+		# Create idmapping subset file if it dont already exists
+		map.mk_susbet(Arguments.mappingFile) 
 
-	# if Arguments.mapOffline:
-	# 	# Map ids files OFFLINE enabling only Refseq and GO ids support. Reliable solution
-	# 	if Arguments.fromOtherDB:
-	# 		if Arguments.fromOtherDB not in SUPPORTED_IDS:
-	# 			print 'fromOtherDB - bad argument: ' + Arguments.fromOtherDB + \
-	# 			'\nPlease use only supported ids. Program will stop now.'
-	# 			sys.exit(1)
-	# 		# Map ids files OFFLINE enabling all ids support. Results may be uncomplete
-	# 		else:
-	# 			map.any_ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', Arguments.fromOtherDB) # Map sample ids
-	# 			map.any_ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', Arguments.fromOtherDB) # Map universe ids
-	# 	# Map ids files OFFLINE enabling only Refseq and GO ids support. Reliable solution
-	# 	else:
-	# 		map.ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
-	# 		map.ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
-	# else:
-	# 	# Map ids files ONLINE enabling only Refseq and GO ids support. BEST solution for strong results
-	# 	if Arguments.fromOtherDB:
-	# 		if Arguments.fromOtherDB not in SUPPORTED_IDS:
-	# 			print 'fromOtherDB - bad argument: ' + str(Arguments.fromOtherDB) + \
-	# 			'\nPlease use only supported ids. Program will stop now.'
-	# 			sys.exit(1)
-	# 		else:
-	# 			map.any_ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', Arguments.fromOtherDB) # Map sample ids
-	# 			map.any_ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', Arguments.fromOtherDB) # Map universe ids
-	# 	# Map ids files ONLINE enabling all ids support. Results may be uncomplete
-	# 	else:
-	# 		map.ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
-	# 		map.ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
+	if Arguments.mapOffline:
+		# Map ids files OFFLINE enabling only Refseq and GO ids support. Reliable solution
+		if Arguments.fromOtherDB:
+			if Arguments.fromOtherDB not in SUPPORTED_IDS:
+				print 'fromOtherDB - bad argument: ' + Arguments.fromOtherDB + \
+				'\nPlease use only supported ids. Program will stop now.'
+				sys.exit(1)
+			# Map ids files OFFLINE enabling all ids support. Results may be uncomplete
+			else:
+				map.any_ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', Arguments.fromOtherDB) # Map sample ids
+				map.any_ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', Arguments.fromOtherDB) # Map universe ids
+		# Map ids files OFFLINE enabling only Refseq and GO ids support. Reliable solution
+		else:
+			map.ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
+			map.ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
+	else:
+		# Map ids files ONLINE enabling only Refseq and GO ids support. BEST solution for strong results
+		if Arguments.fromOtherDB:
+			if Arguments.fromOtherDB not in SUPPORTED_IDS:
+				print 'fromOtherDB - bad argument: ' + str(Arguments.fromOtherDB) + \
+				'\nPlease use only supported ids. Program will stop now.'
+				sys.exit(1)
+			else:
+				map.any_ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', Arguments.fromOtherDB) # Map sample ids
+				map.any_ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', Arguments.fromOtherDB) # Map universe ids
+		# Map ids files ONLINE enabling all ids support. Results may be uncomplete
+		else:
+			map.ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
+			map.ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
 
 	# 	************************ 
 	# 	**** GO ENRICHMENT ***** 
