@@ -1,0 +1,3 @@
+# ignore html files
+*.html linguist-vendored
+
