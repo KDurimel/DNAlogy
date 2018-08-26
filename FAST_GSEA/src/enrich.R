@@ -15,23 +15,25 @@ options(max.print=99999999)
 # parse arguments from master script
 args <- commandArgs(TRUE)
 
-#Load VCFtoGO.py and EveryGO.py output 
 outputPrefix=args[1]    
 outputPrefix=gsub(" ", "",outputPrefix, fixed = TRUE)  
-go_univ_file=readLines(paste(outputPrefix,"/","go_univ_raw.txt",sep="")) 
-go_ech_file=readLines(paste(outputPrefix,"/","go_ech_raw.txt",sep="")) 
-
+# read GO mapping files from master script
+go_univ_file=readLines(paste(outputPrefix,"/go_univ_raw.txt",sep="")) 
+go_ech_file=readLines(paste(outputPrefix,"/go_ech_raw.txt",sep="")) 
 
 
 #####################################################################
-#GO-TERMS WALKING
+# WALK INSIDE THE GO-TERMS TREE
 #####################################################################
-##GO-term walking goal: Retrieve all ancestor GO-terms of the GO-term three for each GO-ID's and categorize them by one file per aspect(CC,BP,MF)
+# For each GO-terms, retrieve its ancestors and categorize them by aspect(CC,BP,MF)
 
 
 ################### ASPECT 1: CC ################################
 
 ###RETRIEVE UNIVERSE GO-TERMS ANCESTORS###
+
+
+print('Browsing sample ontology tree for cellular components...')
 
 capture.output(for(i in 1:length(go_univ_file))
 {
@@ -62,7 +64,7 @@ capture.output(print.go_only(grep(pattern ="GO:" , data, value = TRUE, fixed = T
 
 
 ###RETRIEVE SAMPLE GO-TERMS ANCESTORS###
-
+print('Browsing universe ontology tree for cellular components...')
 capture.output(for(i in 1:length(go_ech_file))
 {
   #Try, in order to avoid errors if GO-term is not a CC or dont have any ancestors
@@ -87,6 +89,8 @@ capture.output(print.go_only(grep(pattern ="GO:" , data, value = TRUE, fixed = T
 
 ###RETRIEVE UNIVERSE GO-TERMS ANCESTORS###
 
+print('Browsing universe ontology tree for biological processes...')
+
 capture.output(for(i in 1:length(go_univ_file))
 {
   aspect=1
@@ -105,7 +109,7 @@ data=scan(paste(outputPrefix,"/gobp_univ.txt",sep=""),what="character"())
 capture.output(print.go_only(grep(pattern = "GO:" , data, value = TRUE, fixed = TRUE)),file=(paste(outputPrefix,"/gobp_univ.txt",sep="")))
 
 ###RETRIEVE SAMPLE GO-TERMS ANCESTORS###
-
+print('Browsing sample ontology tree for biological processes...')
 capture.output(for(i in 1:length(go_ech_file))
 {
   #Try, in order to avoid errors if GO-term is not a CC or dont have any ancestors
@@ -130,6 +134,8 @@ capture.output(print.go_only(grep(pattern ="GO:" , data, value = TRUE, fixed = T
 
 ###RETRIEVE UNIVERSE GO-TERMS ANCESTORS###
 
+print('Browsing universe ontology tree for molecular functions...')
+
 capture.output(for(i in 1:length(go_univ_file))
 {
   #Try, in order to avoid errors if GOterm is not a MF or dont have any ancestors
@@ -149,7 +155,7 @@ data=scan(paste(outputPrefix,"/gomf_univ.txt",sep=""),what="character"())
 capture.output(print.go_only(grep(pattern = "GO:" , data, value = TRUE, fixed = TRUE)),file=(paste(outputPrefix,"/gomf_univ.txt",sep="")))
 
 ###RETRIEVE SAMPLE GO-TERMS ANCESTORS###
-
+print('Browsing sample ontology tree for molecular functions...')
 capture.output(for(i in 1:length(go_ech_file))
 {
   #Try, in order to avoid errors if GO-term is not a CC or dont have any ancestors
@@ -174,19 +180,20 @@ capture.output(print.go_only(grep(pattern ="GO:" , data, value = TRUE, fixed = T
 ############# GO-THREE WALKING AND RELATED STATISTICAL TESTS 
 ######################################################################################################################
 
+print('Performing hypergeometric tests...')
 
 ############################################
 #HYPERGEOMETRIC TEST
 ############################################
 #phyper(a,b,c,d,lower.tail = TRUE)
-#AVEC
+#
 #a : GO-term hits in sample
 #b : GO-term hits in universe
-#c : universe of GO-terms length
+#c : universe of GO-terms length - GO-terms sample length
 #d : GO-terms sample length
 #H0: overrepresented GO-term
 #H1: not overrepresented GO-term
-#Lower.tail = TRUE : invert HO and H1.
+#Lower.tail = TRUE : invert HO and H1 hypothesis.
 #########################################################
 #INITIALIZE VALUES FOR UNIVERSE AND DATASETS 
 #########################################################
@@ -223,8 +230,6 @@ parent="all" #Root node can be considered as "all" in Go.db
 
 #################### MOLECULAR FUNCTION #################
 
-#Bro-tip: parameters allready set for MF analysis (see behind. But CC and BP need to resetting parameters)
-
 #####PHYPER TEST WITH BONFERRONI CORRECTION#####
 pvals=""
 for(i in 1:length(Go_uniq))
@@ -238,16 +243,10 @@ a=1
 
 ######PHYPER OK, NOW ENHANCE PHYPER RESULTS#####
 capture.output(
-  #FILE Header
-  cat("GO:ID","Go term","Number of hits","Expected number of hits","Go level","P-value","Corrected p-value",sep=";"),
-  cat("\n"),
-  
   for(i in 1:length(Go_uniq))
   {
     targeted_goterm=toString(Go_uniq[i]) #tostring in order to request value
     #Targeted_goterm: GOterm currently processed##Number of hits##Expected number of hits##phyper(count of this GO in the batch,count of this go in the universe, universe length,batch length)
-    #With:number of hits: count of this goterm in the batch
-    #expected number of hits: count of the same goterm in the universe
     expectednumberofhits=(((length(which(Go_univ==targeted_goterm)))/(length(Go_univ[,1])))*length(Go_ech[,1]))
     trm=Term(targeted_goterm)
     ##########################################################################
@@ -278,7 +277,7 @@ capture.output(
     {
 	    col3=as.character(length(which(Go_ech==targeted_goterm)))
 	    col6=as.character(phyper(length(which(Go_ech==targeted_goterm)),length(which(Go_univ==targeted_goterm)),length(Go_univ[,1])-length(which(Go_univ==targeted_goterm)),length(Go_ech[,1]),lower.tail = FALSE))
-	    cat(targeted_goterm,trm,col3,expectednumberofhits,level,col6,pvals_adjusted[a],sep=";")
+	    cat(targeted_goterm,trm,col3,expectednumberofhits,level,col6,pvals_adjusted[a],'MF',sep=";")
 	    cat("\n")
     }
     rm(targeted_goterm)
@@ -297,7 +296,6 @@ pvals=""
 for(i in 1:length(Go_uniq))
 {
   targeted_goterm=toString(Go_uniq[i]) #tostring in order to request value
-  #Bro-tip= lower.tail=TRUE because (lower.tail=TRUE)=FALSE in next loop, for obscure reasons
   pvals[i]<-phyper(length(which(Go_ech==targeted_goterm)),length(which(Go_univ==targeted_goterm)),length(Go_univ[,1])-length(which(Go_univ==targeted_goterm)),length(Go_ech[,1]),lower.tail = FALSE) 
 }
 pvals2<-as.vector(pvals)
@@ -305,16 +303,9 @@ pvals_adjusted<-p.adjust(pvals2, method="bonferroni", n=length(pvals))
 a=1
 ######PHYPER OK, NOW ENHANCE PHYPER RESULTS#####
 capture.output(
-  #FILE Header
-  cat("GO:ID","Go term","Number of hits","Expected number of hits","Go level","P-value","Corrected p-value",sep=";"),
-  cat("\n"),
-  
   for(i in 1:length(Go_uniq))
   {
     targeted_goterm=toString(Go_uniq[i]) #tostring in order to request value
-    #Targeted_goterm: GOterm currently processed##Number of hits##Expected number of hits##phyper(count of this GO in the batch,count of this go in the universe, universe length,batch length)
-    #With:number of hits: count of this goterm in the batch
-    #expected number of hits: count of the same goterm in the universe
     expectednumberofhits=(((length(which(Go_univ==targeted_goterm)))/(length(Go_univ[,1])))*length(Go_ech[,1]))
     trm=Term(targeted_goterm)
     ##########################################################################
@@ -345,7 +336,7 @@ capture.output(
     {
 	    col3=as.character(length(which(Go_ech==targeted_goterm)))
 	    col6=as.character(phyper(length(which(Go_ech==targeted_goterm)),length(which(Go_univ==targeted_goterm)),length(Go_univ[,1])-length(which(Go_univ==targeted_goterm)),length(Go_ech[,1]),lower.tail = FALSE))
-	    cat(targeted_goterm,trm,col3,expectednumberofhits,level,col6,pvals_adjusted[a],sep=";")
+	    cat(targeted_goterm,trm,col3,expectednumberofhits,level,col6,pvals_adjusted[a],'CC',sep=";")
 	    cat("\n")
     }
     rm(targeted_goterm)
@@ -372,16 +363,9 @@ a=1
 
 ######PHYPER OK, NOW ENHANCE PHYPER RESULTS#####
 capture.output(
-  #FILE Header
-  cat("GO:ID","Go term","Number of hits","Expected number of hits","Go level","P-value","Corrected p-value",sep=";"),
-  cat("\n"),
-  
   for(i in 1:length(Go_uniq))
   {
     targeted_goterm=toString(Go_uniq[i]) #tostring in order to request value
-    #Targeted_goterm: GOterm currently processed##Number of hits##Expected number of hits##phyper(count of this GO in the batch,count of this go in the universe, universe length,batch length)
-    #With:number of hits: count of this goterm in the batch
-    #expected number of hits: count of the same goterm in the universe
     expectednumberofhits=(((length(which(Go_univ==targeted_goterm)))/(length(Go_univ[,1])))*length(Go_ech[,1]))
     trm=Term(targeted_goterm)
     ##########################################################################
@@ -412,7 +396,7 @@ capture.output(
     {
 	    col3=as.character(length(which(Go_ech==targeted_goterm)))
 	    col6=as.character(phyper(length(which(Go_ech==targeted_goterm)),length(which(Go_univ==targeted_goterm)),length(Go_univ[,1])-length(which(Go_univ==targeted_goterm)),length(Go_ech[,1]),lower.tail = FALSE))
-	    cat(targeted_goterm,trm,col3,expectednumberofhits,level,col6,pvals_adjusted[a],sep=";")
+	    cat(targeted_goterm,trm,col3,expectednumberofhits,level,col6,pvals_adjusted[a],'BP',sep=";")
 	    cat("\n")
 	}
     rm(targeted_goterm)

@@ -27,7 +27,9 @@ from argparse import RawDescriptionHelpFormatter, ArgumentParser # help text for
 import sys, subprocess # too many uses --> import all.
 
 ######## IMPORT HOMEMADE MODULES ########
-import map # homemade id mapping module : import all
+import map # homemade id mapping module : import all functionalities
+from enrich import launchGSEA # homemade go-enrichment module
+import trim # homemade ontology files management : import all functionalities
 
 
 def get_parser():
@@ -74,11 +76,23 @@ def get_parser():
 						type=str, required=False, help='Ids supported by default are UniProtKB-AC and RefSeq ids. Use this '+\
 						'option if you want to use all the supported ids. Caution: results may be less reliable!')
 
+	parser.add_argument('-obo', dest='obo', action="store",
+						type=str, required=False, help='gene ontology file (old go-basic.obo or latest gosubset_prok.obo)')
+
 	parser.add_argument('--mapOffline', dest='mapOffline', action='store_true', 
 						help='Retrieve GO-terms without requesting Uniprot API\'s. '+\
 						'Faster but less reliable. Use this option in case of low internet bandwith, but '+\
 						'dont forget that the GO enrichment step (following the mapping step) will still '+\
 						'requires a reliable internet connection.', default=False)
+
+	parser.add_argument('--keepTmp', dest='keepTmp', action='store_true', 
+						help='Generate graphical representation of the enrichment results (experimental feature)',
+						default=False)
+
+	parser.add_argument('--trim', dest='trim', action='store_true', 
+						help='Trim prokaryotic GO-terms. This feature will be DEPRECATED! More information here: '+\
+						'https://github.com/geneontology/go-ontology/issues/16077',
+						default=False)
 
 	parser.add_argument('--view', dest='view', action='store_true', 
 						help='Generate graphical representation of the enrichment results (experimental feature)',
@@ -122,7 +136,7 @@ def main():
 	######## Print parser help if arguments missed #################
 	if len(sys.argv)==1:
 		parser.print_help()
-		exit(1)
+		sys.exit(1)
 
 	########### Manage workflow accorded to Args  ##################
 	Arguments=parser.parse_args()
@@ -144,6 +158,7 @@ def main():
 			if Arguments.fromOtherDB not in SUPPORTED_IDS:
 				print 'fromOtherDB - bad argument: ' + Arguments.fromOtherDB + \
 				'\nPlease use only supported ids. Program will stop now.'
+				parser.print_help()
 				sys.exit(1)
 			# Map ids files OFFLINE enabling all ids support. Results may be uncomplete
 			else:
@@ -159,6 +174,7 @@ def main():
 			if Arguments.fromOtherDB not in SUPPORTED_IDS:
 				print 'fromOtherDB - bad argument: ' + str(Arguments.fromOtherDB) + \
 				'\nPlease use only supported ids. Program will stop now.'
+				parser.print_help()
 				sys.exit(1)
 			else:
 				map.any_ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', Arguments.fromOtherDB) # Map sample ids
@@ -172,11 +188,23 @@ def main():
 	# 	**** GO ENRICHMENT ***** 
 	# 	************************ 
 
-	
-
-
+	# Gene set enrichment and hypergeometric tests using R scripts called by python map module
+	launchGSEA(TMP_DIR)
+	Trim prokarytic GO-terms if asked by user
+	if Arguments.trim:
+		if Arguments.obo:
+			# Automatically watch if a subset file exists, and generates it if its not the case
+			trim.mk_subset(Arguments.obo, TMP_DIR + '/gosubset.txt') 
+			# Trim non prokaryote and non obsolete terms from enrichment results
+			trim.trim(TMP_DIR + '/gosubset.txt', TMP_DIR + '/../hyperesults.csv')
+		else:
+			print "Please provide a obo file!"
+			parser.print_help()
+			exit(1)
 	# remove tmp files
-	# subprocess.check_call('rm -r ' + Arguments.output + '/tmp', shell=True)
+	if not Arguments.keepTmp:
+		subprocess.check_call('rm -r ' + TMP_DIR, shell = True)
+		
 	################## Show time elapsed  ##########################
 	TIMER.lifetime = "Workflow finished in"
 	print TIMER.lifetime

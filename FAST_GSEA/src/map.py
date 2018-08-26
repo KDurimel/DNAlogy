@@ -90,7 +90,7 @@ def ids_to_go(idMappingFile, idsFile, outputPrefix):
 
 	# write all goterms in a file
 	with open (outputPrefix, 'w') as gofile:
-		gofile.write('\n'.join(all_goterms))
+		gofile.write('\n'.join(all_goterms) + '\n')
 
 	print '...ok'
 
@@ -156,7 +156,7 @@ def ids_to_go_online(idMappingFile, idsFile, outputPrefix):
 				dicogo = {} # cleared for next loop
 	# write all goterms in a file
 	with open (outputPrefix, 'w') as gofile:
-		gofile.write('\n'.join(all_goterms))
+		gofile.write('\n'.join(all_goterms) + '\n')
 	print '...ok'
 
 
@@ -196,7 +196,7 @@ def any_ids_to_go(idMappingFile, idsFile, outputPrefix, whichDb):
 
 	# write all goterms in a file
 	with open (outputPrefix, 'w') as gofile:
-		gofile.write('\n'.join(all_goterms))
+		gofile.write('\n'.join(all_goterms) + '\n')
 	print '...ok'
 
 def any_ids_to_go_online(idMappingFile, idsFile, outputPrefix, whichDb):
@@ -263,5 +263,5 @@ def any_ids_to_go_online(idMappingFile, idsFile, outputPrefix, whichDb):
 				dicogo = {} # cleared for next loop
 	# write all goterms in a file
 	with open (outputPrefix, 'w') as gofile:
-		gofile.write('\n'.join(all_goterms))
+		gofile.write('\n'.join(all_goterms) + '\n')
 	print '...ok'
