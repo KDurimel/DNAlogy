@@ -32,6 +32,8 @@ In every cases of use, supported ids are:
 15. Ensembl_TRS 
 16. Ensembl_PRO
 
+------
+
 ### Installation (GNU/Linux)
 
 You can install it using `Conda`.
@@ -105,14 +107,14 @@ P0C9F6
 ```
 Dummy data and its results can be found in the [example](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples) directory.
 
-** Id mapping : map any ids to UniRef100 ids **
+**Id mapping : map any ids to UniRef100 ids**
 
 ```bash
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs :)
 python fastGSEA.py -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz --mapOnly -toDB UniRef100 -output maybe/here
 ```
 
-** Gene set enrichment analysis : find which GO-terms from a gene set are overrepresented **
+**Gene set enrichment analysis : find which GO-terms from a gene set are overrepresented**
 
 With most steps offline (faster, the better updated your -mappingFile and/or -obo are, the better the results will be) :
 ```bash
@@ -126,17 +128,19 @@ Requesting NCBI and Uniprot APIs (most reliable, but slower):
 python fastGSEA.py -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz  -output maybe/here
 ```
 
-... and trimming obsolete and non Prokaryotic GO-terms (up to date obo file `gosubset_prok.obo` needed):
+...plus trimming obsolete and non Prokaryotic GO-terms (up to date obo file `gosubset_prok.obo` needed):
 ```bash
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs :)
 python fastGSEA.py -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo gosubset_prok.obo -output somewhere --trim
 ```
 
-... and generating a chart for enriched GO-terms:
+...plus generating a chart for enriched GO-terms:
 ```bash
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs :)
 python fastGSEA.py -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo gosubset_prok.obo -output somewhere --trim --view
 ```
+------
+
 All these options can be combined to use FastGSEA as you like. [Dummy data](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples/input_data) can be used to try the tool. Example of results from this data are also provided [here](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples/results)
 
 <img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
@@ -145,9 +149,10 @@ All these options can be combined to use FastGSEA as you like. [Dummy data](http
 
 <img src="https://github.com/KDurimel/DNAlogy/blob/master/FAST_GSEA/doc/workflow.png" alt="fastGSEA workflow"/>
 
+------
 ### Methods
 FastGSEA comes with several methods that you can manipulate to make it behave as you like. Fore more details, please read the [technical documentation](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/doc).
 
-
+------
 ### Contributions
 Opened to all suggestions and pull requests.
