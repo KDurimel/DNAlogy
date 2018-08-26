@@ -2,10 +2,11 @@ library(ggplot2)
 library(gridExtra)
 #Parse args
 args <- commandArgs(TRUE)
-compvalue=args[1]
-filepath=args[2]
+resultsFile=args[1] 
+
 #Parse hypergeometric file results
-resultats=read.delim((paste(compvalue,"/",filepath,sep="")),sep="\t")
+resultats=read.delim(resultsFile,sep=";")
+
 x <-as.numeric(c(resultats$P.value))
 profondeur <-as.numeric(resultats$Go.level)
 y <- as.numeric(resultats$Go.level)
@@ -90,5 +91,5 @@ for(i in 1:length(resultats$P.value))
   
   #arrange the plots together, with appropriate height and width for each row and column
   scatter<-scatter+geom_smooth()
-  pdf(paste(compvalue,"/","GO_distribution.pdf",sep="")) #auto-generate pdf
+  pdf(paste(resultsFile,"_","GO_distribution.pdf",sep="")) #auto-generate pdf
   grid.arrange(plot_top, empty, scatter, plot_right, ncol=2, nrow=2, widths=c(4, 1), heights=c(1, 4))
