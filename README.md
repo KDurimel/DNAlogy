@@ -41,7 +41,7 @@ You can install it using `Conda`.
 For a full installation (all python and R environment), use the [packages_full.yml](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/packages_full.yml) file:
 
 ```bash
-# Go to the tool directory
+# Go to fastGSEA directory
 cd FAST_GSEA
 
 # Create the environment from the yaml file
@@ -50,7 +50,7 @@ conda env create -f packages_full.yml
 # Activate the enrivonment :
 source activate gsea_env # or the first line you just edited
 
-# Add the FastGSEA to your environment variables
+# Add FastGSEA to your environment variables
 PATH="src/:${PATH}"
 export PATH
 
@@ -62,7 +62,7 @@ export PATH
 For a light installation (python dependencies only) use the [packages.yml](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/packages.yml) file:
 
 ```bash
-# Go to the tool directory
+# Go to fastGSEA directory
 cd FAST_GSEA
 
 # Create the environment from the "light" yaml file
@@ -71,7 +71,7 @@ conda env create -f packages.yml
 # Activate the enrivonment :
 source activate gsea_env # or the first line you just edited
 
-# Add the FastGSEA to your environment variables
+# Add FastGSEA to your environment variables
 PATH="src/:${PATH}"
 export PATH
 
@@ -79,11 +79,11 @@ export PATH
 ~/.bashrc
 ```
 
-<img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
+------
 
 ### Usage and examples
 
-DNAlogy takes two input files (one for sample, second one for universe). They have to be text files containing one international databank (ncbi, refseq, etc) **supported** identifiers (listed above) per line, for example:
+FastGSEA takes two input files (one for sample, second one for universe). They have to be text files containing one international databank (ncbi, refseq, etc) **supported** identifiers (listed above) per line, for example:
 
 ```bash
 O55719
@@ -141,18 +141,25 @@ python fastGSEA.py -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_lig
 ```
 ------
 
-All these options can be combined to use FastGSEA as you like. [Dummy data](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples/input_data) can be used to try the tool. Example of results from this data are also provided [here](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples/results)
+All these options can be combined to use FastGSEA as you like. [Dummy data](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples/input_data) can be used to try IT. Examples of results from this data are also provided [here](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples/results)
 
-<img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
+------
 
 ### Workflow
-
+As said previously, workflow can be stopped at each step, the last 3 parts of the workflow are optional and and behave as you set it up for.
 <img src="https://github.com/KDurimel/DNAlogy/blob/master/FAST_GSEA/doc/workflow.png" alt="fastGSEA workflow"/>
 
 ------
+
 ### Methods
 FastGSEA comes with several methods that you can manipulate to make it behave as you like. Fore more details, please read the [technical documentation](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/doc).
 
 ------
 ### Contributions
 Opened to all suggestions and pull requests.
+
+<img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
+
+## Tool 2 - Javascript API (w.i.p)
+
+~ Q4 2018
