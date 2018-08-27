@@ -39,6 +39,8 @@ case ${answer:0:1} in
         echo "Ok"
     ;;
     * )
+	echo "(Mini)Conda download will start in 5 seconds. Type CTRL+C for exit."
+	sleep 5
 	if [ "$ARCH" = "64" ]
           then
             wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
@@ -58,8 +60,14 @@ case ${answer:0:1} in
     	echo '# Added by fastGSEA installer' >> ~/.bashrc
         echo 'alias fastGSEA="python $(pwd)'/src/fastGSEA.py'"' >> ~/.bashrc
         source ~/.bashrc
+	echo "Ok, alias added and sourced."
+	sleep 1
         # Create a new environment from packages.yml and activate it
+	echo 'fastGSEA environment build will start in 5 seconds...'
+	sleep 5
 	conda env create -f packages.yml
+	sleep 1
+	echo 'fastGSEA sucessfully installed. Type "source activate gsea_env" to start using it.'
     ;;
     * )
        echo "Ok, so please install packages.yml (look at the readme) and source gsea_env"
