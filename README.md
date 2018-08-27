@@ -8,13 +8,18 @@
 
 <img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
 
-  * [Tool 1 - fastGSEA](#tool-1---fastgsea)
+  * [Tool 1  — fastGSEA](#tool-1----fastgsea)
     + [Installation](#installation)
-    + [Usage and examples](#usage-and-examples)
+    + [Usage](#usage)
+    + [Examples](#examples)
     + [Workflow](#workflow)
     + [Methods](#methods)
     + [Contributions](#contributions)
-  * [Tool 2 - Javascript API](#tool-2---javascript-api)
+    + [Main dependencies](#main-dependencies)
+  * [Tool 2  — Javascript API](#tool-2----javascript-api)
+- [Licence](#licence)
+  * [Author](#author)
+
 
 
 ## Tool 1  — fastGSEA
@@ -97,7 +102,7 @@ source ~/.bashrc
 
 ------
 
-### Usage and examples
+### Usage
 
 
 **Command line options**
@@ -156,10 +161,14 @@ P0C9F5
 P0C9F6
 ```
 
-Dummy data and its results can be found in the [example](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples) directory.
 
 
 <br/>
+
+### Examples
+
+All data used for the following examples are avalaible in the [examples](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples) directory.
+
 
 **Example  — Id mapping: map any ids to UniRef100 ids**
 
@@ -203,7 +212,7 @@ fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo
 
 <br/>
 
-All these options can be combined to use FastGSEA as you like. [Dummy data](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples/input_data) can be used to try IT. Examples of results from this data are also provided [here](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples/results)
+All these options can be combined to use FastGSEA as you like. Dummy examples of results data are also provided [here](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples/results)
 
 <br/>
 
