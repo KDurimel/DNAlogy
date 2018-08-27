@@ -58,6 +58,9 @@ cd DNAlogy/FAST_GSEA
 # Run install script
 bash install.sh 
 
+# Activate the enrivonment :
+source activate gsea_env
+
 ```
 
 **Manually**
@@ -72,7 +75,7 @@ cd DNAlogy/FAST_GSEA
 conda env create -f packages.yml 
 
 # Activate the enrivonment :
-source activate gsea_env # or the first line you just edited
+source activate gsea_env
 
 # Add fastGSEA to your environment variables
 PATH="src/:${PATH}"
@@ -82,7 +85,7 @@ export PATH
 echo 'alias fastGSEA="python $(pwd)'/src/fastGSEA.py'"' >> ~/.bashrc
 
 # Reload your shell (here, bash) settings 
-~/.bashrc
+source ~/.bashrc
 ```
 
 
