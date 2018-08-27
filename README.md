@@ -58,9 +58,15 @@ cd DNAlogy/FAST_GSEA
 # Run install script
 bash install.sh 
 
+# Respond "yes" to the "Do you wish the installer to prepend the Miniconda2 install location to PATH in your /home/username/.bashrc ?" answer.
+
 # Activate the enrivonment :
 source activate gsea_env
+```
+Next, you'll just have to activate the `gsea_env` environment when you want to use fastGSEA.
 
+```bash
+source activate gsea_env
 ```
 
 **Manually**
@@ -93,6 +99,40 @@ source ~/.bashrc
 
 ### Usage and examples
 
+
+**Command line options**
+
+| Option        | Description                                                             | Required |
+|---------------|-------------------------------------------------------------------------|----------|
+| -ech          | Sample ids file (one id per line)                                       | Yes      |
+| -univ         | Universe ids file (one id per line)                                     | Yes      |
+| -mappingFile  | idmapping_selected.tab.gz file                                          | Yes      |
+| -output       | Output results prefix                                                   | Yes      |
+| -obo          | Gene ontology .obo graph file used when "--trim" option activated       | No       |
+| -toDB         | databank identifier wanted as output when "--mapOnly"  option activated | No       |
+| --fromOtherDB | Activate all ids support (slower)                                       | No       |
+| --mapOffline  | Perform "MAP" step offline                                              | No       |
+| --trim        | Trim prokaryotic GO-terms                                               | No       |
+| --view        | Outputs the enrichment results in a 2D graph                            | No       |
+| --mapOnly     | Perform only the "MAP" step and keep its results                        | No       |
+| --keepTmp     | Keep temporary files folder                                             | No       |
+
+
+
+
+**Usage - Where can I find the `-mappingFile` and `-obo` files?**
+
+`-mappingFile` is used for offline ids mappping and can be found on the [Uniprot FTP](ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/idmapping_selected.tab.gz) ( > 6gb file)
+
+`-obo` is the gene ontology graph used for GO-terms checking and trimming. It is availaible on the [Open Biological and Biomedical Ontology (OBO)](purl.obolibrary.org/obo/go/releases/2018-06-01/subsets/gosubset_prok.obo) ( > 60 mo file). There is daily releases, so you can download the latest ones [here](purl.obolibrary.org/obo/go/releases)
+
+
+> **Important note :** be careful when trimming non prokaryotic GO-terms, 'gosubset_prok' terms are not maitained since 2018/06 because some of them muight be irrelevant. More information [here](https://github.com/geneontology/go-ontology/pull/16255) and [here](https://github.com/geneontology/go-ontology/issues/16077).
+
+
+
+**Usage - Id mapping : map any ids to UniRef100 ids**
+
 FastGSEA takes two input files (one for sample, second one for universe). They have to be text files containing one international databank (ncbi, refseq, etc) **supported** identifiers (listed above) per line, for example:
 
 ```bash
@@ -115,16 +155,20 @@ P0C9F4
 P0C9F5
 P0C9F6
 ```
+
 Dummy data and its results can be found in the [example](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples) directory.
 
-**Id mapping : map any ids to UniRef100 ids**
 
+**Example - Id mapping : map any ids to UniRef100 ids**
+
+This command line requires two outputs, if you want to perform id mapping in only one file, just provide it twice as `-ech` and `-univ`.
 ```bash
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs :)
 fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz --mapOnly -toDB UniRef100 -output maybe/here
 ```
 
-**Gene set enrichment analysis : find which GO-terms from a gene set are overrepresented**
+
+**Examples - Gene set enrichment analysis : find which GO-terms from a gene set are overrepresented**
 
 With most steps offline (faster, the better updated your -mappingFile and/or -obo are, the better the results will be) :
 ```bash
@@ -149,6 +193,7 @@ fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs :)
 fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo gosubset_prok.obo -output somewhere --trim --view
 ```
+
 ------
 
 All these options can be combined to use FastGSEA as you like. [Dummy data](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples/input_data) can be used to try IT. Examples of results from this data are also provided [here](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples/results)
