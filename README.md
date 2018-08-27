@@ -45,48 +45,44 @@ In every cases of use, supported ids are:
 
 ### Installation
 
-Only on GNU/Linux based systems. You can install it using `Conda`.
+Only on GNU/Linux based systems. You can install it using `Conda`. If you already have Conda on your system you can apply the following instructions:
 
-For a full installation (all python and R environment), use the [packages_full.yml](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/packages_full.yml) file:
+**Automatically**
+Just go to the FAST_GSEA directory, then run `install.sh`
 
 ```bash
 # Go to fastGSEA directory
-cd FAST_GSEA
+cd DNAlogy/FAST_GSEA
 
-# Create the environment from the yaml file
-conda env create -f packages_full.yml 
+# Run install script
+bash install.sh 
 
-# Activate the enrivonment :
-source activate gsea_env # or the first line you just edited
-
-# Add FastGSEA to your environment variables
-PATH="src/:${PATH}"
-export PATH
-
-# Reload your shell (here, bash) settings 
-~/.bashrc
 ```
 
-
-For a light installation (python dependencies only) use the [packages.yml](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/packages.yml) file:
+**Manually**
+Use the [packages.yml](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/packages.yml) to retrieve all Python and R dependencies then install fastGSEA :
 
 ```bash
 # Go to fastGSEA directory
-cd FAST_GSEA
+cd DNAlogy/FAST_GSEA
 
-# Create the environment from the "light" yaml file
+# Create the environment from the yaml file
 conda env create -f packages.yml 
 
 # Activate the enrivonment :
 source activate gsea_env # or the first line you just edited
 
-# Add FastGSEA to your environment variables
+# Add fastGSEA to your environment variables
 PATH="src/:${PATH}"
 export PATH
+
+# or add an alias for fastGSEA in your bashrc
+echo 'alias fastGSEA="python $(pwd)'/src/fastGSEA.py'"' >> ~/.bashrc
 
 # Reload your shell (here, bash) settings 
 ~/.bashrc
 ```
+
 
 ------
 
