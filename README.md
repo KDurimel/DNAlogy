@@ -220,7 +220,7 @@ All these options can be combined to use FastGSEA as you like. Dummy examples of
 As said previously, workflow can be stopped at each step, the last three parts of the workflow are optional and and behave as you set it up for.
 <img src="https://github.com/KDurimel/DNAlogy/blob/master/FAST_GSEA/doc/workflow.png" alt="fastGSEA workflow"/>
 
-You can also import the map and trim modules for another usage in your own scripts.
+You can also import all or part of the **`map` `enrich` `trim`** modules for another usage in your own scripts.
 
 <br/>
 
