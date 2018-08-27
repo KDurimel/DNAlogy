@@ -8,10 +8,19 @@
 
 <img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
 
-## Tool 1 - fastGSEA (fast Gene Set Enrichment Analysis) 
+  * [Tool 1 - fastGSEA](#tool-1---fastgsea)
+    + [Installation](#installation)
+    + [Usage and examples](#usage-and-examples)
+    + [Workflow](#workflow)
+    + [Methods](#methods)
+    + [Contributions](#contributions)
+  * [Tool 2 - Javascript API](#tool-2---javascript-api)
 
 
-[FastGSEA](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA) performs GO-terms enrichment analysis bewteen two gene sets, based on hypergeometric tests. These gene sets must be provided as text files containing one international databank (ncbi, refseq, etc) gene or proteins identifier per line. **FastGSEA can also be used only as a standalone mapping tool**, using the `--mapOnly` option.
+## Tool 1 - fastGSEA
+
+
+[FastGSEA](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA) (fast Gene Set Enrichment Analysis)  performs GO-terms enrichment analysis bewteen two gene sets, based on hypergeometric tests. These gene sets must be provided as text files containing one international databank (ncbi, refseq, etc) gene or proteins identifier per line. **FastGSEA can also be used only as a standalone mapping tool**, using the `--mapOnly` option.
 
 In every cases of use, supported ids are:
 
@@ -34,9 +43,9 @@ In every cases of use, supported ids are:
 
 ------
 
-### Installation (GNU/Linux)
+### Installation
 
-You can install it using `Conda`.
+Only on GNU/Linux based systems. You can install it using `Conda`.
 
 For a full installation (all python and R environment), use the [packages_full.yml](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/packages_full.yml) file:
 
@@ -160,6 +169,6 @@ Opened to all suggestions and pull requests.
 
 <img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
 
-## Tool 2 - Javascript API (w.i.p)
+## Tool 2 - Javascript API
 
-~ Q4 2018
+~ Q4 2018 (W.I.P)
