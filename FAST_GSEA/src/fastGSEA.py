@@ -63,24 +63,29 @@ def get_parser():
 	formatter_class=RawDescriptionHelpFormatter)
 
 	parser.add_argument('-ech', dest='ech', action="store",
-						type=str, required=True, help='Sample ids file (one id per line): recquired')
+						type=str, required=True, help='Sample ids file (one id per line): required')
 
 	parser.add_argument('-univ', dest='univ', action="store",
-						type=str, required=True, help='Universe ids file (one id per line): recquired')
+						type=str, required=True, help='Universe ids file (one id per line): required')
 
 	parser.add_argument('-mappingFile', dest='mappingFile', action="store",
-						type=str, required=True, help='idmapping_selected.tab.gz file: recquired')
+						type=str, required=True, help='idmapping_selected.tab.gz file: required')
 
 	parser.add_argument('-output', dest='output', action="store",
-						type=str, required=True, help='output results prefix: recquired')
+						type=str, required=True, help='output results prefix: required')
 
 	parser.add_argument('--fromOtherDB', dest='fromOtherDB', action='store_true', 
 						help='Ids supported by default are UniProtKB-AC and RefSeq ids. Use this '+\
-						'option if you want to use all the supported ids. Caution: results may be less reliable!',
+						'option if you want to activate all ids support (slower). Caution: results may be less reliable!',
 						default=False)
 
 	parser.add_argument('-obo', dest='obo', action="store",
-						type=str, required=False, help='Gene ontology file (old go-basic.obo or latest gosubset_prok.obo)')
+						type=str, required=False, help='Gene ontology .obo graph file used when "--trim" option activated'+\
+						'(old go-basic.obo or latest gosubset_prok.obo)')
+
+	parser.add_argument('-toDB', dest='toDB', action="store",
+						type=str, required=False, help='databank identifier wanted (e.g GO,Uniref100...)'  +\
+						'as output when "--mapOnly" option activated')
 
 	parser.add_argument('--mapOffline', dest='mapOffline', action='store_true', 
 						help='Retrieve GO-terms without requesting Uniprot API\'s. '+\
@@ -88,26 +93,22 @@ def get_parser():
 						'dont forget that the GO enrichment step (following the mapping step) will still '+\
 						'requires a reliable internet connection.', default=False)
 
-	parser.add_argument('--keepTmp', dest='keepTmp', action='store_true', 
-						help='Generate graphical representation of the enrichment results (experimental feature)',
-						default=False)
-
 	parser.add_argument('--trim', dest='trim', action='store_true', 
-						help='Trim prokaryotic GO-terms. This feature will be DEPRECATED! More information here: '+\
+						help='Trim prokaryotic GO-terms. This feature may be DEPRECATED in the future! More information here: '+\
 						'https://github.com/geneontology/go-ontology/issues/16077',
 						default=False)
 
 	parser.add_argument('--view', dest='view', action='store_true', 
-						help='Generate graphical representation of the enrichment results (experimental feature)',
+						help='Outputs the enrichment results in a 2D graph (experimental feature)',
 						default=False)
 
 	parser.add_argument('--mapOnly', dest='mapOnly', action='store_true', 
-						help='Only mapping ids from your input (arg: -from) ids to other (arg: -to) ids and save the results in'+\
-						'a text file',
+						help='Perform only the "MAP" step and keep its results',
 						default=False)
 
-	parser.add_argument('-toDB', dest='toDB', action="store",
-						type=str, required=False, help='database identifier wanted for the output ids (GO, UniRef100, etc...')
+	parser.add_argument('--keepTmp', dest='keepTmp', action='store_true', 
+						help='Keep temporary files folder(tmp).',
+						default=False)
 
 
 	return parser
