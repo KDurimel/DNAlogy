@@ -121,7 +121,7 @@ Dummy data and its results can be found in the [example](https://github.com/KDur
 
 ```bash
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs :)
-python fastGSEA.py -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz --mapOnly -toDB UniRef100 -output maybe/here
+fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz --mapOnly -toDB UniRef100 -output maybe/here
 ```
 
 **Gene set enrichment analysis : find which GO-terms from a gene set are overrepresented**
@@ -129,25 +129,25 @@ python fastGSEA.py -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_lig
 With most steps offline (faster, the better updated your -mappingFile and/or -obo are, the better the results will be) :
 ```bash
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs :)
-python fastGSEA.py -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz  --mapOffline -output maybe/here
+fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz  --mapOffline -output maybe/here
 ```
 
 Requesting NCBI and Uniprot APIs (most reliable, but slower):
 ```bash
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs :)
-python fastGSEA.py -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz  -output maybe/here
+fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz  -output maybe/here
 ```
 
 ...plus trimming obsolete and non Prokaryotic GO-terms (up to date obo file `gosubset_prok.obo` needed):
 ```bash
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs :)
-python fastGSEA.py -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo gosubset_prok.obo -output somewhere --trim
+fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo gosubset_prok.obo -output somewhere --trim
 ```
 
 ...plus generating a chart for enriched GO-terms:
 ```bash
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs :)
-python fastGSEA.py -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo gosubset_prok.obo -output somewhere --trim --view
+fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo gosubset_prok.obo -output somewhere --trim --view
 ```
 ------
 
