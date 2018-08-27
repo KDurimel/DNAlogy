@@ -11,23 +11,29 @@ fi
 ARCH=$(uname -m)
 if [ $ARCH = "i386" ];then
   ARCH="32"
+  echo "32 bits detected"
 elif [ $ARCH = "i486" ];then
   ARCH="32"
+  echo "32 bits detected"
 elif [ $ARCH = "i586" ];then
   ARCH="32"
+  echo "32 bits detected"
 elif [ $ARCH = "i686" ];then
   ARCH="32"
+  echo "32 bits detected"
 elif [ "$ARCH" = "ppc64 ppc" ];then
   ARCH="64"
+  echo "64 bits detected"
 elif [ "$ARCH" = "x86_64" ];then
   ARCH="64"
+  echo "64 bits detected"
 
 else
-  echo "Unsoported Architecture, please try to install manually"
+  echo "Unsuported Architecture, please try to install manually"
   exit 1
 fi
 # Install MiniConda (i.e lightest Conda) if needed
-read -p "Do you already have Conda installed on your system?(y/n)? " answer
+read -p "Do you already have Conda installed on your system?(y/n) " answer
 case ${answer:0:1} in
     y|Y )
         echo "Ok"
@@ -36,16 +42,26 @@ case ${answer:0:1} in
 	if [ "$ARCH" = "64" ]
           then
             wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
-            bash Miniconda2-latest-Linux-x86_64.sh
+            bash Miniconda2-latest-Linux-x86_64.sh -y
             rm Miniconda2-latest-Linux-x86_64.sh*
         else
           wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86.sh
-          bash Miniconda2-latest-Linux-x86.sh
+          bash Miniconda2-latest-Linux-x86.sh -y
           rm Miniconda2-latest-Linux-x86.sh*
 	fi
     ;;
 esac
 # Generate an alias for the main script
-echo 'alias fastGSEA="python $(pwd)'/src/fastGSEA.py'"' >> ~/.bashrc
-# Create a new environment from packages.yml and activate it
-conda env create -f packages.yml
+read -p "Do you want to add an alias (recommended) for fastGSEA?(y/n) " answer
+case ${answer:0:1} in
+    y|Y )
+    	echo '# Added by fastGSEA installer' >> ~/.bashrc
+        echo 'alias fastGSEA="python $(pwd)'/src/fastGSEA.py'"' >> ~/.bashrc
+        source ~/.bashrc
+        # Create a new environment from packages.yml and activate it
+	conda env create -f packages.yml
+    ;;
+    * )
+       echo "Ok, so please install packages.yml (look at the readme) and source gsea_env"
+    ;;
+esac
