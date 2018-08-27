@@ -64,15 +64,13 @@ cd DNAlogy/FAST_GSEA
 bash install.sh 
 
 # Respond "yes" to the "Do you wish the installer to prepend the Miniconda2 install location to PATH in your /home/username/.bashrc ?" answer.
-
-# Activate the enrivonment:
-source activate gsea_env
 ```
 Next, you'll just have to activate the `gsea_env` environment when you want to use fastGSEA.
 
 ```bash
 source activate gsea_env
 ```
+Then, type `fastGSEA` and you will able to use it! If `fastGSEA` command is not recognized, you may need to reload your shell environnement by typing `source ~/.bashrc`.
 
 **Manually**
 
