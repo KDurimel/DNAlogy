@@ -8,7 +8,7 @@ resultsFile=args[1]
 resultats=read.delim(resultsFile,sep=";")
 
 x <-as.numeric(c(resultats$P.value))
-profondeur <-as.numeric(resultats$Go.level)
+Level <-as.numeric(resultats$Go.level)
 y <- as.numeric(resultats$Go.level)
 LogP <- as.numeric(c(log(resultats$P.value)))
 yx <- resultats[1:2]
@@ -66,7 +66,7 @@ for(i in 1:length(resultats$P.value))
     )
   
   #scatterplot of x and y variables
-  scatter <- ggplot(yx,aes(LogP,profondeur)) + 
+  scatter <- ggplot(yx,aes(LogP,Level)) + 
     geom_point(aes(color=Aspect)) + 
     scale_color_manual(values = c("orange", "purple","grey")) + 
     theme(legend.position=c(0,1),legend.justification=c(0,1))+
@@ -81,7 +81,7 @@ for(i in 1:length(resultats$P.value))
     scale_y_continuous(limits=c(min(0),max(x)))  #auto-scale graph
   
   #marginal density of y - plot on the right
-  plot_right <- ggplot(yx, aes(profondeur, fill=Aspect)) + 
+  plot_right <- ggplot(yx, aes(Level, fill=Aspect)) + 
     geom_density(alpha=.5) + 
     coord_flip() + 
     scale_fill_manual(values = c("orange", "purple","grey"))+ 
