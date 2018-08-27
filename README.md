@@ -117,18 +117,19 @@ source ~/.bashrc
 | --mapOnly     | Perform only the "MAP" step and keep its results                        |    No    |
 | --keepTmp     | Keep temporary files folder                                             |    No    |
 
-
+<br/>
+<br/>
 
 **Usage - Where can I find the `-mappingFile` and `-obo` files?**
 
 `-mappingFile` is used for offline ids mappping and can be found on the [Uniprot FTP](ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/idmapping_selected.tab.gz) ( > 6gb file)
 
-`-obo` is the gene ontology graph used for GO-terms checking and trimming. It is availaible on the [Open Biological and Biomedical Ontology (OBO)](purl.obolibrary.org/obo/go/releases/2018-06-01/subsets/gosubset_prok.obo) ( > 60 mo file). There is daily releases, so you can download the latest ones [here](purl.obolibrary.org/obo/go/releases)
+`-obo` is the gene ontology graph used for GO-terms checking and trimming. It is availaible on the Open Biological and Biomedical Ontology (OBO) [subset file](purl.obolibrary.org/obo/go/releases/2018-06-01/subsets/gosubset_prok.obo). There are daily releases, so you can download the latest ones [here](purl.obolibrary.org/obo/go/releases)
 
 
 > **Important note :** be careful when trimming non prokaryotic GO-terms, 'gosubset_prok' terms are not maitained since 2018/06 because some of them muight be irrelevant. More information [here](https://github.com/geneontology/go-ontology/pull/16255) and [here](https://github.com/geneontology/go-ontology/issues/16077).
 
-
+<br/>
 
 **Usage - Id mapping : map any ids to UniRef100 ids**
 
@@ -158,6 +159,10 @@ P0C9F6
 Dummy data and its results can be found in the [example](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples) directory.
 
 
+<br/>
+
+<br/>
+
 **Example - Id mapping : map any ids to UniRef100 ids**
 
 This command line requires two outputs, if you want to perform id mapping in only one file, just provide it twice as `-ech` and `-univ`.
@@ -167,6 +172,8 @@ fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz --ma
 ```
 
 
+<br/>
+
 **Examples - Gene set enrichment analysis : find which GO-terms from a gene set are overrepresented**
 
 With most steps offline (faster, the better updated your -mappingFile and/or -obo are, the better the results will be) :
@@ -175,11 +182,13 @@ With most steps offline (faster, the better updated your -mappingFile and/or -ob
 fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz  --mapOffline -output maybe/here
 ```
 
+
 Requesting NCBI and Uniprot APIs (most reliable, but slower):
 ```bash
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs :)
 fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz  -output maybe/here
 ```
+
 
 ...plus trimming obsolete and non Prokaryotic GO-terms (up to date obo file `gosubset_prok.obo` needed):
 ```bash
@@ -187,17 +196,22 @@ fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz  -ou
 fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo gosubset_prok.obo -output somewhere --trim
 ```
 
+
 ...plus generating a chart for enriched GO-terms:
 ```bash
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs :)
 fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo gosubset_prok.obo -output somewhere --trim --view
 ```
 
-------
+<br/>
 
 All these options can be combined to use FastGSEA as you like. [Dummy data](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples/input_data) can be used to try IT. Examples of results from this data are also provided [here](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples/results)
 
+
+
 ------
+
+<br/>
 
 ### Workflow
 As said previously, workflow can be stopped at each step, the last 3 parts of the workflow are optional and and behave as you set it up for.
@@ -232,6 +246,4 @@ Want to contribute? Opened to all suggestions and pull requests.
 
 * Kévin Durimel
 * Web: http://kevin.durimel.fr/
-* Twitter: [@torstenseemann](https://twitter.com/torstenseemann)
-* Blog: [The Genome Factory](https://thegenomefactory.blogspot.com/)
 
