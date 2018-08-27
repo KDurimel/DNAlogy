@@ -20,7 +20,7 @@
 ## Tool 1 - fastGSEA
 
 
-[FastGSEA](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA) (fast Gene Set Enrichment Analysis)  performs GO-terms enrichment analysis bewteen two gene sets, based on hypergeometric tests. These gene sets must be provided as text files containing one international databank (ncbi, refseq, etc) gene or proteins identifier per line. **FastGSEA can also be used only as a standalone mapping tool**, using the `--mapOnly` option.
+[FastGSEA](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA) (fast Gene Set Enrichment Analysis) performs GO-terms enrichment analysis bewteen two gene sets, based on hypergeometric tests. These gene sets must be provided as text files containing one international databank (ncbi, refseq, etc) gene or proteins identifier per line. **FastGSEA can also be used only as a standalone mapping tool**, using the `--mapOnly` option.
 
 In every cases of use, supported ids are:
 
@@ -103,20 +103,19 @@ source ~/.bashrc
 **Command line options**
 
 | Option        | Description                                                             | Required |
-|---------------|-------------------------------------------------------------------------|----------|
-| -ech          | Sample ids file (one id per line)                                       | Yes      |
-| -univ         | Universe ids file (one id per line)                                     | Yes      |
-| -mappingFile  | idmapping_selected.tab.gz file                                          | Yes      |
-| -output       | Output results prefix                                                   | Yes      |
-| -obo          | Gene ontology .obo graph file used when "--trim" option activated       | No       |
-| -toDB         | databank identifier wanted as output when "--mapOnly"  option activated | No       |
-| --fromOtherDB | Activate all ids support (slower)                                       | No       |
-| --mapOffline  | Perform "MAP" step offline                                              | No       |
-| --trim        | Trim prokaryotic GO-terms                                               | No       |
-| --view        | Outputs the enrichment results in a 2D graph                            | No       |
-| --mapOnly     | Perform only the "MAP" step and keep its results                        | No       |
-| --keepTmp     | Keep temporary files folder                                             | No       |
-
+|---------------|-------------------------------------------------------------------------|:--------:|
+| -ech          | Sample ids file (one id per line)                                       |    Yes   |
+| -univ         | Universe ids file (one id per line)                                     |    Yes   |
+| -mappingFile  | idmapping_selected.tab.gz file                                          |    Yes   |
+| -output       | Output results prefix                                                   |    Yes   |
+| -obo          | Gene ontology .obo graph file used when "--trim" option activated       |    No    |
+| -toDB         | databank identifier wanted as output when "--mapOnly"  option activated |    No    |
+| --fromOtherDB | Activate all ids support (slower)                                       |    No    |
+| --mapOffline  | Perform "MAP" step offline                                              |    No    |
+| --trim        | Trim prokaryotic GO-terms                                               |    No    |
+| --view        | Outputs the enrichment results in a 2D graph                            |    No    |
+| --mapOnly     | Perform only the "MAP" step and keep its results                        |    No    |
+| --keepTmp     | Keep temporary files folder                                             |    No    |
 
 
 
@@ -211,10 +210,28 @@ FastGSEA comes with several methods that you can manipulate to make it behave as
 
 ------
 ### Contributions
-Opened to all suggestions and pull requests.
+
+Submit problems or requests using the [Issue Tracker](https://github.com/KDurimel/DNAlogy/issues).
+
+Want to contribute? Opened to all suggestions and pull requests.
 
 <img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
 
 ## Tool 2 - Javascript API
 
 ~ Q4 2018 (W.I.P)
+
+
+<img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
+
+# Licence
+
+[GPL v3](https://github.com/KDurimel/DNAlogy/blob/master/LICENSE)
+
+## Author
+
+* Kévin Durimel
+* Web: http://kevin.durimel.fr/
+* Twitter: [@torstenseemann](https://twitter.com/torstenseemann)
+* Blog: [The Genome Factory](https://thegenomefactory.blogspot.com/)
+
