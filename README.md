@@ -48,6 +48,7 @@ In every cases of use, supported ids are:
 Only on GNU/Linux based systems. You can install it using `Conda`. If you already have Conda on your system you can apply the following instructions:
 
 **Automatically**
+
 Just go to the FAST_GSEA directory, then run `install.sh`
 
 ```bash
@@ -60,6 +61,7 @@ bash install.sh
 ```
 
 **Manually**
+
 Use the [packages.yml](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/packages.yml) to retrieve all Python and R dependencies then install fastGSEA :
 
 ```bash
