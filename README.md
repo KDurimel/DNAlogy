@@ -14,7 +14,6 @@
 
 <img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
 
-## Table of contents
 
   * [Tool 1  — fastGSEA](#tool-1----fastgsea)
     + [Installation](#installation)
