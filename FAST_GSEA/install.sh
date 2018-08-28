@@ -68,6 +68,7 @@ case ${answer:0:1} in
 	conda env create -f packages.yml
 	sleep 1
 	echo 'fastGSEA sucessfully installed. Type "source activate gsea_env" to start using it.'
+	exec bash # reload bashrc not only in this script context
     ;;
     * )
        echo "Ok, so please install packages.yml (look at the readme) and source gsea_env"
