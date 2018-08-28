@@ -2,11 +2,16 @@
   <img height="150" src="https://github.com/KDurimel/GSEAtools/blob/master/logo.png" alt="DNAlogy logo"/>
   <br/> 
   DNAlogy
+  <br/>
+  <img src="https://img.shields.io/badge/License-GPL%20v3-blue.svg" alt="License"/>
+  <img src="https://img.shields.io/badge/Version-0.2RC-green.svg" alt="Version"/>
 </h1>
+
+<img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
 
 # Light bioinformatics tools for gene set statistical analysis and management based on DNA-seq (meta) data
 
-<img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
+<br/>
 
   * [Tool 1  — fastGSEA](#tool-1----fastgsea)
     + [Installation](#installation)
@@ -21,6 +26,7 @@
   * [Author](#author)
 
 
+<img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
 
 ## Tool 1  — fastGSEA
 
@@ -52,7 +58,7 @@ In every cases of use, supported ids are:
 
 Only on GNU/Linux based systems. You can install it using `Conda`. If you already have Conda on your system you can apply the following instructions:
 
-**Automatically**
+**Auto-install**
 
 Just go to the FAST_GSEA directory, then run `install.sh`
 
@@ -72,7 +78,7 @@ source activate gsea_env
 ```
 Then, type `fastGSEA` and you will able to use it! If `fastGSEA` command is not recognized, you may need to reload your shell environnement by typing `source ~/.bashrc`.
 
-**Manually**
+**Manual install**
 
 Use the [packages.yml](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/packages.yml) to retrieve all Python and R dependencies then install fastGSEA:
 
