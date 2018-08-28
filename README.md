@@ -5,13 +5,9 @@
   <br/>
   <img src="https://img.shields.io/badge/License-GPL%20v3-blue.svg" alt="License"/>
   <img src="https://img.shields.io/badge/Version-0.2RC-green.svg" alt="Version"/>
-</h1>
 
-<br/>
+<div class="paragraph"><p><h1 align="center">Light bioinformatics tools for gene set statistical analysis and management based on DNA-seq (meta) data</h1>&#160;<br/></p></div>
 
-# Light bioinformatics tools for gene set statistical analysis and management based on DNA-seq (meta) data
-
-<br/>
 
   * [Tool 1  — fastGSEA](#tool-1----fastgsea)
     + [Installation](#installation)
@@ -216,7 +212,22 @@ fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo
 
 <br/>
 
-All these options can be combined to use FastGSEA as you like. Dummy examples of results data are also provided [here](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples/results)
+All these options can be combined to use FastGSEA as you like. Examples of results data are also provided [here](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples/results). For example, the top 5 of all the enriched terms detected in the dummy dataset:
+
+
+|    GO:ID   |                     Go term                     | Number of hits | Expected number of hits | Go level |  P-value  | Corrected p-value | Aspect |
+|:----------:|:-----------------------------------------------:|:--------------:|:-----------------------:|:--------:|:---------:|:-----------------:|:------:|
+| GO:0044068 | modulation by symbiont of host cellular process |        1       |        0.02053442       |     6    | 0.0001562 |     0.2967242     |   BP   |
+| GO:0016791 | phosphatase activity                            |        4       |        0.5206708        |     6    |  0.000157 |     0.0408521     |   MF   |
+| GO:0042578 | phosphoric ester hydrolase activity             |        4       |        0.5206708        |     5    |  0.000157 |     0.0408521     |   MF   |
+| GO:0016788 | hydrolase activity, acting on ester bonds       |        4       |        0.5553822        |     4    | 0.0002142 |     0.0557149     |   MF   |
+| GO:0044003 | modification by symbiont of host morphology     |        1       |        0.02566803       |     5    | 0.0002595 |     0.4928665     |   BP   |
+
+<br/>
+
+And its associated 2D chart ( **GO-term level = f(log p-value)** ):
+
+<img src="https://github.com/KDurimel/DNAlogy/blob/master/FAST_GSEA/examples/results/demo.png" alt="2D chart"/>
 
 <br/>
 
