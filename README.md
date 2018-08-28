@@ -11,9 +11,7 @@
 
 # Light bioinformatics tools for gene set statistical analysis and management based on DNA-seq (meta) data
 
-
-<img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
-
+<br/>
 
   * [Tool 1  — fastGSEA](#tool-1----fastgsea)
     + [Installation](#installation)
@@ -28,6 +26,7 @@
   * [Author](#author)
 
 
+<img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
 
 ## Tool 1  — fastGSEA
 
