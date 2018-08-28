@@ -8,6 +8,7 @@
 
 # Light bioinformatics tools for gene set statistical analysis and management based on DNA-seq (meta) data
 
+<br/>
 
   * [Tool 1  — fastGSEA](#tool-1----fastgsea)
     + [Installation](#installation)
