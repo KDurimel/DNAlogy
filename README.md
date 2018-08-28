@@ -2,11 +2,15 @@
   <img height="150" src="https://github.com/KDurimel/GSEAtools/blob/master/logo.png" alt="DNAlogy logo"/>
   <br/> 
   DNAlogy
+  <img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
+  <img src="https://img.shields.io/badge/License-GPL%20v3-blue.svg" alt="License"/>
+  <img src="https://img.shields.io/badge/Version-0.2RC-green.svg" alt="Version"/>
 </h1>
+
 
 # Light bioinformatics tools for gene set statistical analysis and management based on DNA-seq (meta) data
 
-<img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
+## Table of contents
 
   * [Tool 1  — fastGSEA](#tool-1----fastgsea)
     + [Installation](#installation)
