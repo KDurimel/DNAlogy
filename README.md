@@ -6,7 +6,9 @@
   <img src="https://img.shields.io/badge/License-GPL%20v3-blue.svg" alt="License"/>
   <img src="https://img.shields.io/badge/Version-0.2RC-green.svg" alt="Version"/>
 
-# Light bioinformatics tools for gene set statistical analysis and management based on DNA-seq (meta) data
+# Light bioinformatics tools for gene set statistical analysis and management based on DNA-seq (meta) data <br/> &nbsp; <br/>
+
+</h1>
 
 <br/>
 
@@ -24,6 +26,8 @@
 
 
 <img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
+
+<br/> &nbsp; <br/>
 
 ## Tool 1  — fastGSEA
 
@@ -163,8 +167,6 @@ P0C9F6
 ```
 ------
 
-<br/>
-
 ### Examples
 
 All data used for the following examples are avalaible in the [examples](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples) directory.
@@ -226,9 +228,10 @@ All these options can be combined to use FastGSEA as you like. Examples of resul
 <br/>
 
 And its associated 2D chart ( **GO-term level = f(log p-value)** ):
-
-<img src="https://github.com/KDurimel/DNAlogy/blob/master/FAST_GSEA/examples/results/demo.png" alt="2D chart"/>
-
+<p align="center">
+<img width="80%" src="https://github.com/KDurimel/DNAlogy/blob/master/FAST_GSEA/examples/results/demo.png" alt="2D chart"/>
+</p>
+                                                                                                                         
 <br/>
 
 ------
