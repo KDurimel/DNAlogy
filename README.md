@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/badge/Version-0.2RC-green.svg" alt="Version"/>
 </h1>
 
-<img src="https://github.com/KDurimel/DNAlogy/blob/master/sep.png" alt="sep"/>
+<br/>
 
 # Light bioinformatics tools for gene set statistical analysis and management based on DNA-seq (meta) data
 
