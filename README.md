@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/License-GPL%20v3-blue.svg" alt="License"/>
   <img src="https://img.shields.io/badge/Version-0.2RC-green.svg" alt="Version"/>
 
-<div class="paragraph"><p><h1 align="center">Light bioinformatics tools for gene set statistical analysis and management based on DNA-seq (meta) data</h1>&#160;<br/></p></div>
+# Light bioinformatics tools for gene set statistical analysis and management based on DNA-seq (meta) data
 
 
   * [Tool 1  — fastGSEA](#tool-1----fastgsea)
