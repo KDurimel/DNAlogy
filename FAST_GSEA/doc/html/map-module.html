@@ -112,9 +112,10 @@ Supported ids are (by decreasing quantity of available information):
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="show_progression"></a><span class="summary-sig-name">show_progression</span>(<span class="summary-sig-arg">counter</span>,
+          <td><span class="summary-sig"><a href="map-module.html#show_progression" class="summary-sig-name">show_progression</a>(<span class="summary-sig-arg">counter</span>,
         <span class="summary-sig-arg">total</span>,
-        <span class="summary-sig-arg">precision</span>)</span></td>
+        <span class="summary-sig-arg">precision</span>)</span><br />
+      Outputs percentage of progression.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="map-pysrc.html#show_progression">source&nbsp;code</a></span>
             
@@ -130,7 +131,11 @@ Supported ids are (by decreasing quantity of available information):
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="mk_susbet"></a><span class="summary-sig-name">mk_susbet</span>(<span class="summary-sig-arg">idMappingFile</span>)</span></td>
+          <td><span class="summary-sig"><a href="map-module.html#mk_susbet" class="summary-sig-name">mk_susbet</a>(<span class="summary-sig-arg">idMappingFile</span>,
+        <span class="summary-sig-arg">idsOptimized</span>,
+        <span class="summary-sig-arg">showWhichIdIsOptimized</span>)</span><br />
+      Takes as input idMappingfile.gz and the index of the colums we want 
+      to generate an subset for.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="map-pysrc.html#mk_susbet">source&nbsp;code</a></span>
             
@@ -188,8 +193,7 @@ Supported ids are (by decreasing quantity of available information):
         <tr>
           <td><span class="summary-sig"><a href="map-module.html#any_ids_to_go" class="summary-sig-name">any_ids_to_go</a>(<span class="summary-sig-arg">idMappingFile</span>,
         <span class="summary-sig-arg">idsFile</span>,
-        <span class="summary-sig-arg">outputPrefix</span>,
-        <span class="summary-sig-arg">whichDb</span>)</span><br />
+        <span class="summary-sig-arg">outputPrefix</span>)</span><br />
       Takes as input any suppported ids and returns its corresponding 
       GO-terms.</td>
           <td align="right" valign="top">
@@ -209,8 +213,7 @@ Supported ids are (by decreasing quantity of available information):
         <tr>
           <td><span class="summary-sig"><a href="map-module.html#any_ids_to_go_online" class="summary-sig-name">any_ids_to_go_online</a>(<span class="summary-sig-arg">idMappingFile</span>,
         <span class="summary-sig-arg">idsFile</span>,
-        <span class="summary-sig-arg">outputPrefix</span>,
-        <span class="summary-sig-arg">whichDb</span>)</span><br />
+        <span class="summary-sig-arg">outputPrefix</span>)</span><br />
       This function follows same principles as any_ids_to_go() but performs
       id mapping online.</td>
           <td align="right" valign="top">
@@ -308,8 +311,7 @@ Supported ids are (by decreasing quantity of available information):
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="map-module.html#EXEC_PATH" class="summary-name">EXEC_PATH</a> = <code title="'/home/wrecker/EspaceDeTravailLinux/DNAlogy/aug18/DNAlogy/FAST_GSEA/sr\
-c'"><code class="variable-quote">'</code><code class="variable-string">/home/wrecker/EspaceDeTravailLinux/DNAlogy/aug18/</code><code class="variable-ellipsis">...</code></code>
+        <a name="EXEC_PATH"></a><span class="summary-name">EXEC_PATH</span> = <code title="'/home/wrecker/DUMMY/DNAlogy/FAST_GSEA/src'"><code class="variable-quote">'</code><code class="variable-string">/home/wrecker/DUMMY/DNAlogy/FAST_GSEA/src</code><code class="variable-quote">'</code></code>
     </td>
   </tr>
 <tr>
@@ -338,6 +340,61 @@ c'"><code class="variable-quote">'</code><code class="variable-string">/home/wre
   </td>
 </tr>
 </table>
+<a name="show_progression"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">show_progression</span>(<span class="sig-arg">counter</span>,
+        <span class="sig-arg">total</span>,
+        <span class="sig-arg">precision</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="map-pysrc.html#show_progression">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Outputs percentage of progression.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>counter</code></strong> (int) - int used as iterator for couting when iterating a object</li>
+        <li><strong class="pname"><code>total</code></strong> (int) - object total length</li>
+        <li><strong class="pname"><code>precision</code></strong> (int) - number of decimals to show when printing progression</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="mk_susbet"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">mk_susbet</span>(<span class="sig-arg">idMappingFile</span>,
+        <span class="sig-arg">idsOptimized</span>,
+        <span class="sig-arg">showWhichIdIsOptimized</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="map-pysrc.html#mk_susbet">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Takes as input idMappingfile.gz and the index of the colums we want to
+  generate an subset for.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>idMappingFile</code></strong> (string) - path to the .gz file used for id mapping</li>
+        <li><strong class="pname"><code>idsOptimized</code></strong> (int) - column of the identifier in the idMappingFIle</li>
+        <li><strong class="pname"><code>showWhichIdIsOptimized</code></strong> (str) - -fastmode value entered by user (ids to optimize)</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
 <a name="ids_to_go"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -363,9 +420,8 @@ c'"><code class="variable-quote">'</code><code class="variable-string">/home/wre
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>idMappingFile</code></strong> (string) - path to the .gz file used for id mapping</li>
-        <li><strong class="pname"><code>idsFile</code></strong> - path to the input file containing all the ids we have to map</li>
+        <li><strong class="pname"><code>idsFile</code></strong> (string) - path to the input file containing all the ids we have to map</li>
         <li><strong class="pname"><code>outputPrefix</code></strong> (string) - file path output prefix</li>
-        <li><strong class="pname"><code>view</code></strong> (string)</li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -397,9 +453,8 @@ c'"><code class="variable-quote">'</code><code class="variable-string">/home/wre
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>idMappingFile</code></strong> (string) - path to the .gz file used for id mapping</li>
-        <li><strong class="pname"><code>idsFile</code></strong> - path to the input file containing all the ids we have to map</li>
+        <li><strong class="pname"><code>idsFile</code></strong> (string) - path to the input file containing all the ids we have to map</li>
         <li><strong class="pname"><code>outputPrefix</code></strong> (string) - file path output prefix</li>
-        <li><strong class="pname"><code>view</code></strong> (string)</li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -413,8 +468,7 @@ c'"><code class="variable-quote">'</code><code class="variable-string">/home/wre
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">any_ids_to_go</span>(<span class="sig-arg">idMappingFile</span>,
         <span class="sig-arg">idsFile</span>,
-        <span class="sig-arg">outputPrefix</span>,
-        <span class="sig-arg">whichDb</span>)</span>
+        <span class="sig-arg">outputPrefix</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="map-pysrc.html#any_ids_to_go">source&nbsp;code</a></span>&nbsp;
@@ -428,12 +482,8 @@ c'"><code class="variable-quote">'</code><code class="variable-string">/home/wre
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>idMappingFile</code></strong> (string) - path to the .gz file used for id mapping</li>
-        <li><strong class="pname"><code>idsFile</code></strong> - path to the input file containing all the ids we have to map</li>
-        <li><strong class="pname"><code>whichDb</code></strong> (string) - the ids database prefix that we want in output (for example, if 
-          we want go ids, whichDB = GO. Please refer to &quot;supported 
-          ids&quot; at the top section)</li>
+        <li><strong class="pname"><code>idsFile</code></strong> (string) - path to the input file containing all the ids we have to map</li>
         <li><strong class="pname"><code>outputPrefix</code></strong> (string) - file path output prefix</li>
-        <li><strong class="pname"><code>view</code></strong> (string)</li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -447,8 +497,7 @@ c'"><code class="variable-quote">'</code><code class="variable-string">/home/wre
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">any_ids_to_go_online</span>(<span class="sig-arg">idMappingFile</span>,
         <span class="sig-arg">idsFile</span>,
-        <span class="sig-arg">outputPrefix</span>,
-        <span class="sig-arg">whichDb</span>)</span>
+        <span class="sig-arg">outputPrefix</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="map-pysrc.html#any_ids_to_go_online">source&nbsp;code</a></span>&nbsp;
@@ -466,12 +515,8 @@ c'"><code class="variable-quote">'</code><code class="variable-string">/home/wre
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>idMappingFile</code></strong> (string) - path to the .gz file used for id mapping</li>
-        <li><strong class="pname"><code>idsFile</code></strong> - path to the input file containing all the ids we have to map</li>
-        <li><strong class="pname"><code>whichDb</code></strong> (string) - the ids database prefix that we want in output (for example, if 
-          we want go ids, whichDB = GO. Please refer to &quot;supported 
-          ids&quot; at the top section)</li>
+        <li><strong class="pname"><code>idsFile</code></strong> (string) - path to the input file containing all the ids we have to map</li>
         <li><strong class="pname"><code>outputPrefix</code></strong> (string) - file path output prefix</li>
-        <li><strong class="pname"><code>view</code></strong> (string)</li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -500,12 +545,11 @@ c'"><code class="variable-quote">'</code><code class="variable-string">/home/wre
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>idMappingFile</code></strong> (string) - path to the .gz file used for id mapping</li>
-        <li><strong class="pname"><code>idsFile</code></strong> - path to the input file containing all the ids we have to map</li>
+        <li><strong class="pname"><code>idsFile</code></strong> (string) - path to the input file containing all the ids we have to map</li>
+        <li><strong class="pname"><code>outputPrefix</code></strong> (string) - file path output prefix</li>
         <li><strong class="pname"><code>whichDb</code></strong> (string) - the ids database prefix that we want in output (for example, if 
           we want go ids, whichDB = GO. Please refer to &quot;supported 
           ids&quot; at the top section)</li>
-        <li><strong class="pname"><code>outputPrefix</code></strong> (string) - file path output prefix</li>
-        <li><strong class="pname"><code>view</code></strong> (string)</li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -573,25 +617,6 @@ Supported ids are (by decreasing quantity of available information):
   </dl>
 </td></tr></table>
 </div>
-<a name="EXEC_PATH"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">EXEC_PATH</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-<code class="variable-quote">'</code><code class="variable-string">/home/wrecker/EspaceDeTravailLinux/DNAlogy/aug18/DNAlogy/FAST_GSEA/sr</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-<code class="variable-string">c</code><code class="variable-quote">'</code>
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
 <br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
@@ -616,7 +641,7 @@ Supported ids are (by decreasing quantity of available information):
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon Aug 27 00:21:26 2018
+    Generated by Epydoc 3.0.1 on Thu Aug 30 00:45:56 2018
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

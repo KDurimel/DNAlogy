@@ -47,13 +47,13 @@ EXEC_PATH = sys.path[0] # Current running script path*
 
 def show_progression(counter, total, precision):
 	"""
-	Outputs % progression. 
+	Outputs percentage of progression. 
 	@param counter: int used as iterator for couting when iterating a object
 	@type counter: int
-	@param counter: object total length
-	@type counter: int
+	@param total: object total length
+	@type total: int
 	@param precision: number of decimals to show when printing progression
-	@type counter: int
+	@type precision: int
 	"""
 	sys.stdout.write('\r{0}% processed'.format(round(float(counter)/int(total)*100, precision))) # % progressing display
 

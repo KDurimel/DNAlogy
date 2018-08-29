@@ -52,7 +52,7 @@
 </table>
 <!-- ==================== MODULE DESCRIPTION ==================== -->
 <h1 class="epydoc">Module enrich</h1><p class="nomargin-top"><span class="codelink"><a href="enrich-pysrc.html">source&nbsp;code</a></span></p>
-<p>GSEA script. Launches Enrich.R script and manage its results.</p>
+<p>GSEA script. Launches enrich.R script and manages its results.</p>
 
 <hr />
 <div class="fields">      <strong>Requires:</strong>
@@ -101,7 +101,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="launchGSEA"></a><span class="summary-sig-name">launchGSEA</span>(<span class="summary-sig-arg">outputDir</span>)</span></td>
+          <td><span class="summary-sig"><a href="enrich-module.html#launchGSEA" class="summary-sig-name">launchGSEA</a>(<span class="summary-sig-arg">outputDir</span>,
+        <span class="summary-sig-arg">echFile</span>,
+        <span class="summary-sig-arg">univFile</span>)</span><br />
+      enrich.R wrapper.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="enrich-pysrc.html#launchGSEA">source&nbsp;code</a></span>
             
@@ -134,7 +137,7 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a href="enrich-module.html#__doc__" class="summary-name">__doc__</a> = <code title="&quot;&quot;&quot;
-GSEA script. Launches Enrich.R script and manage its results.
+GSEA script. Launches enrich.R script and manages its results.
 @requires: U{python 2.7&lt;https://www.python.org/downloads/&gt;} or greater
 @requires: U{R 3.3.3 RC &lt;https://www.r-project.org/&gt;}
 @requires: U{Conda 4.4.10&lt;https://conda.io/&gt;} or greater with FastGSEA\
@@ -174,8 +177,7 @@ GSEA script. Launches Enrich.R script and manage its results.
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="enrich-module.html#EXEC_DIR" class="summary-name">EXEC_DIR</a> = <code title="'/home/wrecker/EspaceDeTravailLinux/DNAlogy/aug18/DNAlogy/FAST_GSEA/sr\
-c'"><code class="variable-quote">'</code><code class="variable-string">/home/wrecker/EspaceDeTravailLinux/DNAlogy/aug18/D</code><code class="variable-ellipsis">...</code></code>
+        <a name="EXEC_DIR"></a><span class="summary-name">EXEC_DIR</span> = <code title="'/home/wrecker/DUMMY/DNAlogy/FAST_GSEA/src'"><code class="variable-quote">'</code><code class="variable-string">/home/wrecker/DUMMY/DNAlogy/FAST_GSEA/src</code><code class="variable-quote">'</code></code>
     </td>
   </tr>
 <tr>
@@ -186,6 +188,53 @@ c'"><code class="variable-quote">'</code><code class="variable-string">/home/wre
     </td>
   </tr>
 </table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="launchGSEA"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">launchGSEA</span>(<span class="sig-arg">outputDir</span>,
+        <span class="sig-arg">echFile</span>,
+        <span class="sig-arg">univFile</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="enrich-pysrc.html#launchGSEA">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>enrich.R wrapper. Takes as input the paths for output directory, 
+  sample GO ids file and universe GO ids file.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>outputDir</code></strong> (string) - path to the output directory</li>
+        <li><strong class="pname"><code>echFile</code></strong> (str) - Sample GO ids file path</li>
+        <li><strong class="pname"><code>univFile</code></strong> (str) - Universe GO ids file path</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
 <!-- ==================== VARIABLES DETAILS ==================== -->
 <a name="section-VariablesDetails"></a>
 <table class="details" border="1" cellpadding="3"
@@ -217,7 +266,7 @@ c'"><code class="variable-quote">'</code><code class="variable-string">/home/wre
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
 &quot;&quot;&quot;
-GSEA script. Launches Enrich.R script and manage its results.
+GSEA script. Launches enrich.R script and manages its results.
 @requires: U{python 2.7&lt;https://www.python.org/downloads/&gt;} or greater
 @requires: U{R 3.3.3 RC &lt;https://www.r-project.org/&gt;}
 @requires: U{Conda 4.4.10&lt;https://conda.io/&gt;} or greater with FastGSEA<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
@@ -241,25 +290,6 @@ GSEA script. Launches Enrich.R script and manage its results.
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
 <code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">Kevin La</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Arnaud Felten</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Meryl Vila-Nova</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Nicolas Radomski</code><code class="variable-quote">'</code><code class="variable-group">]</code>
-</pre></td></tr></table>
-</dd>
-  </dl>
-</td></tr></table>
-</div>
-<a name="EXEC_DIR"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">EXEC_DIR</h3>
-  
-  <dl class="fields">
-  </dl>
-  <dl class="fields">
-    <dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-<code class="variable-quote">'</code><code class="variable-string">/home/wrecker/EspaceDeTravailLinux/DNAlogy/aug18/DNAlogy/FAST_GSEA/sr</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-<code class="variable-string">c</code><code class="variable-quote">'</code>
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -289,7 +319,7 @@ GSEA script. Launches Enrich.R script and manage its results.
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Mon Aug 27 00:21:26 2018
+    Generated by Epydoc 3.0.1 on Thu Aug 30 00:45:56 2018
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
