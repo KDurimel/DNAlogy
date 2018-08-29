@@ -218,7 +218,7 @@ def main():
 
 	if Arguments.mapOffline:
 		# Map ids files OFFLINE enabling only all ids support.
-		if Arguments.fromOtherDB:
+		if not Arguments.fastmode:
 			map.any_ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/' + ECH_OUTPUT) # Map sample ids
 			map.any_ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/' + UNIV_OUTPUT) # Map universe ids
 		# Map ids files OFFLINE enabling only Refseq and GO ids support. Faster and most reliable solution
@@ -227,7 +227,7 @@ def main():
 			map.ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
 	else:
 		# Map ids files ONLINE enabling all ids support. Results may be uncomplete
-		if Arguments.fromOtherDB:
+		if not Arguments.fastmode:
 			map.any_ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
 			map.any_ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
 		# Map ids files ONLINE enabling only Refset and Uniprot ids support. BEST solution for strong results

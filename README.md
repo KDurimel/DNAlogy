@@ -4,7 +4,7 @@
   DNAlogy
   <br/>
   <img src="https://img.shields.io/badge/License-GPL%20v3-blue.svg" alt="License"/>
-  <img src="https://img.shields.io/badge/Version-0.2RC-green.svg" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-0.3%20RC-green.svg" alt="Version"/>
 
 # Light bioinformatics tools for gene set statistical analysis and management based on DNA-seq (meta) data <br/> &nbsp; <br/>
 
@@ -120,7 +120,7 @@ source ~/.bashrc
 | -output       | Output results prefix                                                   |    Yes   |
 | -obo          | Gene ontology .obo graph file used when "--trim" option activated       |    No    |
 | -toDB         | databank identifier wanted as output when "--mapOnly"  option activated |    No    |
-| --fromOtherDB | Activate all ids support (slower)                                       |    No    |
+| -fastmode     | optimize fastGOEA speeds for the seleted identifier but disables multi-ids support |    No    |
 | --mapOffline  | Perform "MAP" step offline                                              |    No    |
 | --trim        | Trim prokaryotic GO-terms                                               |    No    |
 | --view        | Outputs the enrichment results in a 2D graph                            |    No    |
@@ -143,7 +143,7 @@ source ~/.bashrc
 
 **Usage  — Input files format**
 
-FastGSEA takes two input files (one for sample, second one for universe). They have to be text files containing one international databank (ncbi, refseq, etc) **supported** identifiers (listed above) per line, for example:
+FastGSEA takes two input files (one for sample, second one for universe). They have to be text files containing one international databank (ncbi, refseq, etc) from any **supported** identifiers (listed above) per line, for example:
 
 ```bash
 O55719
@@ -151,19 +151,24 @@ Q6GZM9
 Q6GZM8
 NP_302218.1
 WP_008262748.1
-WP_011437797.1
-NP_149806.1
 NP_854636.1
 WP_003877490.1
 Q6GZM7
 P0C9F0
 P0C9F1
 P0C9F2
-P0C9E9
-Q65209
-P0C9F4
-P0C9F5
-P0C9F6
+```
+
+:warning: If you want to use `-fastmode`, input files must contain identifiers from only one databank among the supported identifiers, for example.
+
+```bash
+O55719
+Q6GZM9
+Q6GZM8
+Q6GZM7
+P0C9F0
+P0C9F1
+P0C9F2
 ```
 ------
 
@@ -198,7 +203,6 @@ Requesting NCBI and Uniprot APIs (most reliable, but slower):
 fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz  -output maybe/here
 ```
 
-
 ...plus trimming obsolete and non Prokaryotic GO-terms (up to date obo file `gosubset_prok.obo` needed):
 ```bash
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs:)
@@ -210,6 +214,13 @@ fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo
 ```bash
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs:)
 fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo gosubset_prok.obo -output somewhere --trim --view
+```
+
+...plus do all these things using `-fastmode` : if you are using huge datasets, this will improve all the mapping steps. With `-fastmode` option, databank identifiers MUST be unified! In this example we use `-fastmode` for RefSeq ids:
+
+```bash
+# -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs:)
+fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo gosubset_prok.obo -fastmode RefSeq -output somewhere --trim --view 
 ```
 
 <br/>

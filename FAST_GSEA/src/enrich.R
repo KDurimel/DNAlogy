@@ -33,7 +33,7 @@ go_univ_file=readLines(univ_tmp)
 
 ###RETRIEVE UNIVERSE GO-TERMS ANCESTORS###
 
-print('Browsing sample ontology tree for cellular components...')
+print('Browsing universe ontology tree for cellular components...')
 
 capture.output(for(i in 1:length(go_univ_file))
 {
@@ -62,7 +62,7 @@ print.go_only <- function(m)
 capture.output(print.go_only(grep(pattern ="GO:" , data, value = TRUE, fixed = TRUE)),file=paste(outputPrefix,"/gocc_univ.txt",sep=""))
 
 ###RETRIEVE SAMPLE GO-TERMS ANCESTORS###
-print('Browsing universe ontology tree for cellular components...')
+print('Browsing sample ontology tree for cellular components...')
 capture.output(for(i in 1:length(go_ech_file))
 {
   #Try, in order to avoid errors if GO-term is not a CC or dont have any ancestors
