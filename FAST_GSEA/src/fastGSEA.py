@@ -87,6 +87,10 @@ def get_parser():
 						type=str, required=False, help='databank identifier wanted (e.g GO,Uniref100...)'  +\
 						'as output when "--mapOnly" option activated')
 
+	parser.add_argument('-fastmode', dest='fastmode', action="store",
+						type=str, required=False, help='optimize fastGOEA speeds for the entered identifier' +\
+						'(Refseq,UniProtKB-AC,etc...)\nthis option improves execution speeds but disables multi-ids support')
+
 	parser.add_argument('--mapOffline', dest='mapOffline', action='store_true', 
 						help='Retrieve GO-terms without requesting Uniprot API\'s. '+\
 						'Faster but less reliable. Use this option in case of low internet bandwith, but '+\
@@ -139,6 +143,12 @@ def main():
 	############# Global varuables initialisation ##################
 	TIMER = Timer()
 	EXEC_DIR = sys.path[0] # Current running script path
+	# idmapping gz columns (used for retrieve cut column when mksubset)
+	ALL_IDS = ['UniProtKB-AC','UniProtKB-ID','GeneID','RefSeq',
+	'GI','PDB','GO','UniRef100','UniRef90','UniRef50','UniParc',
+	'PIR','NCBI-taxon','MIM','UniGene','Pubmed','EMBL','EMBL-CDS','Ensembl',
+	'Ensembl_TRS','Ensembl_PRO','Additional Pubmed']
+	# supported ids : used to control user args input
 	SUPPORTED_IDS = ['UniProtKB-AC','RefSeq','UniProtKB-ID','GeneID',
 	'GI','GO','UniRef100','UniRef90','UniRef50','UniParc','UniGene',
 	'EMBL','EMBL-CDS','Ensembl','Ensembl_TRS','Ensembl_PRO']
@@ -161,11 +171,24 @@ def main():
 	# 	************************ 
 	subprocess.check_call('mkdir -p ' + Arguments.output + '/tmp', shell=True)
 	TMP_DIR = Arguments.output + '/tmp'
-	if not exists(Arguments.mappingFile + '_subset.gz'):
-		# Create idmapping subset file if it dont already exists
-		map.mk_susbet(Arguments.mappingFile) 
 
-	# Only mapping ids if asked
+	#
+	# IF FASTMODE ACTIVATED : Generate subset and use it for mapping (consequence :  no multi-ids support)
+	if Arguments.fastmode:
+		# Create idmapping subset if supported and its not GO (bcs why a subset for mapping go to go?)
+		if Arguments.fastmode in SUPPORTED_IDS:
+			# if used want to create a subset for GO ids its a mistake
+			if Arguments.fastmode == "GO":
+				parser.print_help()
+				print '\nERROR :  generate subset for go ids is not allowed' + \
+				'\nPlease use only supported ids. Program will stop now.'
+				sys.exit(1)
+			else:
+				map.mk_susbet(Arguments.mappingFile,int(ALL_IDS.index(Arguments.fastmode))+1,Arguments.fastmode) 
+
+	#
+	# MAPPING ONLY MODE
+	#
 	if Arguments.mapOnly:
 		if Arguments.toDB:
 			if Arguments.toDB in SUPPORTED_IDS:
@@ -174,23 +197,30 @@ def main():
 				# Remove tmp files
 				if not Arguments.keepTmp:
 					subprocess.check_call('rm -r ' + TMP_DIR, shell = True)
+				# Map only : so exit without error
 				sys.exit(0)
 			else:
-				print 'toDB - bad argument: ' + Arguments.toDB + \
-				'\nPlease use only supported ids. Program will stop now.'
 				parser.print_help()
+				print '\nERROR : toDB - bad argument: ' + Arguments.toDB + \
+				'\nPlease use only supported ids. Program will stop now.'
 				sys.exit(1)
 		else:
 			parser.print_help()
+			print '\nERROR : -toDB argument missed'
 			sys.exit(1)
 
+	#
+	# FULL MODE : ONLINE OR OFFLINE
+	#
 
+	ECH_OUTPUT = 'go_ech_raw.txt' # ECH_OUTPUT = trimmed or not trimmed reads (values changes during the workflow if --trim option was selected)
+	UNIV_OUTPUT = 'go_univ_raw.txt'  # UNIV_OUTPUT = trimmed or not trimmed reads (values changes during the workflow if --trim option was selected)
 
 	if Arguments.mapOffline:
 		# Map ids files OFFLINE enabling only all ids support.
 		if Arguments.fromOtherDB:
-			map.any_ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', 'GO') # Map sample ids
-			map.any_ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', 'GO') # Map universe ids
+			map.any_ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/' + ECH_OUTPUT) # Map sample ids
+			map.any_ids_to_go(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/' + UNIV_OUTPUT) # Map universe ids
 		# Map ids files OFFLINE enabling only Refseq and GO ids support. Faster and most reliable solution
 		else:
 			map.ids_to_go(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
@@ -198,33 +228,36 @@ def main():
 	else:
 		# Map ids files ONLINE enabling all ids support. Results may be uncomplete
 		if Arguments.fromOtherDB:
-			map.any_ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt', 'GO') # Map sample ids
-			map.any_ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt', 'GO') # Map universe ids
+			map.any_ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
+			map.any_ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
 		# Map ids files ONLINE enabling only Refset and Uniprot ids support. BEST solution for strong results
 		else:
 			map.ids_to_go_online(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/go_ech_raw.txt') # Map sample ids
 			map.ids_to_go_online(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/go_univ_raw.txt') # Map universe ids
 
-	# 	************************ 
-	# 	**** GO ENRICHMENT ***** 
-	# 	************************ 
-	# Gene set enrichment and hypergeometric tests using R scripts called by python map module
-	launchGSEA(TMP_DIR)
+
 	# Trim prokarytic GO-terms if asked by user
 	if Arguments.trim:
 		if Arguments.obo:
 			# Automatically watch if a subset file exists, and generates it if its not the case
 			trim.mk_subset(Arguments.obo, TMP_DIR + '/gosubset.txt') 
 			# Trim non prokaryote and non obsolete terms from enrichment results
-			trim.trim(TMP_DIR + '/gosubset.txt', TMP_DIR + '/../hyperesults.csv')
-			# Generates GO distribution plot
-			if Arguments.view:
-				subprocess.check_call('R --vanilla --slave --args ' + TMP_DIR + '/../hyperesults.csv_cleaned.csv < ' +\
-					EXEC_DIR + '/goView.R', shell = True)
+			trim.trim(TMP_DIR + '/gosubset.txt', TMP_DIR + '/go_ech_raw.txt')
+			trim.trim(TMP_DIR + '/gosubset.txt', TMP_DIR + '/go_univ_raw.txt')
+			# Set new file input for launchGSEA (enrichment)
+			ECH_OUTPUT = 'go_ech_raw.txt_cleaned.txt'
+			UNIV_OUTPUT = 'go_univ_raw.txt_cleaned.txt'
 		else:
-			print "Please provide a obo file!"
 			parser.print_help()
+			print "\nERROR : Please provide a obo file!"
 			exit(1)
+
+	# 	************************ 
+	# 	**** GO ENRICHMENT ***** 
+	# 	************************ 
+	# Gene set enrichment and hypergeometric tests using R scripts called by python map module
+	launchGSEA(TMP_DIR,ECH_OUTPUT,UNIV_OUTPUT)
+	
 	# Generates GO distribution plot
 	if Arguments.view:
 		subprocess.check_call('R --vanilla --slave --args ' + TMP_DIR + '/../hyperesults.csv < ' + EXEC_DIR + '/goView.R', shell = True)
