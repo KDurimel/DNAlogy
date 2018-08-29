@@ -43,14 +43,33 @@ import urllib,urllib2,requests	# HTML requests
 import re #regex
 
 
-EXEC_PATH = sys.path[0] # Current running script path
+EXEC_PATH = sys.path[0] # Current running script path*
 
 def show_progression(counter, total, precision):
+	"""
+	Outputs % progression. 
+	@param counter: int used as iterator for couting when iterating a object
+	@type counter: int
+	@param counter: object total length
+	@type counter: int
+	@param precision: number of decimals to show when printing progression
+	@type counter: int
+	"""
 	sys.stdout.write('\r{0}% processed'.format(round(float(counter)/int(total)*100, precision))) # % progressing display
 
-def mk_susbet(idMappingFile):
-	print 'Generating a subset from ids mapping file:'
-	cmd = 'zcat ' + idMappingFile + ' | cut -f 1,4,7 | gzip --stdout > ' + idMappingFile + '_subset.gz'
+def mk_susbet(idMappingFile, idsOptimized, showWhichIdIsOptimized):
+	"""
+	Takes as input idMappingfile.gz and the index of the colums we want to generate an subset for. 
+	@param idMappingFile: path to the .gz file used for id mapping 
+	@type idMappingFile: string
+	@param idsOptimized: column of the identifier in the idMappingFIle
+	@type idsOptimized: int
+	@param showWhichIdIsOptimized: -fastmode value entered by user (ids to optimize)
+	@type showWhichIdIsOptimized: str
+	"""
+	print 'Fastmode activated (ids from one databank only!) we are generating a subset for ' + showWhichIdIsOptimized + \
+	'ids:'
+	cmd = 'zcat ' + idMappingFile + ' | cut -f '+ str(idsOptimized) +',7 | gzip --stdout > ' + idMappingFile + '_subset.gz'
 	subprocess.check_call(cmd, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
 	print '...ok'
 
@@ -63,7 +82,7 @@ def ids_to_go(idMappingFile, idsFile, outputPrefix):
 	@param idMappingFile: path to the .gz file used for id mapping 
 	@type idMappingFile: string
 	@param idsFile: path to the input file containing all the ids we have to map 
-	@type view: string
+	@type idsFile: string
 	@param outputPrefix: file path output prefix
 	@type outputPrefix: string
 	"""
@@ -102,7 +121,7 @@ def ids_to_go_online(idMappingFile, idsFile, outputPrefix):
 	@param idMappingFile: path to the .gz file used for id mapping 
 	@type idMappingFile: string
 	@param idsFile: path to the input file containing all the ids we have to map 
-	@type view: string
+	@type idsFile: string
 	@param outputPrefix: file path output prefix
 	@type outputPrefix: string
 	"""
@@ -118,7 +137,7 @@ def ids_to_go_online(idMappingFile, idsFile, outputPrefix):
 			show_progression(counter,input_lines_count,2)
 			#if this line contains a Refseq id (NP_xxx, Wp_xxx...) performs offline id mapping
 			if 'P_' in id_.strip():
-				cmd = 'bash ' + EXEC_PATH + '/manageFiles.sh ' + ' --anythingToGo ' + idMappingFile + ' ' + id_.strip()
+				cmd = 'bash ' + EXEC_PATH + '/manageFiles.sh ' + ' --subsetToGo ' + idMappingFile + ' ' + id_.strip()
 				goterms = str(subprocess.check_output(cmd,shell=True,preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))).split(';')
 				for goterm in goterms:
 
@@ -158,17 +177,14 @@ def ids_to_go_online(idMappingFile, idsFile, outputPrefix):
 
 
 
-def any_ids_to_go(idMappingFile, idsFile, outputPrefix, whichDb):
+def any_ids_to_go(idMappingFile, idsFile, outputPrefix):
 	"""
 	Takes as input any suppported ids and returns its corresponding GO-terms. Slower
 	than ids_go_to beacause it do not use the idMappingFile subset and requests id per id.
 	@param idMappingFile: path to the .gz file used for id mapping 
 	@type idMappingFile: string
 	@param idsFile: path to the input file containing all the ids we have to map 
-	@type view: string
-	@param whichDb: the ids database prefix that we want in output (for example, if we 
-	want go ids, whichDB = GO. Please refer to "supported ids" at the top section)
-	@type whichDb: string
+	@type idsFile: string
 	@param outputPrefix: file path output prefix
 	@type outputPrefix: string
 	"""
@@ -181,7 +197,7 @@ def any_ids_to_go(idMappingFile, idsFile, outputPrefix, whichDb):
 	with open(idsFile,'r') as ids:
 		for counter,id_ in enumerate(ids):
 			show_progression(counter,input_lines_count,2)
-			cmd = 'bash ' + EXEC_PATH + '/manageFiles.sh '+ ' --anythingToAnything '+ idMappingFile + ' ' + id_.strip() + ' ' + whichDb
+			cmd = 'bash ' + EXEC_PATH + '/manageFiles.sh '+ ' --anythingToGo '+ idMappingFile + ' ' + id_.strip()
 			goterms = str(subprocess.check_output(cmd, shell = True, preexec_fn = lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))).split(';')
 			for goterm in goterms:
 
@@ -195,7 +211,7 @@ def any_ids_to_go(idMappingFile, idsFile, outputPrefix, whichDb):
 		gofile.write('\n'.join(all_goterms) + '\n')
 	print '...ok'
 
-def any_ids_to_go_online(idMappingFile, idsFile, outputPrefix, whichDb):
+def any_ids_to_go_online(idMappingFile, idsFile, outputPrefix):
 	"""
 	This function follows same principles as any_ids_to_go() but performs id mapping online.
 	This function is an experimental feature and support only the ids supported by the 
@@ -205,10 +221,7 @@ def any_ids_to_go_online(idMappingFile, idsFile, outputPrefix, whichDb):
 	@param idMappingFile: path to the .gz file used for id mapping 
 	@type idMappingFile: string
 	@param idsFile: path to the input file containing all the ids we have to map 
-	@type view: string
-	@param whichDb: the ids database prefix that we want in output (for example, if we 
-	want go ids, whichDB = GO. Please refer to "supported ids" at the top section)
-	@type whichDb: string
+	@type idsFile: string
 	@param outputPrefix: file path output prefix
 	@type outputPrefix: string
 	"""
@@ -223,7 +236,7 @@ def any_ids_to_go_online(idMappingFile, idsFile, outputPrefix, whichDb):
 			show_progression(counter,input_lines_count,2)
 			#if this line contains a Refseq id (NP_xxx, Wp_xxx...) performs offline id mapping
 			if 'P_' in id_.strip():
-				cmd = 'bash ' + EXEC_PATH + '/manageFiles.sh ' + ' --anythingToAnything ' + idMappingFile + ' ' + id_.strip() + ' ' + whichDb
+				cmd = 'bash ' + EXEC_PATH + '/manageFiles.sh ' + ' --anythingToGo ' + idMappingFile + ' ' + id_.strip()
 				goterms = str(subprocess.check_output(cmd,shell=True,preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))).split(';')
 				for goterm in goterms:
 
@@ -267,12 +280,12 @@ def any_ids_to_any_ids(idMappingFile, idsFile, outputPrefix, whichDb):
 	@param idMappingFile: path to the .gz file used for id mapping 
 	@type idMappingFile: string
 	@param idsFile: path to the input file containing all the ids we have to map 
-	@type view: string
+	@type idsFile: string
+	@param outputPrefix: file path output prefix
+	@type outputPrefix: string
 	@param whichDb: the ids database prefix that we want in output (for example, if we 
 	want go ids, whichDB = GO. Please refer to "supported ids" at the top section)
 	@type whichDb: string
-	@param outputPrefix: file path output prefix
-	@type outputPrefix: string
 	"""
 	print 'Offline ids mapping from any IDs:'
 	all_ids = [] # This will contains all the go-terms retrieved
