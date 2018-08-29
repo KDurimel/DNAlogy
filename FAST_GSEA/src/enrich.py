@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 __doc__="""
-GSEA script. Launches Enrich.R script and manage its results.
+GSEA script. Launches enrich.R script and manages its results.
 @requires: U{python 2.7<https://www.python.org/downloads/>} or greater
 @requires: U{R 3.3.3 RC <https://www.r-project.org/>}
 @requires: U{Conda 4.4.10<https://conda.io/>} or greater with FastGSEA  conda environment (fastgsea.yml)
@@ -20,9 +20,19 @@ import sys, subprocess # too many uses --> import all.
 
 EXEC_DIR = sys.path[0] # Current running script path
 
-def launchGSEA(outputDir):
+def launchGSEA(outputDir,echFile,univFile):
+	"""
+	enrich.R wrapper.
+	Takes as input the paths for output directory, sample GO ids file and universe GO ids file.
+	@param outputDir: path to the output directory
+	@type outputDir: string
+	@param echFile: Sample GO ids file path
+	@type echFile: str
+	@param univFile: Universe GO ids file path
+	@type univFile: str
+	"""
 	print 'Online GO enrichment and hypergeometric tests:'
-	subprocess.check_call('R --vanilla --slave --args ' + outputDir + ' < ' + EXEC_DIR + "/enrich.R", shell = True)
+	subprocess.check_call('R --vanilla --slave --args ' + outputDir + ' ' + outputDir + '/' + echFile +  ' ' + outputDir + '/' + univFile + ' < ' + EXEC_DIR + "/enrich.R", shell = True)
 	# Add header
 	subprocess.check_call(' echo "GO:ID;Go term;Number of hits;Expected number of hits;Go level;P-value;Corrected p-value;Aspect" > ' + \
 		outputDir + '/../hyperesults.csv', shell = True)

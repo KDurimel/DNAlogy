@@ -17,9 +17,12 @@ args <- commandArgs(TRUE)
 
 outputPrefix=args[1]    
 outputPrefix=gsub(" ", "",outputPrefix, fixed = TRUE)  
+ech_tmp=args[2]
+univ_tmp=args[3]
 # read GO mapping files from master script
-go_univ_file=readLines(paste(outputPrefix,"/go_univ_raw.txt",sep="")) 
-go_ech_file=readLines(paste(outputPrefix,"/go_ech_raw.txt",sep="")) 
+go_ech_file=readLines(ech_tmp)
+go_univ_file=readLines(univ_tmp)
+
 
 
 #####################################################################
