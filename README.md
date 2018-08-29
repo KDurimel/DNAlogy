@@ -159,7 +159,7 @@ P0C9F1
 P0C9F2
 ```
 
-:warning: If you want to use `-fastmode`, input files must contain identifiers from only one databank among the supported identifiers, for example.
+:warning: If you want to use `-fastmode`, input files must contain identifiers from only one databank among the supported identifiers, for example, only UniProtKB-AC ids:
 
 ```bash
 O55719
