@@ -132,12 +132,12 @@ source ~/.bashrc
 
 **Usage - Where can I find the `-mappingFile` and `-obo` files?**
 
-`-mappingFile` is used for offline ids mappping and can be found on the [Uniprot FTP](ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/idmapping_selected.tab.gz) ( > 6gb file)
+`-mappingFile` is used for offline ids mappping and can be found on the [Uniprot FTP](ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/idmapping_selected.tab.gz)
 
 `-obo` is the gene ontology graph used for GO-terms checking and trimming. It is availaible on the Open Biological and Biomedical Ontology (OBO) [subset file](purl.obolibrary.org/obo/go/releases/2018-06-01/subsets/gosubset_prok.obo). There are daily releases, so you can download the latest ones [here](purl.obolibrary.org/obo/go/releases)
 
 
-> :warning: **Important note:** be careful when trimming non prokaryotic GO-terms, 'gosubset_prok' terms are not maitained since 2018/06 because some of them muight be irrelevant. More information [here](https://github.com/geneontology/go-ontology/pull/16255) and [here](https://github.com/geneontology/go-ontology/issues/16077).
+> :warning: **Important note:** be careful when trimming non prokaryotic GO-terms, 'gosubset_prok' terms are not maitained since 2018/06 because some of them might be irrelevant. More information [here](https://github.com/geneontology/go-ontology/pull/16255) and [here](https://github.com/geneontology/go-ontology/issues/16077).
 
 <br/>
 
