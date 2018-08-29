@@ -53,9 +53,13 @@ def add_object(d, outputFile):
     all_objects[key] = d["subset: gosubset_prok"] + is_a
 
 
-def mk_subset(oboFile,outputFile): 
+def mk_subset(oboFile, outputFile): 
     """
     Generates a GO-terms file subset based on a obo file.
+    @param oboFile: obo file path
+    @type oboFile: str
+    @param outputFile: GO subset output file path
+    @type outputFile: str
     """
     if os.path.exists(outputFile):
         print 'Go prokaryotic subset already found, passing this step...'
@@ -87,13 +91,20 @@ def mk_subset(oboFile,outputFile):
         
     print "...ok"
 
-def trim(goprok_txt,enrichmentResultsFile):
+def trim(goprok_txt, trimmedFile):
+    """
+    GO terms trimming based on obo file subset
+    @param goprok_txt: obo file subset path (goprok.txt)
+    @type goprok_txt: str
+    @param trimmedFile: trimmed file path
+    @type trimmedFile: str
+    """
     print "Trimming obsolete and non-prokaryotic go terms from enrichment results: \n\
     CAUTION - Using this functionality may make you lose relevant prokaryotic GO-terms::\n\
     https://github.com/geneontology/go-ontology/issues/16077 \n\
     Please inspect your results carefully."
     subprocess.check_call('echo "GO:ID;Go term;Number of hits;Expected number of hits;Go level;P-value;Corrected p-value;Aspect" > '+\
-        enrichmentResultsFile + '_cleaned.csv', shell = True)
-    subprocess.check_call('grep -F -f ' + goprok_txt + ' ' + enrichmentResultsFile + ' >> ' +\
-        enrichmentResultsFile + '_cleaned.csv', shell = True)
+        trimmedFile + '_cleaned.txt', shell = True)
+    subprocess.check_call('grep -F -f ' + goprok_txt + ' ' + trimmedFile + ' >> ' +\
+        trimmedFile + '_cleaned.txt', shell = True)
     print "...ok"
