@@ -249,7 +249,7 @@ And its associated 2D chart ( **GO-term level = f(log p-value)** ):
 
 ### Workflow
 As said previously, workflow can be stopped at each step, the last three parts of the workflow are optional and and behave as you set it up for.
-<img src="https://github.com/KDurimel/DNAlogy/blob/master/FAST_GSEA/doc/workflow_vRC.png" alt="fastGSEA workflow"/>
+<img src="FAST_GSEA/doc/workflow_vRC.png" alt="fastGSEA workflow"/>
 
 You can also import all or part of the **`map` `enrich` `trim`** modules for another usage in your own scripts.
 
