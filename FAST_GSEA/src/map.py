@@ -57,7 +57,7 @@ def show_progression(counter, total, precision):
 	"""
 	sys.stdout.write('\r{0}% processed'.format(round(float(counter)/int(total)*100, precision))) # % progressing display
 
-def mk_susbet(idMappingFile, idsOptimized, showWhichIdIsOptimized):
+def mk_subset(idMappingFile, idsOptimized, showWhichIdIsOptimized):
 	"""
 	Takes as input idMappingfile.gz and the index of the colums we want to generate an subset for. 
 	@param idMappingFile: path to the .gz file used for id mapping 
@@ -70,6 +70,28 @@ def mk_susbet(idMappingFile, idsOptimized, showWhichIdIsOptimized):
 	print 'Fastmode activated (ids from one databank only!) we are generating a subset for ' + showWhichIdIsOptimized + \
 	'ids:'
 	cmd = 'zcat ' + idMappingFile + ' | cut -f '+ str(idsOptimized) +',7 | gzip --stdout > ' + idMappingFile + '_subset.gz'
+	subprocess.check_call(cmd, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
+	print '...ok'
+
+def mk_subsetmap(idMappingFile, idsTo, showWhichIdsTo, idsFrom, showWhichIdsFrom):
+	"""
+	Takes as input idMappingfile.gz and the index of the two colums (from,to) we want to generate a subset for. 
+	@param idMappingFile: path to the .gz file used for id mapping 
+	@type idMappingFile: string
+	@param idsTo: column of the identifier in the idMappingFIle
+	@type idsTo: int
+	@param showWhichIdsTo: -fastmode value entered by user (ids to optimize)
+	@type showWhichIdsTo: str
+	@param idsFrom: column of the identifier in the idMappingFIle
+	@type idsFrom: int
+	@param idsFrom: column of the identifier in the idMappingFIle
+	@type idsFrom: int
+	@param showWhichIdsFrom: -fastmode value entered by user (ids to optimize)
+	@type showWhichIdsFrom: str
+	"""
+	print 'Map only mode.We are generating a subset from ' + showWhichIdsFrom + ' to ' + showWhichIdsTo + \
+	'ids:'
+	cmd = 'zcat ' + idMappingFile + ' | cut -f '+ str(idsTo) + ',' + str(idsFrom) +' | gzip --stdout > ' + idMappingFile + '_subset.gz'
 	subprocess.check_call(cmd, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
 	print '...ok'
 
