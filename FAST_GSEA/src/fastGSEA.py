@@ -74,17 +74,16 @@ def get_parser():
 	parser.add_argument('-output', dest='output', action="store",
 						type=str, required=True, help='output results prefix: required')
 
-	parser.add_argument('--fromOtherDB', dest='fromOtherDB', action='store_true', 
-						help='Ids supported by default are UniProtKB-AC and RefSeq ids. Use this '+\
-						'option if you want to activate all ids support (slower). Caution: results may be less reliable!',
-						default=False)
-
 	parser.add_argument('-obo', dest='obo', action="store",
 						type=str, required=False, help='Gene ontology .obo graph file used when "--trim" option activated'+\
 						'(old go-basic.obo or latest gosubset_prok.obo)')
 
 	parser.add_argument('-toDB', dest='toDB', action="store",
 						type=str, required=False, help='databank identifier wanted (e.g GO,Uniref100...)'  +\
+						'as output when "--mapOnly" option activated')
+
+	parser.add_argument('-fromDB', dest='fromDB', action="store",
+						type=str, required=False, help='databank identifier contained in input file (e.g GO,Uniref100...)'  +\
 						'as output when "--mapOnly" option activated')
 
 	parser.add_argument('-fastmode', dest='fastmode', action="store",
@@ -184,7 +183,7 @@ def main():
 				'\nPlease use only supported ids. Program will stop now.'
 				sys.exit(1)
 			else:
-				map.mk_susbet(Arguments.mappingFile,int(ALL_IDS.index(Arguments.fastmode))+1,Arguments.fastmode) 
+				map.mk_subset(Arguments.mappingFile,int(ALL_IDS.index(Arguments.fastmode))+1,Arguments.fastmode) 
 
 	#
 	# MAPPING ONLY MODE
@@ -192,8 +191,9 @@ def main():
 	if Arguments.mapOnly:
 		if Arguments.toDB:
 			if Arguments.toDB in SUPPORTED_IDS:
-				map.any_ids_to_any_ids(Arguments.mappingFile, Arguments.ech, TMP_DIR + '/../ech_mapped_ids.txt', Arguments.toDB) # Map sample ids
-				map.any_ids_to_any_ids(Arguments.mappingFile, Arguments.univ, TMP_DIR + '/../univ_mapped_ids.txt', Arguments.toDB) # Map universe ids
+				map.mk_subsetmap(Arguments.mappingFile,int(ALL_IDS.index(Arguments.toDB))+1,Arguments.toDB,int(ALL_IDS.index(Arguments.fromDB))+1,Arguments.fromDB) 
+				map.any_ids_to_any_ids(Arguments.mappingFile + "_subset.gz", Arguments.ech, TMP_DIR + '/../ech_mapped_ids.txt', Arguments.toDB) # Map sample ids
+				map.any_ids_to_any_ids(Arguments.mappingFile + "_subset.gz", Arguments.univ, TMP_DIR + '/../univ_mapped_ids.txt', Arguments.toDB) # Map universe ids
 				# Remove tmp files
 				if not Arguments.keepTmp:
 					subprocess.check_call('rm -r ' + TMP_DIR, shell = True)
