@@ -122,8 +122,8 @@ source ~/.bashrc
 | -obo          | Gene ontology .obo graph file used when "--trim" option activated       |    No    |
 | -toDB         | databank identifier wanted as output (when "--mapOnly"  option activated)          |    No    |
 | -fromDB      | databank identifier contained in the (when "--mapOnly"  option activated)          |    No    |
-| --mapOffline  | Perform "MAP" step offline                                                         |    No    |
 | -fastmode    | Optimize fastGOEA speed for the entered identifier (disables multi ids support)   |    No    |
+| --mapOffline  | Perform "MAP" step offline                                                         |    No    |
 | --trim        | Trim prokaryotic GO-terms                                               |    No    |
 | --view        | Outputs the enrichment results in a 2D graph                            |    No    |
 | --mapOnly     | Perform only the "MAP" step and keep its results                        |    No    |
