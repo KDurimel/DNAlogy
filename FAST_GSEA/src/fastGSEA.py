@@ -74,6 +74,9 @@ def get_parser():
 	parser.add_argument('-output', dest='output', action="store",
 						type=str, required=True, help='output results prefix: required')
 
+	parser.add_argument('-t', dest='t', action="store",
+						type=str, required=True, help='Number of threads to use')
+
 	parser.add_argument('-obo', dest='obo', action="store",
 						type=str, required=False, help='Gene ontology .obo graph file used when "--trim" option activated'+\
 						'(old go-basic.obo or latest gosubset_prok.obo)')
@@ -183,7 +186,7 @@ def main():
 				'\nPlease use only supported ids. Program will stop now.'
 				sys.exit(1)
 			else:
-				map.mk_subset(Arguments.mappingFile,int(ALL_IDS.index(Arguments.fastmode))+1,Arguments.fastmode) 
+				map.mk_subset(Arguments.mappingFile,int(ALL_IDS.index(Arguments.fastmode))+1,Arguments.fastmode,Arguments.t) 
 
 	#
 	# MAPPING ONLY MODE
@@ -191,7 +194,7 @@ def main():
 	if Arguments.mapOnly:
 		if Arguments.toDB:
 			if Arguments.toDB in SUPPORTED_IDS:
-				map.mk_subsetmap(Arguments.mappingFile,int(ALL_IDS.index(Arguments.toDB))+1,Arguments.toDB,int(ALL_IDS.index(Arguments.fromDB))+1,Arguments.fromDB) 
+				map.mk_subsetmap(Arguments.mappingFile,int(ALL_IDS.index(Arguments.toDB))+1,Arguments.toDB,int(ALL_IDS.index(Arguments.fromDB))+1,Arguments.fromDB,Arguments.t) 
 				map.any_ids_to_any_ids(Arguments.mappingFile + "_subset.gz", Arguments.ech, TMP_DIR + '/../ech_mapped_ids.txt', Arguments.toDB) # Map sample ids
 				map.any_ids_to_any_ids(Arguments.mappingFile + "_subset.gz", Arguments.univ, TMP_DIR + '/../univ_mapped_ids.txt', Arguments.toDB) # Map universe ids
 				# Remove tmp files
