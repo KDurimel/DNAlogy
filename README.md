@@ -121,7 +121,7 @@ source ~/.bashrc
 | -t            | Number of threads to use                                                |    Yes   |
 | -obo          | Gene ontology .obo graph file used when "--trim" option activated       |    No    |
 | -toDB         | databank identifier wanted as output (when "--mapOnly"  option activated)          |    No    |
-| --fromDB      | databank identifier contained in the (when "--mapOnly"  option activated)          |    No    |
+| -fromDB      | databank identifier contained in the (when "--mapOnly"  option activated)          |    No    |
 | --mapOffline  | Perform "MAP" step offline                                                         |    No    |
 | -fastmode    | Optimize fastGOEA speed for the entered identifier (disables multi ids support)   |    No    |
 | --trim        | Trim prokaryotic GO-terms                                               |    No    |
