@@ -118,10 +118,12 @@ source ~/.bashrc
 | -univ         | Universe ids file (one id per line)                                     |    Yes   |
 | -mappingFile  | idmapping_selected.tab.gz file                                          |    Yes   |
 | -output       | Output results prefix                                                   |    Yes   |
+| -t            | Number of threads to use                                                |    Yes   |
 | -obo          | Gene ontology .obo graph file used when "--trim" option activated       |    No    |
-| -toDB         | databank identifier wanted as output when "--mapOnly"  option activated |    No    |
-| -fastmode     | optimize fastGOEA speeds for the seleted identifier but disables multi-ids support |    No    |
-| --mapOffline  | Perform "MAP" step offline                                              |    No    |
+| -toDB         | databank identifier wanted as output (when "--mapOnly"  option activated)          |    No    |
+| --fromDB      | databank identifier contained in the (when "--mapOnly"  option activated)          |    No    |
+| --mapOffline  | Perform "MAP" step offline                                                         |    No    |
+| --fastmode    | Optimize fastGOEA speed for the entered identifier (disables multi ids support)   |    No    |
 | --trim        | Trim prokaryotic GO-terms                                               |    No    |
 | --view        | Outputs the enrichment results in a 2D graph                            |    No    |
 | --mapOnly     | Perform only the "MAP" step and keep its results                        |    No    |
@@ -177,12 +179,12 @@ P0C9F2
 All data used for the following examples are avalaible in the [examples](https://github.com/KDurimel/DNAlogy/tree/master/FAST_GSEA/examples) directory.
 
 
-**Example  — Id mapping: map any ids to UniRef100 ids**
+**Example  — Id mapping: map RefSeq ids to UniRef100 ids**
 
 This command line requires two outputs, if you want to perform id mapping in only one file, just provide it twice as `-ech` and `-univ`.
 ```bash
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs:)
-fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz --mapOnly -toDB UniRef100 -output maybe/here
+fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz --mapOnly -fromDB RefSeq -toDB UniRef100 -output maybe/here
 ```
 
 
@@ -195,7 +197,6 @@ With most steps offline (faster, the better updated your -mappingFile and/or -ob
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs:)
 fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz  --mapOffline -output maybe/here
 ```
-
 
 Requesting NCBI and Uniprot APIs (most reliable, but slower):
 ```bash
@@ -216,11 +217,11 @@ fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo
 fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo gosubset_prok.obo -output somewhere --trim --view
 ```
 
-...plus do all these things using `-fastmode` : if you are using huge datasets, this will improve all the mapping steps. With `-fastmode` option, databank identifiers MUST be unified! In this example we use `-fastmode` for RefSeq ids:
+...plus do all these things using `-fastmode` and using 4 threads : if you are using huge datasets, this will improve all the mapping steps. With `-fastmode` option, databank identifiers MUST be unified! In this example we use `-fastmode` for RefSeq ids:
 
 ```bash
 # -ech: gene set sample ; -univ: gene set universe ; other args? please read the docs:)
-fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo gosubset_prok.obo -fastmode RefSeq -output somewhere --trim --view 
+fastGSEA -ech ech.txt  -univ univ.txt  -mappingFile idmapping_very_light.gz -obo gosubset_prok.obo -fastmode RefSeq -t 4 -output somewhere --trim --view 
 ```
 
 <br/>
