@@ -26,11 +26,11 @@ case $1 in
     echo "No sufficient args : input id not given"
     exit 1
   fi
-  zgrep -m 1 "$3" $2_subset.gz | cut -f 3 # Keep GO only if exists else null
+  LANG=C zgrep -m 1 "$3" $2_subset.tsv.gz | cut -f 3 # Keep GO only if exists else null
   ;;
   # Zgrep whatever id to obtain GO-terms using the huge file
   "--anythingToGo")
-  zgrep -m 1 "$3" $2 | cut -f 7
+  LANG=C zgrep -m 1 "$3" $2 | cut -f 7
   # Zgrep whatever id to obtain GO-terms using the huge file
   ;;
   "--anythingToAnything")
@@ -39,6 +39,6 @@ case $1 in
     "No sufficient args : output id not given"
     exit 1
   fi
-  zgrep -m 1 "$3" $2 | cut -f ${ids[$4]} #$3 input ids to grep ; $2 mode ; $4 output ids
+  LANG=C zgrep -m 1 "$3" $2 | cut -f ${ids[$4]} #$3 input ids to grep ; $2 mode ; $4 output ids
   ;;
 esac

@@ -23,7 +23,6 @@ __email__ = 'k@durimel@gmail.com'
 __status__ = 'Alpha'
 
 ######## IMPORT BUILT IN MODULES ########
-from os.path import exists # verify if path exists
 from time import time # handle system time
 from argparse import RawDescriptionHelpFormatter, ArgumentParser # help text formatter, argument parser
 import sys, subprocess # too many uses --> import all.
@@ -113,7 +112,8 @@ def get_parser():
 						default=False)
 
 	parser.add_argument('--keepTmp', dest='keepTmp', action='store_true', 
-						help='Keep temporary files folder(tmp).',
+						help='Keep temporary files folder(tmp). Use this option to get faster results if your databank identifiers ' +\
+						'and file paths wont change for the next runs',
 						default=False)
 
 
@@ -195,8 +195,8 @@ def main():
 		if Arguments.toDB:
 			if Arguments.toDB in SUPPORTED_IDS:
 				map.mk_subsetmap(Arguments.mappingFile,int(ALL_IDS.index(Arguments.toDB))+1,Arguments.toDB,int(ALL_IDS.index(Arguments.fromDB))+1,Arguments.fromDB,Arguments.t) 
-				map.any_ids_to_any_ids(Arguments.mappingFile + "_subset.gz", Arguments.ech, TMP_DIR + '/../ech_mapped_ids.txt', Arguments.toDB) # Map sample ids
-				map.any_ids_to_any_ids(Arguments.mappingFile + "_subset.gz", Arguments.univ, TMP_DIR + '/../univ_mapped_ids.txt', Arguments.toDB) # Map universe ids
+				map.any_ids_to_any_ids(Arguments.mappingFile + "_subset.tsv.gz", Arguments.ech, TMP_DIR + '/../ech_mapped_ids.txt', Arguments.toDB) # Map sample ids
+				map.any_ids_to_any_ids(Arguments.mappingFile + "_subset.tsv.gz", Arguments.univ, TMP_DIR + '/../univ_mapped_ids.txt', Arguments.toDB) # Map universe ids
 				# Remove tmp files
 				if not Arguments.keepTmp:
 					subprocess.check_call('rm -r ' + TMP_DIR, shell = True)
@@ -267,6 +267,7 @@ def main():
 	# Remove tmp files
 	if not Arguments.keepTmp:
 		subprocess.check_call('rm -r ' + TMP_DIR, shell = True)
+		subprocess.check_call('rm ' + Arguments.mappingFile + '_*', shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
 
 	################## Show time elapsed  ##########################
 	TIMER.lifetime = "Workflow finished in"

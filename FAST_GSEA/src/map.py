@@ -67,15 +67,22 @@ def mk_subset(idMappingFile, idsOptimized, showWhichIdIsOptimized,nbThreads):
 	@param showWhichIdIsOptimized: -fastmode value entered by user (ids to optimize)
 	@type showWhichIdIsOptimized: str
 	"""
-	print 'Fastmode activated (ids from one databank only!) we are generating a subset for ' + showWhichIdIsOptimized + \
-	'ids:'
-	# Generates a subset
-	cmd = 'zcat ' + idMappingFile + ' | cut -f '+ str(idsOptimized) +',7 | gzip --stdout > ' + idMappingFile + '_subset'
-	subprocess.check_call(cmd, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
-	# Pigz this subset (enables multiprocessing)
-	cmd2 = 'pigz fast -p ' + nbThreads + ' ' + idMappingFile + '_subset'
-	subprocess.check_call(cmd2, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
-	print '...ok'
+	if os.path.exists(idMappingFile + '_subset.tsv.gz'):
+		print 'The subset generated in the previous run will be used. Remove temporary files ' +\
+		'or do not use --keepTmp option if you dont want this'
+	else:
+		print 'Fastmode activated (ids from one databank only!) we are generating a subset for ' + showWhichIdIsOptimized + \
+		'ids:'
+		# Generates a subset
+		cmd = 'zcat ' + idMappingFile + ' | cut -f '+ str(idsOptimized) +',7 | gzip --stdout > ' + idMappingFile + '_subset.gz'
+		subprocess.check_call(cmd, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
+		# Uncompress the subset
+		cmd2 = 'gunzip -c ' + idMappingFile + '_subset.gz > ' + idMappingFile + '_subset.tsv' 
+		subprocess.check_call(cmd2, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
+		# Pigz this subset (enables multiprocessing)
+		cmd3 = 'pigz --fast --force -p ' + nbThreads + ' ' + idMappingFile + '_subset.tsv'
+		subprocess.check_call(cmd3, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
+		print '...ok'
 
 def mk_subsetmap(idMappingFile, idsTo, showWhichIdsTo, idsFrom, showWhichIdsFrom,nbThreads):
 	"""
@@ -93,14 +100,21 @@ def mk_subsetmap(idMappingFile, idsTo, showWhichIdsTo, idsFrom, showWhichIdsFrom
 	@param showWhichIdsFrom: -fastmode value entered by user (ids to optimize)
 	@type showWhichIdsFrom: str
 	"""
-	print 'Map only mode.We are generating a subset from ' + showWhichIdsFrom + ' to ' + showWhichIdsTo + \
-	'ids:'
-	cmd = 'zcat ' + idMappingFile + ' | cut -f '+ str(idsTo) + ',' + str(idsFrom) +' | gzip --stdout > ' + idMappingFile + '_subset'
-	subprocess.check_call(cmd, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
-	# Pigz this subset (enables multiprocessing)
-	cmd2 = 'pigz fast -p ' + nbThreads + ' ' + idMappingFile + '_subset'
-	subprocess.check_call(cmd2, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
-	print '...ok'
+	if os.path.exists(idMappingFile + '_subset.tsv.gz'):
+		print 'The subset generated in the previous run will be used. Remove temporary files ' +\
+		'or do not use --keepTmp option if you dont want this'
+	else:
+		print 'Map only mode.We are generating a subset from ' + showWhichIdsFrom + ' to ' + showWhichIdsTo + \
+		'ids:'
+		cmd = 'zcat ' + idMappingFile + ' | cut -f '+ str(idsTo) + ',' + str(idsFrom) +' | gzip --stdout > ' + idMappingFile + '_subset.gz'
+		subprocess.check_call(cmd, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
+		# Uncompress the subset
+		cmd2 = 'gunzip -c ' + idMappingFile + '_subset.gz > ' + idMappingFile + '_subset.tsv' 
+		subprocess.check_call(cmd2, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
+		# Pigz this subset (enables multiprocessing)
+		cmd3 = 'pigz --fast --force -p ' + nbThreads + ' ' + idMappingFile + '_subset.tsv'
+		subprocess.check_call(cmd3, shell=True, preexec_fn=lambda:signal.signal(signal.SIGPIPE, signal.SIG_DFL))
+		print '...ok'
 
 def ids_to_go(idMappingFile, idsFile, outputPrefix):
 	"""
