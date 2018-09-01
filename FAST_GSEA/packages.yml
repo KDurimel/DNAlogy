@@ -1,4 +1,4 @@
-name: goea_env
+name: gsea_env
 channels:
   - ostrokach
   - bioconda
