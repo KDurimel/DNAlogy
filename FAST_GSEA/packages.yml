@@ -1,4 +1,4 @@
-name: gsea_env
+name: goea_env
 channels:
   - r
   - conda-forge
