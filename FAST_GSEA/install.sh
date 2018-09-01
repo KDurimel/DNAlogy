@@ -54,26 +54,26 @@ case ${answer:0:1} in
     ;;
 esac
 # Generate an alias for the main script
-read -p "Do you want to add fastGOEA (recommended) in your shell environment?(y/n) " answer
+read -p "Do you want to add fastGSEA (recommended) in your shell environment?(y/n) " answer
 case ${answer:0:1} in
     y|Y )
-      echo '# Added by fastGOEA installer' >> ~/.bashrc
+      echo '# Added by fastGSEA installer' >> ~/.bashrc
       ABSPATH=$(readlink -f $0)
       ABSDIR=$(dirname $ABSPATH)
       chmod +x $ABSDIR/src/*
       echo 'export PATH=$PATH:'$ABSDIR'/src/' >> ~/.bashrc
       source ~/.bashrc
-  echo "Ok, fastGOEA added and sourced."
+  echo "Ok, fastGSEA added and sourced."
   sleep 1
         # Create a new environment from packages.yml and activate it
-  echo 'fastGOEA environment build will start in 5 seconds...'
+  echo 'fastGSEA environment build will start in 5 seconds...'
   sleep 5
   conda env create -f $ABSDIR/packages.yml
   sleep 1
-  echo 'fastGOEA sucessfully installed. Type "source activate goea_env" to start using it.'
+  echo 'fastGSEA sucessfully installed. Type "source activate gsea_env" to start using it.'
   exec bash # reload bashrc not only in this script context
     ;;
     * )
-       echo "Ok, so please install packages.yml (look at the readme) and source goea_env"
+       echo "Ok, so please install packages.yml (look at the readme) and source gsea_env"
     ;;
 esac
