@@ -289,4 +289,4 @@ All DNAlogy tools are under [GPL v3](https://github.com/KDurimel/DNAlogy/blob/ma
 
 ## Author
 * Kévin Durimel
-* Web: http://kevin.durimel.fr/
+* Website: http://kevin.durimel.fr/
